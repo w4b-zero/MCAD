@@ -19,7 +19,7 @@ Currently Provided Tools:
 * motors.scad:
     - stepper_motor_mount(nema_standard, slide_distance OPTIONAL, mochup OPTIONAL)
 
-Other tools (alpha quality):
+Other tools (alpha and beta quality):
 * nuts_and_bolts.scad: for creating metric and imperial bolt/nut holes
 * bearing.scad: standard/custom bearings
 * screw.cad: screws and augers
@@ -31,5 +31,6 @@ Utils:
 * curves.scad: mathematical functions defining curves
 * units.scad: easy metric units
 * utilities: geometric funtions and misc. useful stuff
+* teardrop (http://www.thingiverse.com/thing:3457): parametric teardrop module
 
 You are welcome to fork this project in github and request pulls. I will try to accomodate the community as much as possible in this.
