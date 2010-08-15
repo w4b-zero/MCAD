@@ -24,6 +24,7 @@ Other tools (alpha and beta quality):
 * bearing.scad: standard/custom bearings
 * screw.cad: screws and augers
 * materials.scad: color definitions for different materials
+* stepper.scad: NEMA standard stepper outlines
 
 Utils:
 * math.scad: general math functions
