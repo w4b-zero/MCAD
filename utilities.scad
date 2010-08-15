@@ -23,6 +23,27 @@ function angle(v) = angleOfNormalizedVector(normalized(v));
 
 function angleBetweenTwoPoints(a, b) = angle(normalized(b-a));
 
+// Untested
+module intersection(big_number=1000000000){
+    difference(){
+        child(0);
+        difference(){
+            cube(big_number, center=true);
+            child(1);
+        }
+    }
+}
+
+module intersection2(){
+    difference(){
+        child(0);
+        difference(){
+            child(0);
+            child(1);
+        }
+    }
+}
+
 
 CENTER = 0;
 LEFT = -0.5;
