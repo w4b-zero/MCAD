@@ -2,9 +2,9 @@
  * Servo outline library
  *
  * Authors:
- *   - Eero 'rambo' af Heurlin 2010- 
+ *   - Eero 'rambo' af Heurlin 2010-
  *
- * License: GPL 2.0
+ * License: LGPL 2.1
  */
 
 use <triangle.scad>
@@ -35,11 +35,11 @@ module alignds420(position, rotation, screws = 0, axle_lenght = 0)
 				translate([-6,-6,0])
 				{
 					cube([12, 22.8,19.5], false);
-					translate([0,-5, 17]) 
+					translate([0,-5, 17])
 					{
 						cube([12, 7, 2.5]);
 					}
-					translate([0, 20.8, 17]) 
+					translate([0, 20.8, 17])
 					{
 						cube([12, 7, 2.5]);
 					}
@@ -54,7 +54,7 @@ module alignds420(position, rotation, screws = 0, axle_lenght = 0)
 					{
 						# cylinder(r=1.8/2, h=6, $fn=6);
 					}
-					
+
 				}
 				// The large slope
 				translate([6,18,19.0])
@@ -65,7 +65,7 @@ module alignds420(position, rotation, screws = 0, axle_lenght = 0)
 					}
 				}
 
-				/** 
+				/**
 				 * This seems to get too complex fast
 				// Small additional axes
 				translate([0,6,17])
@@ -87,7 +87,7 @@ module alignds420(position, rotation, screws = 0, axle_lenght = 0)
 							triangle(3, 8, 14);
 						}
 					}
-				
+
 				}
 				*/
 				// So we render a cube instead of the small slope on a cube
@@ -101,7 +101,7 @@ module alignds420(position, rotation, screws = 0, axle_lenght = 0)
 				% cylinder(r=0.9, h=axle_lenght, center=true, $fn=8);
 			}
 		}
-	}	
+	}
 }
 
 // Example, uncomment to test
