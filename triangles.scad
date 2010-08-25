@@ -2,9 +2,9 @@
  * Simple triangles library
  *
  * Authors:
- *   - Eero 'rambo' af Heurlin 2010- 
+ *   - Eero 'rambo' af Heurlin 2010-
  *
- * License: GPL 2.0
+ * License: LGPL 2.1
  */
 
 
