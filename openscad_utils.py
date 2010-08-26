@@ -4,20 +4,21 @@ from subprocess import Popen, PIPE
 mod_re = (r"\bmodule\s+(", r")\s*\(\s*")
 func_re = (r"\bfunction\s+(", r")\s*\(")
 
-def extract_mod_names(fpath, name_re=r"\w+"):
-    regex = name_re.join(mod_re)
+def extract_definitions(fpath, name_re=r"\w+", def_re=""):
+    regex = name_re.join(def_re)
     matcher = re.compile(regex)
     return (m.group(1) for m in matcher.finditer(fpath.read()))
+
+def extract_mod_names(fpath, name_re=r"\w+"):
+    return extract_definitions(fpath, name_re=name_re, def_re=mod_re)
 
 def extract_func_names(fpath, name_re=r"\w+"):
-    regex = name_re.join(func_re)
-    matcher = re.compile(regex)
-    return (m.group(1) for m in matcher.finditer(fpath.read()))
+    return extract_definitions(fpath, name_re=name_re, def_re=func_re)
 
-def collect_test_modules():
-    dirpath = py.path.local("./")
+def collect_test_modules(dirpath=None):
+    dirpath = dirpath or py.path.local("./")
     print "Collecting openscad test module names"
-    
+
     test_files = {}
     for fpath in dirpath.visit('*.scad'):
         #print fpath
@@ -26,21 +27,24 @@ def collect_test_modules():
         test_files[fpath] = modules
     return test_files
 
-collect_test_modules()
+class Timeout(Exception): pass
 
-def call_openscad(path, stlpath, timeout=20):
+def call_openscad(path, stlpath, timeout=1):
     try:
-        proc = Popen(['openscad', '-s', str(stlpath),  str(path)],
+        command = ['openscad', '-s', str(stlpath),  str(path)]
+        print command
+        proc = Popen(command,
             stdout=PIPE, stderr=PIPE, close_fds=True)
         calltime = time.time()
+        time.sleep(0.01)
         #print calltime
         while True:
             if proc.poll() is not None:
                 break
-            time.sleep(0.1)
+            time.sleep(0.5)
             #print time.time()
             if time.time() > calltime + timeout:
-                raise Exception("Timeout")
+                raise Timeout()
     finally:
         try:
             proc.terminate()
