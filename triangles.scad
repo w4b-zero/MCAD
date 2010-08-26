@@ -7,14 +7,12 @@
  * License: LGPL 2.1
  */
 
-
 /**
  * Standard right-angled triangle
  *
  * @param number o_len Lenght of the opposite side
  * @param number a_len Lenght of the adjacent side
  * @param number depth How wide/deep the triangle is in the 3rd dimension
- * @todo a better way ?
  */
 module triangle(o_len, a_len, depth)
 {
