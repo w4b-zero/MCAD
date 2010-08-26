@@ -16,7 +16,7 @@
  * @param number depth How wide/deep the triangle is in the 3rd dimension
  */
 /*
-module triangle(o_len, a_len, depth)
+module triangle_old(o_len, a_len, depth)
 {
 	difference()
 	{
@@ -51,5 +51,5 @@ module triangle(o_len, a_len, depth)
     }
 }
 
-triangle(5,10,7);
+//triangle(5,10,7);
 
