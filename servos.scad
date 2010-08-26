@@ -104,5 +104,4 @@ module alignds420(position, rotation, screws = 0, axle_lenght = 0)
 	}
 }
 
-// Tests:
 module test_alignds420(){alignds420(screws=1);}
