@@ -7,7 +7,7 @@
  * License: LGPL 2.1
  */
 
-use <triangle.scad>
+use <triangles.scad>
 
 /**
  * Align DS420 digital servo
@@ -57,9 +57,9 @@ module alignds420(position, rotation, screws = 0, axle_lenght = 0)
 
 				}
 				// The large slope
-				translate([6,18,19.0])
+				translate([-6,0,19])
 				{
-					rotate([0,0,180])
+					rotate([90,0,90])
 					{
 						triangle(4, 18, 12);
 					}
@@ -80,11 +80,11 @@ module alignds420(position, rotation, screws = 0, axle_lenght = 0)
 					{
 						cube([12,6.5,4]);
 					}
-					translate([-7,1,24.0])
+					translate([7,-7,24.0])
 					{
-						rotate([180,0,0])
+						rotate([-90,0,90])
 						{
-							triangle(3, 8, 14);
+				            triangle(3, 8, 14);
 						}
 					}
 
