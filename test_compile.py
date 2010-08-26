@@ -16,14 +16,14 @@ def pytest_generate_tests(metafunc):
                 metafunc.addcall(funcargs=dict(modpath=fpath))
 
 
-def test_compile(modname, modpath):
-    tempname = "test_" + modpath.basename + modname + '.scad'
+def test_module_compile(modname, modpath):
+    tempname = modpath.basename + '-' + modname + '.scad'
     fpath = temppath.join(tempname)
     stlpath = temppath.join(tempname + ".stl")
     f = fpath.open('w')
     f.write("""
 //generated testfile
-include <%s>
+use <%s>
 
 %s();
 """ % (modpath, modname))
@@ -34,9 +34,8 @@ include <%s>
     assert "warning" or "error" not in output[2].strip().lowercase()
     assert len(stlpath.readlines()) > 2
 
-def test_compile_default(modpath):
-    tempname = "test_" + modpath.basename
-    stlpath = temppath.join(tempname + ".stl")
+def test_file_compile(modpath):
+    stlpath = temppath.join(modpath.basename + "-test.stl")
     output = call_openscad(path=modpath, stlpath=stlpath)
     print output
     assert output[0] is 0
