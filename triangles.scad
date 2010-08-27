@@ -22,5 +22,41 @@ module triangle(o_len, a_len, depth)
     }
 }
 
-//triangle(5,10,7);
+/**
+ * Standard right-angled triangle (tangent version)
+ *
+ * @param number angle of adjacent to hypotenuse (ie tangent)
+ * @param number a_len Lenght of the adjacent side
+ * @param number depth How wide/deep the triangle is in the 3rd dimension
+ */
+module a_triangle(tan_angle, a_len, depth)
+{
+    linear_extrude(height=depth)
+    {
+        polygon(points=[[0,0],[a_len,0],[0,tan(tan_angle) * a_len]], paths=[[0,1,2]]);
+    }
+}
 
+module triangles_test()
+{
+    // Generate a bunch of triangles by sizes
+    for (i = [1:10])
+    {
+        translate([i*7, -30, i*7])
+        {
+            triangle(i*5, sqrt(i*5+pow(i,2)), 5);
+        }
+        
+    }
+
+    // Generate a bunch of triangles by angle
+    for (i = [1:85/5])
+    {
+        translate([i*7, 20, i*7])
+        {
+            a_triangle(i*5, 10, 5);
+        }
+    }
+}
+
+// triangles_test();
