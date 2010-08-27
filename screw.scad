@@ -1,5 +1,5 @@
 // Parametric screw-like things (ball screws, augers)
-// License: GNU GPL 2.0 or later.
+// License: GNU LGPL 2.1 or later.
 // © 2010 by Elmo Mäntynen
 
 include <curves.scad>
