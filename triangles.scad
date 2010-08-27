@@ -37,7 +37,11 @@ module a_triangle(tan_angle, a_len, depth)
     }
 }
 
-module triangles_test()
+
+// Tests:
+module test_triangle() { triangle(5, 5, 5); }
+module test_a_triangle() { a_triangle(45, 5, 5); }
+module test_triangles()
 {
     // Generate a bunch of triangles by sizes
     for (i = [1:10])
@@ -46,7 +50,6 @@ module triangles_test()
         {
             triangle(i*5, sqrt(i*5+pow(i,2)), 5);
         }
-        
     }
 
     // Generate a bunch of triangles by angle
@@ -58,5 +61,3 @@ module triangles_test()
         }
     }
 }
-
-// triangles_test();
