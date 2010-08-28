@@ -14,10 +14,13 @@ files include useful constants which will be available with "include <MCAD/*.sca
 which should be safe to use on all included files (ie. no top level code should
 create geometry).
 
+If you host your project in git, you use "git submodule add URL" in your
+repo to import this library as a git submodule for easy usage. See
+"git help submodule"" for more info
 
 Currently Provided Tools:
 
-* involute_gears.scad (http://www.thingiverse.com/thing:3575): 
+* involute_gears.scad (http://www.thingiverse.com/thing:3575):
     - gear()
     - bevel_gear()
     - bevel_gear_pair()
