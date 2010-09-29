@@ -29,10 +29,10 @@ BEARING_INNER_DIAMETER = 0;
 BEARING_OUTER_DIAMETER = 1;
 BEARING_WIDTH = 2;
 
-//BearingXXX = [inner dia, outer dia, width]
+//BearingXXX = [inner dia, outer dia, width];
 Bearing608 = [8*mm, 22*mm, 7*mm];
-Bearing623 = [3*mm, 10*mm, 4*mm]
-//Bearing624 = [4*mm, , ]
+Bearing623 = [3*mm, 10*mm, 4*mm];
+//Bearing624 = [4*mm, , ];
 Bearing627 = [7*mm, 22*mm, 7*mm];
 Bearing688 = [8*mm, 16*mm, 5*mm];
 SkateBearing = Bearing608;
