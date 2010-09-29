@@ -1,6 +1,6 @@
 /*
  * Bearing model.
- * 
+ *
  * Originally by Hans Häggström, 2010.
  * Dual licenced under Creative Commons Attribution-Share Alike 3.0 and LGPL2 or later
  */
@@ -29,7 +29,10 @@ BEARING_INNER_DIAMETER = 0;
 BEARING_OUTER_DIAMETER = 1;
 BEARING_WIDTH = 2;
 
+//BearingXXX = [inner dia, outer dia, width];
 Bearing608 = [8*mm, 22*mm, 7*mm];
+Bearing623 = [3*mm, 10*mm, 4*mm];
+//Bearing624 = [4*mm, , ];
 Bearing627 = [7*mm, 22*mm, 7*mm];
 Bearing688 = [8*mm, 16*mm, 5*mm];
 SkateBearing = Bearing608;
@@ -43,13 +46,13 @@ module bearing(pos=[0,0,0], angle=[0,0,0], model=SkateBearing, outline=false,
   w = bearingWidth(model);
   innerD = outline==false ? bearingInnerDiameter(model) : 0;
   outerD = bearingOuterDiameter(model);
-  
+
   innerRim = innerD + (outerD - innerD) * 0.2;
   outerRim = outerD - (outerD - innerD) * 0.2;
   midSink = w * 0.1;
 
   translate(pos) rotate(angle) union() {
-    color(material)  
+    color(material)
       difference() {
         // Basic ring
         Ring([0,0,0], outerD, innerD, w, material, material);
@@ -67,13 +70,13 @@ module bearing(pos=[0,0,0], angle=[0,0,0], model=SkateBearing, outline=false,
       translate(pos)
         difference() {
           cylinder(r=od/2, h=h,  $fs = 0.01);
-          color(holeMaterial) 
-            translate([0,0,-10*epsilon]) 
+          color(holeMaterial)
+            translate([0,0,-10*epsilon])
               cylinder(r=id/2, h=h+20*epsilon,  $fs = 0.01);
         }
     }
   }
-      
+
 }
 
 
