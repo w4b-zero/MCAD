@@ -1,4 +1,4 @@
-import py, re, os, signal, time
+import py, re, os, signal, time, commands
 from subprocess import Popen, PIPE
 
 mod_re = (r"\bmodule\s+(", r")\s*\(\s*")
@@ -30,26 +30,33 @@ def collect_test_modules(dirpath=None):
 class Timeout(Exception): pass
 
 def call_openscad(path, stlpath, timeout=1):
-    try:
-        command = ['openscad', '-s', str(stlpath),  str(path)]
-        print command
-        proc = Popen(command,
-            stdout=PIPE, stderr=PIPE, close_fds=True)
-        calltime = time.time()
-        time.sleep(0.01)
-        #print calltime
-        while True:
-            if proc.poll() is not None:
-                break
-            time.sleep(0.5)
-            #print time.time()
-            if time.time() > calltime + timeout:
-                raise Timeout()
-    finally:
+    command = ['openscad', '-s', str(stlpath),  str(path)]
+    print command
+    if timeout:
         try:
-            proc.terminate()
-            proc.kill()
-        except OSError:
-            pass
+            proc = Popen(command,
+                stdout=PIPE, stderr=PIPE, close_fds=True)
+            calltime = time.time()
+            time.sleep(0.01)
+            #print calltime
+            while True:
+                if proc.poll() is not None:
+                    break
+                time.sleep(0.5)
+                #print time.time()
+                if time.time() > calltime + timeout:
+                    raise Timeout()
+        finally:
+            try:
+                proc.terminate()
+                proc.kill()
+            except OSError:
+                pass
 
-    return (proc.returncode,) + proc.communicate()
+        return (proc.returncode,) + proc.communicate()
+    else:
+        output = commands.getstatusoutput(" ".join(command))
+        return output + ('', '')
+
+def parse_output(text):
+    pass

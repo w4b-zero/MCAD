@@ -30,10 +30,11 @@ use <%s>
     print code
     f.write(code)
     f.flush
-    output = call_openscad(path=fpath, stlpath=stlpath, timeout=5)
+    output = call_openscad(path=fpath, stlpath=stlpath, timeout=0)
     print output
     assert output[0] is 0
-    assert "warning" or "error" not in output[2].strip().lowercase()
+    for s in ("warning", "error"):
+        assert s not in output[2].strip().lower()
     assert len(stlpath.readlines()) > 2
 
 def test_file_compile(modpath):
@@ -41,7 +42,8 @@ def test_file_compile(modpath):
     output = call_openscad(path=modpath, stlpath=stlpath)
     print output
     assert output[0] is 0
-    assert "warning" or "error" not in output[2].strip().lowercase()
+    for s in ("warning", "error"):
+        assert s not in output[2].strip().lower()
     assert len(stlpath.readlines()) == 2
 
 
