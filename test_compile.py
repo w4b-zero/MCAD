@@ -29,8 +29,8 @@ use <%s>
 """ % (modpath, modname)
     print code
     f.write(code)
-    f.flush
-    output = call_openscad(path=fpath, stlpath=stlpath, timeout=0)
+    f.flush()
+    output = call_openscad(path=fpath, stlpath=stlpath, timeout=15)
     print output
     assert output[0] is 0
     for s in ("warning", "error"):
