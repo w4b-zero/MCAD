@@ -17,7 +17,7 @@
 //test_meshing_double_helix ();
 
 module test_meshing_double_helix(){
-    test_meshing_double_helix ();
+    meshing_double_helix ();
 }
 
 // Demonstrate the backlash option for Spur gears.

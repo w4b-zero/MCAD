@@ -8,7 +8,7 @@ temppath = py.test.ensuretemp('MCAD')
 def pytest_generate_tests(metafunc):
     if "modpath" in metafunc.funcargnames:
         for fpath, modnames in collect_test_modules().items():
-            os.system("cp %s %s/" % (fpath, temppath))
+            #os.system("cp %s %s/" % (fpath, temppath))
             if "modname" in metafunc.funcargnames:
                 for modname in modnames:
                     metafunc.addcall(funcargs=dict(modname=modname, modpath=fpath))
@@ -21,17 +21,20 @@ def test_module_compile(modname, modpath):
     fpath = temppath.join(tempname)
     stlpath = temppath.join(tempname + ".stl")
     f = fpath.open('w')
-    f.write("""
+    code = """
 //generated testfile
 use <%s>
 
 %s();
-""" % (modpath, modname))
-    f.flush
-    output = call_openscad(path=fpath, stlpath=stlpath, timeout=5)
+""" % (modpath, modname)
+    print code
+    f.write(code)
+    f.flush()
+    output = call_openscad(path=fpath, stlpath=stlpath, timeout=15)
     print output
     assert output[0] is 0
-    assert "warning" or "error" not in output[2].strip().lowercase()
+    for s in ("warning", "error"):
+        assert s not in output[2].strip().lower()
     assert len(stlpath.readlines()) > 2
 
 def test_file_compile(modpath):
@@ -39,7 +42,8 @@ def test_file_compile(modpath):
     output = call_openscad(path=modpath, stlpath=stlpath)
     print output
     assert output[0] is 0
-    assert "warning" or "error" not in output[2].strip().lowercase()
+    for s in ("warning", "error"):
+        assert s not in output[2].strip().lower()
     assert len(stlpath.readlines()) == 2
 
 
