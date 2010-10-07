@@ -29,7 +29,7 @@ def collect_test_modules(dirpath=None):
 
 class Timeout(Exception): pass
 
-def call_openscad(path, stlpath, timeout=1):
+def call_openscad(path, stlpath, timeout=5):
     command = ['openscad', '-s', str(stlpath),  str(path)]
     print command
     if timeout:
@@ -37,7 +37,7 @@ def call_openscad(path, stlpath, timeout=1):
             proc = Popen(command,
                 stdout=PIPE, stderr=PIPE, close_fds=True)
             calltime = time.time()
-            time.sleep(0.01)
+            time.sleep(0.05)
             #print calltime
             while True:
                 if proc.poll() is not None:
