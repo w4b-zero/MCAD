@@ -9,16 +9,16 @@ include <units.scad>
 include <materials.scad>
 
 // Example, uncomment to view
-//bearing_test();
-//bearing_hole_test();
+//test_bearing();
+//test_bearing_hole();
 
-module bearing_test(){
+module test_bearing(){
     bearing();
     bearing(pos=[5*cm, 0,0], angle=[90,0,0]);
-    bearing(pos=[-2.5*cm, 0,0], model=Bearing688);
+    bearing(pos=[-2.5*cm, 0,0], model=688);
 }
 
-module bearing_hole_test(){
+module test_bearing_hole(){
     difference(){
       translate([0, 0, 3.5]) cube(size=[30, 30, 7-10*epsilon], center=true);
       bearing(outline=true);
@@ -29,20 +29,32 @@ BEARING_INNER_DIAMETER = 0;
 BEARING_OUTER_DIAMETER = 1;
 BEARING_WIDTH = 2;
 
-//BearingXXX = [inner dia, outer dia, width];
-Bearing608 = [8*mm, 22*mm, 7*mm];
-Bearing623 = [3*mm, 10*mm, 4*mm];
-//Bearing624 = [4*mm, , ];
-Bearing627 = [7*mm, 22*mm, 7*mm];
-Bearing688 = [8*mm, 16*mm, 5*mm];
-SkateBearing = Bearing608;
+// Common bearing names
+SkateBearing = 608;
 
-function bearingWidth(model) = model[BEARING_WIDTH];
-function bearingInnerDiameter(model) = model[BEARING_INNER_DIAMETER];
-function bearingOuterDiameter(model) = model[BEARING_OUTER_DIAMETER];
+// Bearing dimensions
+// model == XXX ? [inner dia, outer dia, width]:
+function bearingDimensions(model) =
+  model == 608 ? [8*mm, 22*mm, 7*mm]:
+  model == 623 ? [3*mm, 10*mm, 4*mm]:
+  model == 624 ? [4*mm, 13*mm, 5*mm]:
+  model == 627 ? [7*mm, 22*mm, 7*mm]:
+  model == 688 ? [8*mm, 16*mm, 4*mm]:
+  model == 698 ? [8*mm, 19*mm, 6*mm]:
+  [8*mm, 22*mm, 7*mm]; // this is the default
+
+
+function bearingWidth(model) = bearingDimensions(model)[BEARING_WIDTH];
+function bearingInnerDiameter(model) = bearingDimensions(model)[BEARING_INNER_DIAMETER];
+function bearingOuterDiameter(model) = bearingDimensions(model)[BEARING_OUTER_DIAMETER];
 
 module bearing(pos=[0,0,0], angle=[0,0,0], model=SkateBearing, outline=false,
                 material=Steel, sideMaterial=Brass) {
+  // Common bearing names
+  model =
+    model == "Skate" ? 608 :
+    model;
+
   w = bearingWidth(model);
   innerD = outline==false ? bearingInnerDiameter(model) : 0;
   outerD = bearingOuterDiameter(model);
