@@ -1,5 +1,10 @@
-Code that could be integrated:
+Code that could be included:
 * http://github.com/l0b0/qr2scad
 * http://github.com/l0b0/img2scad
 * http://github.com/l0b0/OpenSCAD-Minimizer
-* http://github.com/tbuser/openscad-bitmap
+
+Integrate these better:
+* bitmap
+
+Testing:
+* add tests for openscad functions
