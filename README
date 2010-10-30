@@ -80,5 +80,5 @@ inside the lib dir in a terminal and you should see a part of the tests passing
 and tracebacks for failing tests. It's very simplistic still, but it should test
 that no syntax errors occur at least.
 
-The code is included in openscad_teting.py, and can be imported to be
+The code is included in openscad_testing.py, and can be imported to be
 used in other codebases.
