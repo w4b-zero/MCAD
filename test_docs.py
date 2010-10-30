@@ -8,7 +8,7 @@ def pytest_generate_tests(metafunc):
             metafunc.addcall(funcargs=dict(filename=fpath.basename))
         for fpath in dirpath.visit('*.py'):
             name = fpath.basename
-            if not name.startswith('test_'):
+            if not (name.startswith('test_') or name.startswith('_')):
                 metafunc.addcall(funcargs=dict(filename=fpath.basename))
 
 def test_README(filename):
