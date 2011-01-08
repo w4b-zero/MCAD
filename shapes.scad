@@ -61,7 +61,7 @@ module egg_outline(width=5, length=7){
     union(){
         difference(){
             ellipse(width, 2*length-width, center=true);
-            translate([0, length/2, 0]) square(length, width, center=true);
+            translate([0, length/2, 0]) square(length, center=true);
         }
         circle(r=width/2, center=true);
     }
