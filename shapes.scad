@@ -13,7 +13,7 @@
 //roundedBox(width, height, depth, factor);
 //cone(height, radius);
 //ellipticalCylinder(width, height, depth);
-//ellipsoid(width, height); 
+//ellipsoid(width, height);
 //tube(height, radius, wall);
 //ovalTube(width, height, depth, wall);
 //hexagon(height, depth);
@@ -49,12 +49,12 @@ module ellipticalCylinder(w,h, height, center = false) {
   scale([1, h/w, 1]) cylinder(h=height, r=w, center=center);
 }
 
-module ellipse(w, h) {
-  scale([1, h/w, 1]) circle(r=w, center=center);
+module ellipse(w, h, center = false) {
+  scale([1, h/w, 1]) circle(r=w/2, center=center);
 }
 
-module ellipsoid(w, h) {
-  scale([1, h/w, 1]) sphere(r=w, center=center);
+module ellipsoid(w, h, center = false) {
+  scale([1, h/w, 1]) sphere(r=w/2, center=center);
 }
 
 // wall is wall thickness
@@ -138,3 +138,8 @@ module 12ptStar(size, height) {
 module dislocateBox(w, h, d) {
   translate([0,0,-d/2]) cube([w,h,d]);
 }
+
+//-----------------------
+// Tests
+//module test2D_ellipse(){ellipse(10, 5);}
+module test_ellipsoid(){ellipsoid(10, 5);}
