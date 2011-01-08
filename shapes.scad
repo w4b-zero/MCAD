@@ -9,6 +9,7 @@
 // 2D Shapes
 //ellipse(width, height);
 //egg_outline(width=5, length=7);
+//ngon(sides, radius, center=false);
 
 // 3D Shapes
 //box(width, height, depth);
@@ -16,8 +17,9 @@
 //cone(height, radius);
 //ellipticalCylinder(width, height, depth);
 //ellipsoid(width, height);
-//tube(height, radius, wall);
-//ovalTube(width, height, depth, wall);
+//tube(height, radius, wall, center = false);
+//tube2(height, ID, OD, center = false);
+//ovalTube(width, height, depth, wall, center = false);
 //hexagon(height, depth);
 //octagon(height, depth);
 //dodecagon(height, depth);
@@ -79,11 +81,24 @@ module tube(height, radius, wall, center = false) {
 }
 
 // wall is wall thickness
+module tube2(height, ID, OD, center = false) {
+  difference() {
+    cylinder(h=height, r=OD/2, center=center);
+    cylinder(h=height, r=ID/2, center=center);
+  }
+}
+
+// wall is wall thickness
 module ovalTube(height, rx, ry, wall, center = false) {
   difference() {
     scale([1, ry/rx, 1]) cylinder(h=height, r=rx, center=center);
     scale([(rx-wall)/rx, (ry-wall)/rx, 1]) cylinder(h=height, r=rx, center=center);
   }
+}
+
+// The orientation might change with the implementation of circle...
+module ngon(sides, radius, center=false){
+    rotate([0, 0, 360/sides/2]) circle(r=radius, $fn=sides, center=center);
 }
 
 // size is the XY plane size, height in Z
