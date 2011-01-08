@@ -7,6 +7,7 @@
 
 // 2D Shapes
 //ellipse(width, height);
+//egg_outline(width=5, length=7);
 
 // 3D Shapes
 //box(width, height, depth);
