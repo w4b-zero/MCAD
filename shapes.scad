@@ -57,6 +57,16 @@ module ellipsoid(w, h, center = false) {
   scale([1, h/w, 1]) sphere(r=w/2, center=center);
 }
 
+module egg_outline(width=5, length=7){
+    union(){
+        difference(){
+            ellipse(width, 2*length-width, center=true);
+            translate([0, length/2, 0]) square(length, width, center=true);
+        }
+        circle(r=width/2, center=true);
+    }
+}
+
 // wall is wall thickness
 module tube(height, radius, wall, center = false) {
   difference() {
@@ -143,3 +153,5 @@ module dislocateBox(w, h, d) {
 // Tests
 //module test2D_ellipse(){ellipse(10, 5);}
 module test_ellipsoid(){ellipsoid(10, 5);}
+
+//module test2D_egg_outline(){egg_outline();}
