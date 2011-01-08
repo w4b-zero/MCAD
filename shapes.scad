@@ -1,6 +1,7 @@
 /*
  *  OpenSCAD Shapes Library (www.openscad.org)
  *  Copyright (C) 2009  Catarina Mota
+ *  Copyright (C) 2010  Elmo Mäntynen
  *
  *  License: LGPL 2.1 or later
 */
@@ -34,7 +35,7 @@ module box(width, height, depth,) {
 
 // size is a vector [w, h, d]
 module roundedBox(width, height, depth, radius) {
-  size=[width, height, depth,]
+  size=[width, height, depth,];
   cube(size - [2*radius,0,0], true);
   cube(size - [0,2*radius,0], true);
   for (x = [radius-size[0]/2, -radius+size[0]/2],
