@@ -1,4 +1,4 @@
-OpenSCAD MCAD Library [![](http://stillmaintained.com/user/project.png)](http://stillmaintained.com/user/project)
+OpenSCAD MCAD Library [![](http://stillmaintained.com/elmom/MCAD.png)](http://stillmaintained.com/elmom/MCAD)
 =====================
 
 This library contains components commonly used in designing and moching up
