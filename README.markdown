@@ -26,15 +26,15 @@ do `cd PATH; git checkout master; git pull`. See `git help submodule` for more i
 Currently Provided Tools:
 
 * involute_gears.scad (http://www.thingiverse.com/thing:3575):
-** gear()
-** bevel_gear()
-** bevel_gear_pair()
+    - gear()
+    - bevel_gear()
+    - bevel_gear_pair()
 
 * gears.scad (Old version):
-** gear(number_of_teeth, circular_pitch OR diametrial_pitch, pressure_angle OPTIONAL, clearance OPTIONAL)
+    - gear(number_of_teeth, circular_pitch OR diametrial_pitch, pressure_angle OPTIONAL, clearance OPTIONAL)
 
 * motors.scad:
-** stepper_motor_mount(nema_standard, slide_distance OPTIONAL, mochup OPTIONAL)
+    - stepper_motor_mount(nema_standard, slide_distance OPTIONAL, mochup OPTIONAL)
 
 Other tools (alpha and beta quality):
 * nuts_and_bolts.scad: for creating metric and imperial bolt/nut holes
