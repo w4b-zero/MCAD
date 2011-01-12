@@ -10,31 +10,31 @@ See http://creativecommons.org/licenses/LGPL/2.1/ or the included file, lgpl-2.1
 
 ## Usage ##
 
-You can import these files in your scripts with "use <MCAD/*.scad>", but some
-files include useful constants which will be available with "include <MCAD/*.scad>",
+You can import these files in your scripts with `use <MCAD/*.scad>`, but some
+files include useful constants which will be available with `include <MCAD/*.scad>`,
 which should be safe to use on all included files (ie. no top level code should
 create geometry). (There is a bug/feature that prevents including constants from
 files that "include" other files - see the openscad mailing list archives for more
 details. Since the maintainers aren't very responsive, may have to work around this
 somehow)
 
-If you host your project in git, you can do "git submodule add URL PATH" in your
+If you host your project in git, you can do `git submodule add URL PATH` in your
 repo to import this library as a git submodule for easy usage. Then you need to do
-a "git submodule update --init" after cloning. When you want to update the submodule,
-do "cd PATH; git checkout master; git pull". See "git help submodule"" for more info.
+a `git submodule update --init` after cloning. When you want to update the submodule,
+do `cd PATH; git checkout master; git pull`. See `git help submodule` for more info.
 
 Currently Provided Tools:
 
 * involute_gears.scad (http://www.thingiverse.com/thing:3575):
-    - gear()
-    - bevel_gear()
-    - bevel_gear_pair()
+** gear()
+** bevel_gear()
+** bevel_gear_pair()
 
 * gears.scad (Old version):
-    - gear(number_of_teeth, circular_pitch OR diametrial_pitch, pressure_angle OPTIONAL, clearance OPTIONAL)
+** gear(number_of_teeth, circular_pitch OR diametrial_pitch, pressure_angle OPTIONAL, clearance OPTIONAL)
 
 * motors.scad:
-    - stepper_motor_mount(nema_standard, slide_distance OPTIONAL, mochup OPTIONAL)
+** stepper_motor_mount(nema_standard, slide_distance OPTIONAL, mochup OPTIONAL)
 
 Other tools (alpha and beta quality):
 * nuts_and_bolts.scad: for creating metric and imperial bolt/nut holes
@@ -77,7 +77,7 @@ and stick to it.
 
 ### Testing ###
 I've started a minimal testing infrastucture for OpenSCAD code. It's written in
-python and uses py.test (might be compatible with Nose also). Just type py.test
+python and uses py.test (might be compatible with Nose also). Just type `py.test`
 inside the lib dir in a terminal and you should see a part of the tests passing
 and tracebacks for failing tests. It's very simplistic still, but it should test
 that no syntax errors occur at least.
