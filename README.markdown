@@ -37,6 +37,7 @@ Currently Provided Tools:
     - stepper_motor_mount(nema_standard, slide_distance OPTIONAL, mochup OPTIONAL)
 
 Other tools (alpha and beta quality):
+
 * nuts_and_bolts.scad: for creating metric and imperial bolt/nut holes
 * bearing.scad: standard/custom bearings
 * screw.scad: screws and augers
@@ -47,6 +48,7 @@ Other tools (alpha and beta quality):
 * triangles.scad: simple triangles
 
 Very generally useful functions and constants:
+
 * math.scad: general math functions
 * constants.scad: mathematical constants
 * curves.scad: mathematical functions defining curves
@@ -56,6 +58,7 @@ Very generally useful functions and constants:
 * shapes.scad: simple shapes by Catarina Mota
 
 External utils that generate and and process openscad code:
+
 * openscad_testing.py: testing code, see below
 * openscad_utils.py: code for scraping function names etc.
 
