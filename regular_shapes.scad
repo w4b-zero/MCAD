@@ -76,6 +76,20 @@ module dodecagon(radius)
   reg_polygon(12,radius);
 }
 
+module ellipse(width, height) {
+  scale([1, height/width, 1]) circle(r=width/2);
+}
+
+module egg_outline(width, length){
+    union(){
+        difference(){
+            ellipse(width, 2*length-width);
+            translate([-length/2, 0, 0]) square(length);
+        }
+        circle(r=width/2);
+    }
+}
+
 //3D regular shapes
 
 module cone(height, radius, center = false) 

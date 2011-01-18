@@ -7,8 +7,6 @@
 */
 
 // 2D Shapes
-//ellipse(width, height);
-//egg_outline(width=5, length=7);
 //ngon(sides, radius, center=false);
 
 // 3D Shapes
@@ -54,22 +52,8 @@ module ellipticalCylinder(w,h, height, center = false) {
   scale([1, h/w, 1]) cylinder(h=height, r=w, center=center);
 }
 
-module ellipse(w, h, center = false) {
-  scale([1, h/w, 1]) circle(r=w/2, center=center);
-}
-
 module ellipsoid(w, h, center = false) {
   scale([1, h/w, 1]) sphere(r=w/2, center=center);
-}
-
-module egg_outline(width=5, length=7){
-    union(){
-        difference(){
-            ellipse(width, 2*length-width, center=true);
-            translate([0, length/2, 0]) square(length, center=true);
-        }
-        circle(r=width/2, center=true);
-    }
 }
 
 // wall is wall thickness
