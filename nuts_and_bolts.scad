@@ -1,3 +1,5 @@
+// Copyright 2010 D1plo1d
+
 // This library is dual licensed under the GPL 3.0 and the GNU Lesser General Public License as per http://creativecommons.org/licenses/LGPL/2.1/ .
 
 //testNutsAndBolts();
