@@ -1,4 +1,4 @@
-// License: GPL 2.0
+// This library is dual licensed under the GPL 3.0 and the GNU Lesser General Public License as per http://creativecommons.org/licenses/LGPL/2.1/ .
 
 //testNutsAndBolts();
 
