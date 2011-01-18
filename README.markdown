@@ -1,4 +1,4 @@
-OpenSCAD MCAD Library
+OpenSCAD MCAD Library [![](http://stillmaintained.com/elmom/MCAD.png)](http://stillmaintained.com/elmom/MCAD)
 =====================
 
 This library contains components commonly used in designing and moching up
@@ -8,19 +8,20 @@ changes, however many things are already working.
 This library is licensed under the LGPL 2.1
 See http://creativecommons.org/licenses/LGPL/2.1/ or the included file, lgpl-2.1.txt.
 
-== Usage ==
-You can import these files in your scripts with "use <MCAD/*.scad>", but some
-files include useful constants which will be available with "include <MCAD/*.scad>",
+## Usage ##
+
+You can import these files in your scripts with `use <MCAD/*.scad>`, but some
+files include useful constants which will be available with `include <MCAD/*.scad>`,
 which should be safe to use on all included files (ie. no top level code should
 create geometry). (There is a bug/feature that prevents including constants from
 files that "include" other files - see the openscad mailing list archives for more
 details. Since the maintainers aren't very responsive, may have to work around this
 somehow)
 
-If you host your project in git, you can do "git submodule add URL PATH" in your
+If you host your project in git, you can do `git submodule add URL PATH` in your
 repo to import this library as a git submodule for easy usage. Then you need to do
-a "git submodule update --init" after cloning. When you want to update the submodule,
-do "cd PATH; git checkout master; git pull". See "git help submodule"" for more info.
+a `git submodule update --init` after cloning. When you want to update the submodule,
+do `cd PATH; git checkout master; git pull`. See `git help submodule` for more info.
 
 Currently Provided Tools:
 
@@ -36,6 +37,7 @@ Currently Provided Tools:
     - stepper_motor_mount(nema_standard, slide_distance OPTIONAL, mochup OPTIONAL)
 
 Other tools (alpha and beta quality):
+
 * nuts_and_bolts.scad: for creating metric and imperial bolt/nut holes
 * bearing.scad: standard/custom bearings
 * screw.scad: screws and augers
@@ -46,6 +48,7 @@ Other tools (alpha and beta quality):
 * triangles.scad: simple triangles
 
 Very generally useful functions and constants:
+
 * math.scad: general math functions
 * constants.scad: mathematical constants
 * curves.scad: mathematical functions defining curves
@@ -55,10 +58,12 @@ Very generally useful functions and constants:
 * shapes.scad: simple shapes by Catarina Mota
 
 External utils that generate and and process openscad code:
+
 * openscad_testing.py: testing code, see below
 * openscad_utils.py: code for scraping function names etc.
 
-== Development ==
+## Development ##
+
 You are welcome to fork this project in github and request pulls. I will try to
 accomodate the community as much as possible in this. If for some reason you
 want collaborator access, just ask.
@@ -67,15 +72,15 @@ Github is fun (and easy), but I can include code submissions and other
 improvements directly, and have already included code from various sources
 (thingiverse is great :)
 
-=== Code style ===
+### Code style ###
 I'd prefer to have all included code nicely indented, at least at the block
 level, and no extraneous whitespace. I'm used to indent with four spaces as
 opposed to tabs or other mixes of whitespace, but at least try to choose a style
 and stick to it.
 
-=== Testing ===
+### Testing ###
 I've started a minimal testing infrastucture for OpenSCAD code. It's written in
-python and uses py.test (might be compatible with Nose also). Just type py.test
+python and uses py.test (might be compatible with Nose also). Just type `py.test`
 inside the lib dir in a terminal and you should see a part of the tests passing
 and tracebacks for failing tests. It's very simplistic still, but it should test
 that no syntax errors occur at least.
