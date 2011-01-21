@@ -509,7 +509,7 @@ function rotate_point (rotate, coord) =
 function involute (base_radius, involute_angle) =
 [
 	base_radius*(cos (involute_angle) + involute_angle*pi/180*sin (involute_angle)),
-	base_radius*(sin (involute_angle) - involute_angle*pi/180*cos (involute_angle)),
+	base_radius*(sin (involute_angle) - involute_angle*pi/180*cos (involute_angle))
 ];
 
 

@@ -29,13 +29,13 @@
 //----------------------
 
 // size is a vector [w, h, d]
-module box(width, height, depth,) {
-  cube([width, height, depth,], true);
+module box(width, height, depth) {
+  cube([width, height, depth], true);
 }
 
 // size is a vector [w, h, d]
 module roundedBox(width, height, depth, radius) {
-  size=[width, height, depth,];
+  size=[width, height, depth];
   cube(size - [2*radius,0,0], true);
   cube(size - [0,2*radius,0], true);
   for (x = [radius-size[0]/2, -radius+size[0]/2],

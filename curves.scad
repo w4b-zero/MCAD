@@ -1,9 +1,9 @@
 // Parametric curves, to be used as paths
 // Licensed under the MIT license.
 // © 2010 by Elmo Mäntynen
-
-include <constants.scad>
 use <math.scad>
+include <constants.scad>
+
 
 
 /* A circular helix of radius a and pitch 2πb is described by the following parametrisation:

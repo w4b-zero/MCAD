@@ -92,5 +92,5 @@ module _stepper_motor_mount(
 			%cylinder(r=motor_shaft_diameter/2,h=motor_length+motor_shaft_length--1, center = true);
 		}
 	}
-	};
+	}
 }
