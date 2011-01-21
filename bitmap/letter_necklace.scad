@@ -4,7 +4,7 @@ Elmo Mäntynen <elmo.mantynen@iki.fi>
 LGPL 2.1
 */
 
-include <bitmap.scad>
+use <bitmap.scad>
 
 // change chars array and char_count
 // OpenSCAD has no string or length methods :(
@@ -46,7 +46,7 @@ module letter(char, block_size, height, hole_diameter) {
 	}
 }
 
-matrix = [["O",  "L", "E", "N", "S",], 
+matrix = [["O",  "L", "E", "N", "S"], 
 		[ "Y", "OE", "N", "Y", "T"]];
 
 union() {

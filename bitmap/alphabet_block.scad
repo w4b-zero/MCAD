@@ -5,7 +5,7 @@ http://tonybuser.com
 http://creativecommons.org/licenses/by/3.0/
 */
 
-<bitmap.scad>
+use <bitmap.scad>
 
 // change to any letter
 letter = "A";
