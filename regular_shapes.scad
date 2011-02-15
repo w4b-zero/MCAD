@@ -194,9 +194,13 @@ module triangle_pyramid(radius)
   polyhedron(points=[[-a,-o,-o],[a,-o,-o],[0,radius,-o],[0,0,radius]],triangles=[[0,1,2],[1,2,3],[0,1,3],[0,2,3]]);
 }
 
-module square_pyramid(width,height,depth)
+module square_pyramid(base_x, base_y,height)
 {
-  w=width/2;
-  h=height/2;
-  polyhedron(points=[[-w,-h,0],[-w,h,0],[w,h,0],[w,-h,0],[0,0,depth]],triangles=[[0,1,2],[0,1,4],[0,1,3],[0,2,3]]);
+  w=base_x/2;
+  h=base_y/2;
+  polyhedron(points=[[-w,-h,0],[-w,h,0],[w,h,0],[w,-h,0],[0,0,height]],triangles=[[0,3,2,1], [0,1,4], [1,2,4], [2,3,4], [3,0,4]]);
 }
+
+// Tests:
+
+test_square_pyramid(){square_pyramid(10, 20, 30);}
