@@ -1,0 +1,3 @@
+[submodule "SolidPython"]
+	path = SolidPython
+	url = git@github.com:SolidCode/SolidPython.git
