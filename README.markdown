@@ -22,8 +22,13 @@ If you host your project in git, you can do `git submodule add URL PATH` in your
 repo to import this library as a git submodule for easy usage. Then you need to do
 a `git submodule update --init` after cloning. When you want to update the submodule,
 do `cd PATH; git checkout master; git pull`. See `git help submodule` for more info.
+"./get_submodules.py" is shortcut that initializes and updates submodules.
 
 Currently Provided Tools:
+
+* regular_shapes.scad
+    - regular polygons, ie. 2D
+    - regular polyhedrons, ie. 3D
 
 * involute_gears.scad (http://www.thingiverse.com/thing:3575):
     - gear()
@@ -55,12 +60,14 @@ Very generally useful functions and constants:
 * units.scad: easy metric units
 * utilities.scad: geometric funtions and misc. useful stuff
 * teardrop.scad (http://www.thingiverse.com/thing:3457): parametric teardrop module
-* shapes.scad: simple shapes by Catarina Mota
+* shapes.scad: DEPRECATED simple shapes by Catarina Mota
+* polyholes.scad: holes that should come out well when printed
 
 External utils that generate and and process openscad code:
 
 * openscad_testing.py: testing code, see below
 * openscad_utils.py: code for scraping function names etc.
+* SolidPython: An external Python library for solid cad
 
 ## Development ##
 
