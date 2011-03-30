@@ -23,6 +23,16 @@ function angle(v) = angleOfNormalizedVector(normalized(v));
 
 function angleBetweenTwoPoints(a, b) = angle(normalized(b-a));
 
+// TODO check that the axis parameter works as intended
+// Duplicate everything $no of times around an $axis, for $angle/360 rounds
+module spin(no, angle=360, axis=[0, 0, 1]){
+    for (i = [0:no]){
+        rotate(normalized(axis)*angle*i/no) union(){
+            for (i = [0 : $children-1]) child(i);
+        }
+    }
+}
+ 
 
 CENTER = 0;
 LEFT = -0.5;

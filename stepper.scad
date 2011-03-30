@@ -73,7 +73,7 @@ Nema08 = [
                 [NemaBackAxleLength, 9.9*mm],
                 [NemaAxleFlatDepth, -1*mm],
                 [NemaAxleFlatLengthFront, 0*mm],
-                [NemaAxleFlatLengthBack, 0*mm],
+                [NemaAxleFlatLengthBack, 0*mm]
          ];
 
 Nema11 = [
@@ -95,7 +95,7 @@ Nema11 = [
                 [NemaBackAxleLength, 10*mm],
                 [NemaAxleFlatDepth, 0.5*mm],
                 [NemaAxleFlatLengthFront, 10*mm],
-                [NemaAxleFlatLengthBack, 9*mm],
+                [NemaAxleFlatLengthBack, 9*mm]
          ];
 
 Nema14 = [
@@ -117,7 +117,7 @@ Nema14 = [
                 [NemaBackAxleLength, 10*mm],
                 [NemaAxleFlatDepth, 0.5*mm],
                 [NemaAxleFlatLengthFront, 15*mm],
-                [NemaAxleFlatLengthBack, 9*mm],
+                [NemaAxleFlatLengthBack, 9*mm]
          ];
 
 Nema17 = [
@@ -139,7 +139,7 @@ Nema17 = [
                 [NemaBackAxleLength, 15*mm],
                 [NemaAxleFlatDepth, 0.5*mm],
                 [NemaAxleFlatLengthFront, 15*mm],
-                [NemaAxleFlatLengthBack, 14*mm],
+                [NemaAxleFlatLengthBack, 14*mm]
          ];
 
 Nema23 = [
@@ -161,7 +161,7 @@ Nema23 = [
                 [NemaBackAxleLength, 15.60*mm],
                 [NemaAxleFlatDepth, 0.5*mm],
                 [NemaAxleFlatLengthFront, 16*mm],
-                [NemaAxleFlatLengthBack, 14*mm],
+                [NemaAxleFlatLengthBack, 14*mm]
          ];
 
 Nema34 = [
@@ -183,7 +183,7 @@ Nema34 = [
                 [NemaBackAxleLength, 34*mm],
                 [NemaAxleFlatDepth, 1.20*mm],
                 [NemaAxleFlatLengthFront, 25*mm],
-                [NemaAxleFlatLengthBack, 25*mm],
+                [NemaAxleFlatLengthBack, 25*mm]
          ];
 
 

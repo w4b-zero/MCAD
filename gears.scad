@@ -1,3 +1,7 @@
+// Copyright 2010 D1plo1d
+// LGPL 2.1
+
+
 //test_involute_curve();
 //test_gears();
 //demo_3d_gears();
