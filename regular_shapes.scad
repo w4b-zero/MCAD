@@ -29,7 +29,7 @@ module triangle(radius)
 
 module reg_polygon(sides,radius)
 {
-  function dia(r) = sqrt(pow(r*2,2)/2);  //sqrt(r*2^2/2) if only we had an exponention op
+  function dia(r) = sqrt(pow(r*2,2)/2);  //sqrt((r*2^2)/2) if only we had an exponention op
   if(sides<2) square([radius,0]);
   if(sides==3) triangle(radius);
   if(sides==4) square([dia(radius),dia(radius)],center=true);
@@ -151,14 +151,29 @@ module hexagon_prism(height,radius)
   linear_extrude(height=height) hexagon(radius);
 }
 
+module hexagon_tube(height,radius,wall)
+{
+ tubify(radius,wall) hexagon_prism(height,radius);
+}
+
 module heptagon_prism(height,radius) 
 {
   linear_extrude(height=height) heptagon(radius);
 }
 
+module heptagon_tube(height,radius,wall)
+{
+ tubify(radius,wall) heptagon_prism(height,radius);
+}
+
 module octagon_prism(height,radius) 
 {
   linear_extrude(height=height) octagon(radius);  
+}
+
+module octagon_tube(height,radius,wall)
+{
+ tubify(radius,wall) octagon_prism(height,radius);
 }
 
 module nonagon_prism(height,radius)
