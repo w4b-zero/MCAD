@@ -1,6 +1,6 @@
 /*
  *  OpenSCAD Shapes Library (www.openscad.org)
- *  Copyright (C) 2010-2011  Giles Bathgate
+ *  Copyright (C) 2010-2011  Giles Bathgate, Elmo Mäntynen
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -80,9 +80,10 @@ module ellipse(width, height) {
   scale([1, height/width, 1]) circle(r=width/2);
 }
 
+// The ratio of lenght and width is about 1.39 for a real egg
 module egg_outline(width, length){
-    union(){
-        difference(){
+    translate([0, width/2, 0]) union(){
+        rotate([0, 0, 180]) difference(){
             ellipse(width, 2*length-width);
             translate([-length/2, 0, 0]) square(length);
         }
@@ -214,6 +215,14 @@ module square_pyramid(base_x, base_y,height)
   w=base_x/2;
   h=base_y/2;
   polyhedron(points=[[-w,-h,0],[-w,h,0],[w,h,0],[w,-h,0],[0,0,height]],triangles=[[0,3,2,1], [0,1,4], [1,2,4], [2,3,4], [3,0,4]]);
+}
+
+module egg(width, lenght){
+    rotate_extrude()
+        difference(){
+            egg_outline(width, lenght);
+            translate([-lenght, 0, 0]) cube(2*lenght, center=true);
+        }
 }
 
 // Tests:
