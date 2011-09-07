@@ -203,6 +203,17 @@ module torus(outerRadius, innerRadius)
   rotate_extrude() translate([innerRadius+r,0,0]) circle(r);	
 }
 
+module torus2(r1, r2)
+{
+  rotate_extrude() translate([r1,0,0]) circle(r2);
+}
+
+module oval_torus(inner_radius, thickness=[0, 0])
+{
+  rotate_extrude() translate([inner_radius+thickness[0]/2,0,0]) ellipse(width=thickness[0], height=thickness[1]);
+}
+
+
 module triangle_pyramid(radius)
 {
   o=radius/2;		//equivalent to radius*sin(30)
