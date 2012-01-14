@@ -142,8 +142,8 @@ module post(height) {
 module reinforcement(height) {
 	union() {
 		translate([0,0,height*block_height/2]) union() {
-			cube([reinforcing_width,knob_spacing+knob_diameter+wall_thickness/2,height*block_height-roof_thickness/2],center=true);
-			rotate(v=[0,0,1],a=90) cube([reinforcing_width,knob_spacing+knob_diameter+wall_thickness/2,height*block_height-roof_thickness/2], center=true);
+			cube([reinforcing_width,knob_spacing+knob_diameter+wall_thickness/2,height*block_height],center=true);
+			rotate(v=[0,0,1],a=90) cube([reinforcing_width,knob_spacing+knob_diameter+wall_thickness/2,height*block_height], center=true);
 		}
 	}
 }
