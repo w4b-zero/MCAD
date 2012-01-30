@@ -15,7 +15,9 @@ function length2(a) = sqrt( a[0]*a[0] + a[1]*a[1] );
 
 function normalized(a) = a / (max(distance([0,0,0], a), 0.00001));
 
-
+function normalized_axis(a) = a == "x" ? [1, 0, 0]:
+                   a == "y" ? [0, 1, 0]:
+                   a == "z" ? [0, 0, 1]: normalized(a);
 
 function angleOfNormalizedVector(n) = [0, -atan2(n[2], length2([n[0], n[1]])), atan2(n[1], n[0]) ];
 
@@ -23,16 +25,6 @@ function angle(v) = angleOfNormalizedVector(normalized(v));
 
 function angleBetweenTwoPoints(a, b) = angle(normalized(b-a));
 
-// TODO check that the axis parameter works as intended
-// Duplicate everything $no of times around an $axis, for $angle/360 rounds
-module spin(no, angle=360, axis=[0, 0, 1]){
-    for (i = [1:no]){
-        rotate(normalized(axis)*angle*no/i) union(){
-            for (i = [0 : $children-1]) child(i);
-        }
-    }
-}
- 
 
 CENTER = 0;
 LEFT = -0.5;
