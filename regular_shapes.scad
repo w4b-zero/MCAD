@@ -76,6 +76,13 @@ module dodecagon(radius)
   reg_polygon(12,radius);
 }
 
+module ring(inside_diameter, thickness){
+  difference(){
+    circle(r=(inside_diameter+thickness*2)/2);
+    circle(r=inside_diameter/2);
+  }
+}
+
 module ellipse(width, height) {
   scale([1, height/width, 1]) circle(r=width/2);
 }
@@ -93,17 +100,17 @@ module egg_outline(width, length){
 
 //3D regular shapes
 
-module cone(height, radius, center = false) 
+module cone(height, radius, center = false)
 {
   cylinder(height, radius, 0, center);
 }
 
-module oval_prism(height, rx, ry, center = false) 
+module oval_prism(height, rx, ry, center = false)
 {
   scale([1, rx/ry, 1]) cylinder(h=height, r=ry, center=center);
 }
 
-module oval_tube(height, rx, ry, wall, center = false) 
+module oval_tube(height, rx, ry, wall, center = false)
 {
   difference() {
     scale([1, ry/rx, 1]) cylinder(h=height, r=rx, center=center);
@@ -111,7 +118,7 @@ module oval_tube(height, rx, ry, wall, center = false)
   }
 }
 
-module cylinder_tube(height, radius, wall, center = false) 
+module cylinder_tube(height, radius, wall, center = false)
 {
     tubify(radius,wall)
     cylinder(h=height, r=radius, center=center);
@@ -144,10 +151,10 @@ module pentagon_prism(height,radius)
 
 module pentagon_tube(height,radius,wall)
 {
- tubify(radius,wall) pentagon_prism(height,radius);	
+ tubify(radius,wall) pentagon_prism(height,radius);
 }
 
-module hexagon_prism(height,radius) 
+module hexagon_prism(height,radius)
 {
   linear_extrude(height=height) hexagon(radius);
 }
@@ -157,7 +164,7 @@ module hexagon_tube(height,radius,wall)
  tubify(radius,wall) hexagon_prism(height,radius);
 }
 
-module heptagon_prism(height,radius) 
+module heptagon_prism(height,radius)
 {
   linear_extrude(height=height) heptagon(radius);
 }
@@ -167,9 +174,9 @@ module heptagon_tube(height,radius,wall)
  tubify(radius,wall) heptagon_prism(height,radius);
 }
 
-module octagon_prism(height,radius) 
+module octagon_prism(height,radius)
 {
-  linear_extrude(height=height) octagon(radius);  
+  linear_extrude(height=height) octagon(radius);
 }
 
 module octagon_tube(height,radius,wall)
@@ -179,28 +186,28 @@ module octagon_tube(height,radius,wall)
 
 module nonagon_prism(height,radius)
 {
-  linear_extrude(height=height) nonagon(radius); 
+  linear_extrude(height=height) nonagon(radius);
 }
 
 module decagon_prism(height,radius)
 {
-  linear_extrude(height=height) decagon(radius); 
+  linear_extrude(height=height) decagon(radius);
 }
 
 module hendecagon_prism(height,radius)
 {
-  linear_extrude(height=height) hendecagon(radius); 
+  linear_extrude(height=height) hendecagon(radius);
 }
 
 module dodecagon_prism(height,radius)
 {
-  linear_extrude(height=height) dodecagon(radius); 
+  linear_extrude(height=height) dodecagon(radius);
 }
 
 module torus(outerRadius, innerRadius)
 {
   r=(outerRadius-innerRadius)/2;
-  rotate_extrude() translate([innerRadius+r,0,0]) circle(r);	
+  rotate_extrude() translate([innerRadius+r,0,0]) circle(r);
 }
 
 module torus2(r1, r2)
