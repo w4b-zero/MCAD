@@ -1,6 +1,37 @@
 // Font Functions
 // Encoding from http://en.wikipedia.org/wiki/ASCII
 
+module outline_2d(outline,points,paths,width=0.1,resolution=8) {
+  if(outline && resolution > 4) {
+    for(j=[0:len(paths)-1]) union() {
+      for(i=[1:len(paths[j])-1]) hull() {
+            translate(points[paths[j][i-1]]) circle($fn=resolution,r=width/2);
+            translate(points[paths[j][i]]) circle($fn=resolution,r=width/2);
+      }
+      hull() {
+            translate(points[paths[j][len(paths[j])-1]]) circle($fn=resolution,r=width/2);
+            translate(points[paths[j][0]]) circle($fn=resolution,r=width/2);
+      }
+    }
+  } else {
+      polygon(points=points,paths=paths);
+  }
+}
+
+module bold_2d(bold,width=0.2,resolution=8) {
+  for(j=[0:$children-1]) {
+    if(bold) {
+      union() {
+            child(j);
+        for(i=[0:resolution-1]) assign(dx=width*cos(360*i/resolution),dy=width*sin(360*i/resolution))
+              translate([dx,dy]) child(j);
+      }
+    } else {
+      child(j);
+    }
+  }
+}
+
 function 8bit_polyfont(dx=0.1,dy=0.1) = [
   [8,8,0,"fixed"],["Decimal Byte","Caret Notation","Character Escape Code","Abbreviation","Name","Bound Box","[points,paths]"]
   ,[
