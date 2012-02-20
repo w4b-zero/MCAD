@@ -529,6 +529,7 @@ function 8bit_polyfont(dx=0.1,dy=0.1) = [
 //
 // Additional References:
 //    http://www.loc.gov/nls/specs/800.pdf
+//    http://www.tiresias.org/research/reports/braille_cell.htm
 module braille_ascii_spec800(inString,dot_backing=true,cell_backing=false,justify=1,align=-1,dot_h=0.48,dot_d=1.44,dot_spacing=2.340,cell_d2d_spacing=6.2, line_d2d_spacing=10.0, echo_translate=true) {
   // justify:
   //  -1 : left side
@@ -543,14 +544,16 @@ module braille_ascii_spec800(inString,dot_backing=true,cell_backing=false,justif
   x_shift=thisFont[0][0];
   y_shift=thisFont[0][1];
   theseIndicies=search(inString,thisFont[2],1,1);
-  for( i=[0:len(theseIndicies)-1]) translate([i*x_shift,-y_shift*(align+1)/2]) assign(dotPattern=thisFont[2][theseIndicies[i]][6]) {
-    if(dot_backing) translate([cell_d2d_spacing/2-dot_d/2,line_d2d_spacing/2-dot_d/2,-dot_h]) 
-	cube(size=[x_shift-cell_d2d_spacing+dot_d,y_shift-line_d2d_spacing+dot_d,dot_h],center=false);
+  for( i=[0:len(theseIndicies)-1]) translate([i*x_shift-(1-justify)*x_shift*len(theseIndicies)/2,-y_shift*(align+1)/2]) 
+	assign(dotPattern=thisFont[2][theseIndicies[i]][6]) {
+    if(dot_backing) translate([cell_d2d_spacing/2-dot_spacing/2-dot_d/2,line_d2d_spacing/2-dot_spacing-dot_d/2,-dot_h]) 
+	cube(size=[dot_spacing+dot_d,2*dot_spacing+dot_d,dot_h],center=false);
     if(cell_backing) translate([0,0,-dot_h]) 
 	cube(size=[x_shift,y_shift,dot_h],center=false);
     if(echo_translate) echo(str(inString[i]," maps to '",thisFont[2][theseIndicies[i]][4],"'"));
     for(dotIndex=dotPattern) {
-      translate([cell_d2d_spacing/2+floor((dotIndex-1)/3)*dot_spacing, line_d2d_spacing/2+(2-(dotIndex-1)%3)*dot_spacing])
+      translate([cell_d2d_spacing/2-dot_spacing/2+floor((dotIndex-1)/3)*dot_spacing
+		, line_d2d_spacing/2-dot_spacing+(2-(dotIndex-1)%3)*dot_spacing])
         scale([dot_d,dot_d,2*dot_h]) sphere($fn=8,r=0.5);
     }
   }
@@ -562,7 +565,7 @@ module braille_ascii_spec800(inString,dot_backing=true,cell_backing=false,justif
 //  2 5
 //  3 6
 function braille_ascii_font(dot_h=0.48,dot_d=1.44,dot_spacing=2.340,cell_d2d_spacing=6.2,line_d2d_spacing=10.0) = [
-  [2*dot_spacing+cell_d2d_spacing,3*dot_spacing+line_d2d_spacing,0,"bump"],["Decimal Byte","Caret Notation","Character Escape Code","Abbreviation","Name","Bound Box","[bump_list]"]
+  [cell_d2d_spacing,line_d2d_spacing,0,"bump"],["Decimal Byte","Caret Notation","Character Escape Code","Abbreviation","Name","Bound Box","[bump_list]"]
   ,[
    [  0,"^@","\0","NUL","Null character",[[0,0],[2,3]],[]]
   ,[  1,"^A","",  "SOH","Start of Header",[[0,0],[2,3]],[]]
