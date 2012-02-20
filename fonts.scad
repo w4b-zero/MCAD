@@ -32,6 +32,37 @@ module bold_2d(bold,width=0.2,resolution=8) {
   }
 }
 
+module polytext(charstring,size,font,line=0,justify=1
+	,bold=false,bold_width=0.2,bold_resolution=8
+	,underline=false,underline_start=[0,0],underline_width=1.0
+	,outline=false,outline_width=0.2,outline_resolution=8
+	,strike=false,strike_start=[-0.5,0],strike_width=1.0
+	) {
+  line_length=len(charstring)*font[0][0];
+  line_shift=-line_length/2+justify*line_length/2;
+  char_width=font[0][0];
+  char_height=font[0][1];
+  char_thickness=font[0][2];
+  char_index_map=search(charstring,font[2],1,1);
+  for(i=[0:len(char_index_map)-1]) assign( thisCharIndex=char_index_map[i], x_pos= i*char_width*size/char_width+line_shift) {
+    translate([x_pos,line*char_height*size/char_height]) {
+      if(char_thickness==0)
+        bold_2d(bold,width=bold_width,resolution=bold_resolution)
+          render() outline_2d(outline,points=font[2][thisCharIndex][6][0],paths=font[2][thisCharIndex][6][1]
+              ,width=outline_width,resolution=outline_resolution);
+      if( charstring[i] != " " ) {
+        if(underline) translate(underline_start)
+	  square(size=[char_width-2*underline_start[0],underline_width],center=false);
+        if(strike) translate([strike_start[0],char_height/2+strike_start[1]])
+          square(size=[char_width-2*strike_start[0],strike_width],center=false);
+      }
+      if(char_thickness>0)
+          polyhedron(points=font[2][thisCharIndex][6][0],triangles=font[2][thisCharIndex][6][1]);
+    }
+  }
+}
+
+
 function 8bit_polyfont(dx=0.1,dy=0.1) = [
   [8,8,0,"fixed"],["Decimal Byte","Caret Notation","Character Escape Code","Abbreviation","Name","Bound Box","[points,paths]"]
   ,[
