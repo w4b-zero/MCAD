@@ -514,13 +514,55 @@ function 8bit_polyfont(dx=0.1,dy=0.1) = [
   ,[127,"^?","",  "DEL","Delete",[[0,0],[8,8]],[]]
   ] ];
 
+// From http://www.brailleauthority.org/sizespacingofbraille/
+//
+//   Section 3.2 of Specification 800 (Braille Books and Pamphlets) February 2008 reads as follows:
+//     Size and Spacing
+//     3.2.1	The nominal height of braille dots shall be 0.019 inches [0.48 mm] and shall be uniform within any given transcription.
+//     3.2.2	The nominal base diameter of braille dots shall be 0.057 inches [1.44 mm].
+//     3.2.3	Cell spacing of dots shall conform to the following:
+//     3.2.3.1	The nominal distance from center to center of adjacent dots (horizontally or vertically, but not diagonally)
+//              in the same cell shall be 0.092 inches [2.340 mm].
+//     3.2.3.2	The nominal distance from center to center of corresponding dots in adjacent cells shall be 0.245 inches [6.2 mm].
+//     3.2.4    The nominal line spacing of braille cells from center to center of nearest corresponding dots in adjacent lines shall
+//              be 0.400 inches [1.000 cm].
+//
+// Additional References:
+//    http://www.loc.gov/nls/specs/800.pdf
+module braille_ascii_spec800(inString,dot_backing=true,cell_backing=false,justify=1,align=-1,dot_h=0.48,dot_d=1.44,dot_spacing=2.340,cell_d2d_spacing=6.2, line_d2d_spacing=10.0, echo_translate=true) {
+  // justify:
+  //  -1 : left side
+  //   0 : center
+  //   1 : right side (default)
+  // align:
+  //  -1 : bottom braille cell edge - shift up (default)
+  //   0 : center braille cell
+  //   1 : top braille cell edge - shift down
+  thisFont=braille_ascii_font(dot_h=dot_h,dot_d=dot_d,dot_spacing=dot_spacing
+	,cell_d2d_spacing=cell_d2d_spacing,line_d2d_spacing=line_d2d_spacing);
+  x_shift=thisFont[0][0];
+  y_shift=thisFont[0][1];
+  theseIndicies=search(inString,thisFont[2],1,1);
+  for( i=[0:len(theseIndicies)-1]) translate([i*x_shift,-y_shift*(align+1)/2]) assign(dotPattern=thisFont[2][theseIndicies[i]][6]) {
+    if(dot_backing) translate([cell_d2d_spacing/2-dot_d/2,line_d2d_spacing/2-dot_d/2,-dot_h]) 
+	cube(size=[x_shift-cell_d2d_spacing+dot_d,y_shift-line_d2d_spacing+dot_d,dot_h],center=false);
+    if(cell_backing) translate([0,0,-dot_h]) 
+	cube(size=[x_shift,y_shift,dot_h],center=false);
+    if(echo_translate) echo(str(inString[i]," maps to '",thisFont[2][theseIndicies[i]][4],"'"));
+    for(dotIndex=dotPattern) {
+      translate([cell_d2d_spacing/2+floor((dotIndex-1)/3)*dot_spacing, line_d2d_spacing/2+(2-(dotIndex-1)%3)*dot_spacing])
+        scale([dot_d,dot_d,2*dot_h]) sphere($fn=8,r=0.5);
+    }
+  }
+}
+
 // Encoding from http://en.wikipedia.org/wiki/Braille_ASCII
 // Dot Pattern:
-//  1 2
-//  3 4
-//  5 6
-function braille_ascii_font(dx=0.1,dy=0.1) = [
-  [2,3,0,"fixed"],["Decimal Byte","Caret Notation","Character Escape Code","Abbreviation","Name","Bound Box","[points,paths]"]
+//  1 4
+//  2 5
+//  3 6
+function braille_ascii_font(dot_h=0.48,dot_d=1.44,dot_spacing=2.340,cell_d2d_spacing=6.2,line_d2d_spacing=10.0) = [
+  [2*dot_spacing+cell_d2d_spacing,3*dot_spacing+line_d2d_spacing,0,"bump"],["Decimal Byte","Caret Notation","Character Escape Code","Abbreviation","Name","Bound Box","[bump_list]"]
   ,[
    [  0,"^@","\0","NUL","Null character",[[0,0],[2,3]],[]]
   ,[  1,"^A","",  "SOH","Start of Header",[[0,0],[2,3]],[]]
@@ -554,7 +596,7 @@ function braille_ascii_font(dx=0.1,dy=0.1) = [
   ,[ 29,"^]","",  "GS", "Group Separator",[[0,0],[2,3]],[]]
   ,[ 30,"^^","",  "RS", "Record Separator",[[0,0],[2,3]],[]]
   ,[ 31,"^_","",  "US", "Unit Separator",[[0,0],[2,3]],[]]
-  ,[ 32," "," ",  "", "Space",[[0,0],[2,8]],[]]
+  ,[ 32," "," ",  "", "Space",[[0,0],[2,3]],[]]
   ,[ 33,"!","!",  "", "the",[[0,0],[2,3]],[ 2,3,4,6 ]]
   ,[ 34,"\"","\"","", "(contraction)",[[0,0],[2,3]],[ 5 ]]
   ,[ 35,"#","#",  "", "(number prefix)",[[0,0],[2,3]],[ 3,4,5,6 ]]
