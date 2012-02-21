@@ -5,25 +5,62 @@
  * Dual licenced under Creative Commons Attribution-Share Alike 3.0 and LGPL2 or later
  */
 
-include <units.scad>
+//include <units.scad>
 
-function distance(a, b) = sqrt( (a[0] - b[0])*(a[0] - b[0]) +
+
+/******************** Disance Poins ******************************/
+function distance3D(a,b) =sqrt( (a[0] - b[0])*(a[0] - b[0]) +
                                 (a[1] - b[1])*(a[1] - b[1]) +
                                 (a[2] - b[2])*(a[2] - b[2]) );
+//Obsolet
+function distance(a, b) = distance3D(a,b);
 
-function length2(a) = sqrt( a[0]*a[0] + a[1]*a[1] );
+function distance2D(a,b) = sqrt( (a[0] - b[0])*(a[0] - b[0]) +
+                                (a[1] - b[1])*(a[1] - b[1]));
+								
+function distance1D(a,b) = sqrt(a*a+b*b);
+//Obsolet
+function length2(a) = distance1D(a[0],a[1]);
 
-function normalized(a) = a / (max(distance([0,0,0], a), 0.00001));
+
+/************************ vector *************************/
+function normalized(a) = a / (max(distance3D([0,0,0], a), 0.00001));
 
 function normalized_axis(a) = a == "x" ? [1, 0, 0]:
                    a == "y" ? [0, 1, 0]:
                    a == "z" ? [0, 0, 1]: normalized(a);
 
-function angleOfNormalizedVector(n) = [0, -atan2(n[2], length2([n[0], n[1]])), atan2(n[1], n[0]) ];
+function angleOfNormalizedVector(n) = [0, -atan2(n[2], distance1D([n[0], n[1]])), atan2(n[1], n[0]) ];
 
 function angle(v) = angleOfNormalizedVector(normalized(v));
 
 function angleBetweenTwoPoints(a, b) = angle(normalized(b-a));
+
+function _angleVectore2D(a) = atan2(a[0],a[1]);
+function angle_betweentTwoPoints2D (a,b) = _angleVectore2D(b-a);
+
+
+/********************** Circel ***************************/
+
+function circel_area(r) = PI * r * r;
+
+function circel_radius3Points(a,b,c) = (distance2D(a,b) * distance2D(b,c) * distance2D(c,a)) / (4 * triangle_area3Points(a,b,c));
+
+function circel_radius3lengths(a,b,c) = (a*b*c) / (4 * triangle_area3lengths(a,b,c));
+
+
+/********************** triangle **************************/
+//Satz des Heron
+function triangle_area3lengths(a,b,c) = sqrt((a+b+c)*(a+b-c)*(b+c-a)*(c+a-b))/4;
+
+function triangle_area3Points(a,b,c) = triangle_area3lengths(distance2D(a,b),distance2D(b,c),distance2D(c,a));
+
+
+
+/************************** coordinate systems translation ****/
+//[radius,phi] <=> [x,y]
+function conv2D_cartesian2polar(x) = [ distance1D(x[0],x[1]) , atan2(x[1],x[0]) ];
+function conv2D_polar2cartesian(x) = [ x[0]*cos(x[1]) , x[0]*sin(x[1]) ];
 
 
 CENTER = 0;
@@ -37,13 +74,13 @@ ExtendedCap =0.5;
 CutCap =-0.5;
 
 
-module fromTo(from=[0,0,0], to=[1*m,0,0], size=[1*cm, 1*cm], align=[CENTER, CENTER], material=[0.5, 0.5, 0.5], name="", endExtras=[0,0], endCaps=[FlatCap, FlatCap], rotation=[0,0,0], printString=true) {
+module fromTo(from=[0,0,0], to=[1,0,0], size=[1, 1], align=[CENTER, CENTER], material=[0.5, 0.5, 0.5], name="", endExtras=[0,0], endCaps=[FlatCap, FlatCap], rotation=[0,0,0], printString=true) {
 
   angle = angleBetweenTwoPoints(from, to);
   length = distance(from, to) + endCaps[0]*size[0] + endCaps[1]*size[0] + endExtras[0] + endExtras[1];
 
   if (length > 0) {
-    if (printString) echo(str("  " ,name, " ", size[0], "mm x ", size[1], "mm, length ",length,"mm"));
+    if (printString) echo(str( "  " ,name, " ", size[0], "mm x ", size[1], "mm, length ", length, "mm"));
 
     color(material)
       translate(from)
