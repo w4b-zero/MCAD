@@ -26,4 +26,4 @@ M8 = 8*mm;
 
 // When a small distance is needed to overlap shapes for boolean cutting, etc.
 epsilon = 0.01*mm;
-
+OS = epsilon;  // Over size
