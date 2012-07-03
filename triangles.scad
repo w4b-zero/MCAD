@@ -56,7 +56,7 @@ module test_triangles()
     // Generate a bunch of triangles by angle
     for (i = [1:85/5])
     {
-        translate([i*7, 20, i*7])
+        translate([i*7, 22, i*7])
         {
             a_triangle(i*5, 10, 5);
         }

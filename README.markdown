@@ -51,6 +51,7 @@ Other tools (alpha and beta quality):
 * servos.scad: servo outlines
 * boxes.scad: box with rounded corners
 * triangles.scad: simple triangles
+* 3d_triangle.scad: more advanced triangles
 
 Very generally useful functions and constants:
 

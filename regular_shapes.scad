@@ -1,6 +1,6 @@
 /*
  *  OpenSCAD Shapes Library (www.openscad.org)
- *  Copyright (C) 2010-2011  Giles Bathgate
+ *  Copyright (C) 2010-2011  Giles Bathgate, Elmo Mäntynen
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ module triangle(radius)
 
 module reg_polygon(sides,radius)
 {
-  function dia(r) = sqrt(pow(r*2,2)/2);  //sqrt(r*2^2/2) if only we had an exponention op
+  function dia(r) = sqrt(pow(r*2,2)/2);  //sqrt((r*2^2)/2) if only we had an exponention op
   if(sides<2) square([radius,0]);
   if(sides==3) triangle(radius);
   if(sides==4) square([dia(radius),dia(radius)],center=true);
@@ -76,13 +76,21 @@ module dodecagon(radius)
   reg_polygon(12,radius);
 }
 
+module ring(inside_diameter, thickness){
+  difference(){
+    circle(r=(inside_diameter+thickness*2)/2);
+    circle(r=inside_diameter/2);
+  }
+}
+
 module ellipse(width, height) {
   scale([1, height/width, 1]) circle(r=width/2);
 }
 
+// The ratio of lenght and width is about 1.39 for a real egg
 module egg_outline(width, length){
-    union(){
-        difference(){
+    translate([0, width/2, 0]) union(){
+        rotate([0, 0, 180]) difference(){
             ellipse(width, 2*length-width);
             translate([-length/2, 0, 0]) square(length);
         }
@@ -92,17 +100,17 @@ module egg_outline(width, length){
 
 //3D regular shapes
 
-module cone(height, radius, center = false) 
+module cone(height, radius, center = false)
 {
   cylinder(height, radius, 0, center);
 }
 
-module oval_prism(height, rx, ry, center = false) 
+module oval_prism(height, rx, ry, center = false)
 {
   scale([1, rx/ry, 1]) cylinder(h=height, r=ry, center=center);
 }
 
-module oval_tube(height, rx, ry, wall, center = false) 
+module oval_tube(height, rx, ry, wall, center = false)
 {
   difference() {
     scale([1, ry/rx, 1]) cylinder(h=height, r=rx, center=center);
@@ -110,7 +118,7 @@ module oval_tube(height, rx, ry, wall, center = false)
   }
 }
 
-module cylinder_tube(height, radius, wall, center = false) 
+module cylinder_tube(height, radius, wall, center = false)
 {
     tubify(radius,wall)
     cylinder(h=height, r=radius, center=center);
@@ -143,49 +151,75 @@ module pentagon_prism(height,radius)
 
 module pentagon_tube(height,radius,wall)
 {
- tubify(radius,wall) pentagon_prism(height,radius);	
+ tubify(radius,wall) pentagon_prism(height,radius);
 }
 
-module hexagon_prism(height,radius) 
+module hexagon_prism(height,radius)
 {
   linear_extrude(height=height) hexagon(radius);
 }
 
-module heptagon_prism(height,radius) 
+module hexagon_tube(height,radius,wall)
+{
+ tubify(radius,wall) hexagon_prism(height,radius);
+}
+
+module heptagon_prism(height,radius)
 {
   linear_extrude(height=height) heptagon(radius);
 }
 
-module octagon_prism(height,radius) 
+module heptagon_tube(height,radius,wall)
 {
-  linear_extrude(height=height) octagon(radius);  
+ tubify(radius,wall) heptagon_prism(height,radius);
+}
+
+module octagon_prism(height,radius)
+{
+  linear_extrude(height=height) octagon(radius);
+}
+
+module octagon_tube(height,radius,wall)
+{
+ tubify(radius,wall) octagon_prism(height,radius);
 }
 
 module nonagon_prism(height,radius)
 {
-  linear_extrude(height=height) nonagon(radius); 
+  linear_extrude(height=height) nonagon(radius);
 }
 
 module decagon_prism(height,radius)
 {
-  linear_extrude(height=height) decagon(radius); 
+  linear_extrude(height=height) decagon(radius);
 }
 
 module hendecagon_prism(height,radius)
 {
-  linear_extrude(height=height) hendecagon(radius); 
+  linear_extrude(height=height) hendecagon(radius);
 }
 
 module dodecagon_prism(height,radius)
 {
-  linear_extrude(height=height) dodecagon(radius); 
+  linear_extrude(height=height) dodecagon(radius);
 }
 
 module torus(outerRadius, innerRadius)
 {
   r=(outerRadius-innerRadius)/2;
-  rotate_extrude() translate([innerRadius+r,0,0]) circle(r);	
+  rotate_extrude() translate([innerRadius+r,0,0]) circle(r);
 }
+
+module torus2(r1, r2)
+{
+  rotate_extrude() translate([r1,0,0]) circle(r2);
+}
+
+module oval_torus(inner_radius, thickness=[0, 0])
+{
+  rotate_extrude() translate([inner_radius+thickness[0]/2,0,0]) ellipse(width=thickness[0], height=thickness[1]);
+}
+
 
 module triangle_pyramid(radius)
 {
@@ -199,6 +233,14 @@ module square_pyramid(base_x, base_y,height)
   w=base_x/2;
   h=base_y/2;
   polyhedron(points=[[-w,-h,0],[-w,h,0],[w,h,0],[w,-h,0],[0,0,height]],triangles=[[0,3,2,1], [0,1,4], [1,2,4], [2,3,4], [3,0,4]]);
+}
+
+module egg(width, lenght){
+    rotate_extrude()
+        difference(){
+            egg_outline(width, lenght);
+            translate([-lenght, 0, 0]) cube(2*lenght, center=true);
+        }
 }
 
 // Tests:
