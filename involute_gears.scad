@@ -4,11 +4,26 @@
 // http://www.thingiverse.com/thing:3575 and http://www.thingiverse.com/thing:3752
 
 // Simple Test:
-//gear (circular_pitch=700,
-//	gear_thickness = 12,
-//	rim_thickness = 15,
-//	hub_thickness = 17,
-//	circles=8);
+gear (
+	number_of_teeth = 30,
+	circular_pitch=700,
+	gear_thickness = 12,
+	rim_thickness = 15,
+	hub_thickness = 17,
+	circles=8,
+	roundsize = 0
+	);
+
+translate([100,0,0])
+gear (
+	number_of_teeth = 30,
+	circular_pitch=700,
+	gear_thickness = 12,
+	rim_thickness = 15,
+	hub_thickness = 17,
+	circles=8,
+	roundsize = 1
+	);
 
 //Complex Spur Gear Test:
 //test_gears ();
@@ -293,6 +308,8 @@ module involute_bevel_gear_tooth (
 	}
 }
 
+
+
 module gear (
 	number_of_teeth=15,
 	circular_pitch=false, diametral_pitch=false,
@@ -308,7 +325,9 @@ module gear (
 	backlash=0,
 	twist=0,
 	involute_facets=0,
-	flat=false)
+	flat=false,
+	roundsize = 1
+	)
 {
 	if (circular_pitch==false && diametral_pitch==false)
 		echo("MCAD ERROR: gear module needs either a diametral_pitch or circular_pitch");
@@ -353,13 +372,12 @@ module gear (
 		min (
 			0.70*circle_orbit_curcumference/circles,
 			(rim_radius-hub_diameter/2)*0.9);
-
+	//render()
 	difference()
 	{
-		union ()
+		union()
 		{
-			difference ()
-			{
+
 				linear_exturde_flat_option(flat=flat, height=rim_thickness, convexity=10, twist=twist)
 				gear_shape (
 					number_of_teeth,
@@ -370,10 +388,6 @@ module gear (
 					half_thick_angle = half_thick_angle,
 					involute_facets=involute_facets);
 
-				if (gear_thickness < rim_thickness)
-					translate ([0,0,gear_thickness])
-					cylinder (r=rim_radius,h=rim_thickness-gear_thickness+1);
-			}
 			if (gear_thickness > rim_thickness)
 				linear_exturde_flat_option(flat=flat, height=gear_thickness)
 				circle (r=rim_radius);
@@ -382,16 +396,54 @@ module gear (
 				linear_exturde_flat_option(flat=flat, height=hub_thickness-gear_thickness)
 				circle (r=hub_diameter/2);
 		}
-		translate ([0,0,-1])
-		linear_exturde_flat_option(flat =flat, height=2+max(rim_thickness,hub_thickness,gear_thickness))
-		circle (r=bore_diameter/2);
-		if (circles>0)
-		{
+		render() {		
+			if(roundsize > 0) {
+				if(number_of_teeth % 4 == 0) { 
+					for(i=[1:number_of_teeth]) {
+						rotate([0,0,(i+0.5)*(360/number_of_teeth) - (half_thick_angle*0)])
+						translate([0,root_radius,-50])
+						cylinder(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, h = 100, $fn = 20);
+					}
+				}
+				if(number_of_teeth % 4 == 1) { 
+					for(i=[1:number_of_teeth]) {
+						rotate([0,0,(i+0.5)*(360/number_of_teeth) - (half_thick_angle)])
+						translate([0,root_radius,-50])
+						cylinder(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, h = 100, $fn = 20);
+					}
+				}
+				if(number_of_teeth % 4 == 2) { 
+					for(i=[1:number_of_teeth]) {
+						rotate([0,0,(i)*(360/number_of_teeth) + (half_thick_angle*0)])
+						translate([0,root_radius,-50])
+						cylinder(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, h = 100, $fn = 20);
+					}
+				}
+				if(number_of_teeth % 4 == 3) { 
+					for(i=[1:number_of_teeth]) {
+						rotate([0,0,(i)*(360/number_of_teeth) - (half_thick_angle)])
+						translate([0,root_radius,-50])
+						cylinder(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, h = 100, $fn = 20);
+					}
+				}
+			}
+
+			if (gear_thickness < rim_thickness)
+				translate ([0,0,gear_thickness])
+				cylinder (r=rim_radius,h=rim_thickness-gear_thickness+1);
+
+			translate ([0,0,-1])
+			linear_exturde_flat_option(flat =flat, height=2+max(rim_thickness,hub_thickness,gear_thickness))
+			circle (r=bore_diameter/2);
+
+			if (circles>0)
+			{
 			for(i=[0:circles-1])
 				rotate([0,0,i*360/circles])
 				translate([circle_orbit_diameter/2,0,-1])
 				linear_exturde_flat_option(flat =flat, height=max(gear_thickness,rim_thickness)+3)
 				circle(r=circle_diameter/2);
+			}
 		}
 	}
 }
@@ -409,6 +461,7 @@ module linear_exturde_flat_option(flat =false, height = 10, center = false, conv
 
 }
 
+
 module gear_shape (
 	number_of_teeth,
 	pitch_radius,
@@ -418,12 +471,15 @@ module gear_shape (
 	half_thick_angle,
 	involute_facets)
 {
+
+
 	union()
 	{
 		rotate (half_thick_angle) circle ($fn=number_of_teeth*2, r=root_radius);
 
 		for (i = [1:number_of_teeth])
 		{
+			
 			rotate ([0,0,i*360/number_of_teeth])
 			{
 				involute_gear_tooth (
@@ -437,6 +493,7 @@ module gear_shape (
 		}
 	}
 }
+
 
 module involute_gear_tooth (
 	pitch_radius,
@@ -520,14 +577,14 @@ module test_gears()
 {
 	translate([17,-15])
 	{
-		gear (number_of_teeth=17,
+		#gear (number_of_teeth=17,
 			circular_pitch=500,
 			circles=8);
 
 		rotate ([0,0,360*4/17])
 		translate ([39.088888,0,0])
 		{
-			gear (number_of_teeth=11,
+			#gear (number_of_teeth=11,
 				circular_pitch=500,
 				hub_diameter=0,
 				rim_width=65);
@@ -539,7 +596,7 @@ module test_gears()
 					rim_width=5,
 					rim_thickness=6,
 					pressure_angle=31);
-				rotate ([0,0,360*5/6])
+				#rotate ([0,0,360*5/6])
 				translate ([22.5,0,1])
 				gear (number_of_teeth=21,
 					circular_pitch=300,
@@ -555,7 +612,7 @@ module test_gears()
 
 		translate ([-61.1111111,0,0])
 		{
-			gear (number_of_teeth=27,
+			#gear (number_of_teeth=27,
 				circular_pitch=500,
 				circles=5,
 				hub_diameter=2*8.88888889);
@@ -573,7 +630,7 @@ module test_gears()
 					bore_diameter=5,
 					circles=0);
 				translate ([13.8888888,0,1])
-				gear (
+				#gear (
 					number_of_teeth=11,
 					circular_pitch=200,
 					pressure_angle=5,
@@ -590,7 +647,7 @@ module test_gears()
 
 		rotate ([0,0,360*-5/17])
 		translate ([44.444444444,0,0])
-		gear (number_of_teeth=15,
+		#gear (number_of_teeth=15,
 			circular_pitch=500,
 			hub_diameter=10,
 			rim_width=5,
@@ -601,7 +658,7 @@ module test_gears()
 
 		rotate ([0,0,360*-1/17])
 		translate ([30.5555555,0,-1])
-		gear (number_of_teeth=5,
+		#gear (number_of_teeth=5,
 			circular_pitch=500,
 			hub_diameter=0,
 			rim_width=5,
