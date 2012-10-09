@@ -84,7 +84,7 @@ module bearing(pos=[0,0,0], angle=[0,0,0], model=SkateBearing, outline=false,
           cylinder(r=od/2, h=h,  $fs = 0.01);
           color(holeMaterial)
             translate([0,0,-10*epsilon])
-              cylinder(r=id/2, h=h+20*epsilon,  $fs = 0.01);
+              cylinder(r=(id/2)+epsilon, h=h+20*epsilon,  $fs = 0.01);
         }
     }
   }
