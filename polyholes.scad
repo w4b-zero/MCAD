@@ -1,4 +1,5 @@
 // Copyright 2011 Nophead (of RepRap fame)
+// This file is licensed under the terms of Creative Commons Attribution 3.0 Unported.
 
 // Using this holes should come out approximately right when printed
 module polyhole(h, d) {
