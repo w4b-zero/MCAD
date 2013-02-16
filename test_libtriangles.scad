@@ -1,3 +1,5 @@
+//Copyright (C) 2013 Alex Davies
+//License: LGPL 2.1 or later
 use <libtriangles.scad>;
 
 //all of these follow the (X,Y,Z) syntax
