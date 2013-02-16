@@ -1,4 +1,4 @@
-use <../libtriangles.scad>;
+use <libtriangles.scad>;
 
 //all of these follow the (X,Y,Z) syntax
 
