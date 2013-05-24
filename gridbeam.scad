@@ -26,7 +26,7 @@
 mode = "model";
 //mode = "dxf";
 
-include <MCAD/units.scad>
+include <units.scad>
 
 beam_width = inch * 1.5;
 beam_hole_radius = inch * 5/16;
