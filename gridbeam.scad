@@ -29,7 +29,8 @@ mode = "model";
 include <units.scad>
 
 beam_width = inch * 1.5;
-beam_hole_radius = inch * 5/16;
+beam_hole_diameter = inch * 5/16;
+beam_hole_radius = beam_hole_diameter / 2;
 beam_is_hollow = 1;
 beam_wall_thickness = inch * 1/8;
 beam_shelf_thickness = inch * 1/4;
