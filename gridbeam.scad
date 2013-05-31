@@ -7,6 +7,7 @@
 
 /* Todo:
  - implement "dxf" mode
+ - implement hole cutout pattern - interference based on hole size, compatible with two sizes above and below the currently set size.
 */
 
 // zBeam(segments) - create a vertical gridbeam strut 'segments' long
