@@ -31,6 +31,11 @@ module Cubic_and_Radial_Array_Test()
  	Cubic_Array(10,10,10,5,5,5,center=true)
 		{
 		sphere(2.5,center=true,$fn=60);
+			cylinder(h=10,r=.5,center=true);
+			rotate([90,0,0])
+			cylinder(h=10,r=.5,center=true);
+			rotate([0,90,0])
+			cylinder(h=10,r=.5,center=true);
 		}
 
 //a linear array allong x can be derived from the cubic array simply 
@@ -76,6 +81,9 @@ module Cubic_and_Radial_Array_Test()
    	Cubic_Array(0,10,0,1,5,1,center=false)
 			{
 			cube([2,3,4],center=true);
+			cylinder(h=10,r=.5,center=true);
+			rotate([90,0,0])
+			cylinder(h=10,r=.5,center=true);
 			}
 		}
 
@@ -96,7 +104,7 @@ module Cubic_Array(sx,sy,sz,nx,ny,nz,center)
 					for(z=[1:nz])
 						{
 						translate([x*sx,y*sy,z*sz])
-						child(center=true);
+						for (k = [0:$children-1]) child(k,center=true);;
 						}
 					}
 				}
@@ -113,7 +121,7 @@ module Cubic_Array(sx,sy,sz,nx,ny,nz,center)
 					for(z=[1:nz])
 						{
 						translate([x*sx,y*sy,z*sz])
-						child();
+						for (k = [0:$children-1]) child(k);
 						}
 					}
 				}
@@ -134,6 +142,6 @@ module Radial_Array(a,n,r)
  {
  rotate([0,0,-(a*k)])
  translate([0,r,0])
- child();
+ for (k = [0:$children-1]) child(k);
  }
 }
