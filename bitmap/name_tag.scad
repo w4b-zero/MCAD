@@ -9,13 +9,13 @@ use <bitmap.scad>
 
 /*
  chars = chars array
- char_count = number of characters (OpenSCAD has no string or length methods)
  block_size = letter size (block size 1 will result in 8mm per letter)
  height = the Z height of each letter in mm
  key_ring_hole = (boolean) Append a hole to a keyring, necklace etc. ?
 */
-module name_tag(chars = ["R", "E", "P", "R", "A", "P"], char_count = 6,
+module name_tag(chars = ["R", "E", "P", "R", "A", "P"],
     block_size = 2, height = 3, key_ring_hole = true) {
+  char_count = len(chars);
   union() {
     translate(v = [0,-block_size*8*char_count/2+block_size*8/2,3]) {
       8bit_str(chars, char_count, block_size, height);
