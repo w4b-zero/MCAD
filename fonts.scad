@@ -1,5 +1,7 @@
 // Font Functions
 // Encoding from http://en.wikipedia.org/wiki/ASCII
+// Author: Andrew Plumb
+// License: LGPL 2.1
 
 module outline_2d(outline,points,paths,width=0.1,resolution=8) {
   if(outline && resolution > 4) {
