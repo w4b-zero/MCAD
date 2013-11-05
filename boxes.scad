@@ -2,7 +2,7 @@
 // Version: 1.0
 // Author: Marius Kintel
 // Copyright: 2010
-// License: Simplified BSD License
+// License: 2-clause BSD License (http://opensource.org/licenses/BSD-2-Clause)
 
 // roundedBox([width, height, depth], float radius, bool sidesonly);
 
