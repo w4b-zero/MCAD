@@ -1,9 +1,9 @@
 // This file is placed under the public domain
 
 // from: http://www.thingiverse.com/thing:9512
+// Author: nefercheprure
 
-
-// EXAMPLES:
+// Examples:
 //   standard LEGO 2x1 tile has no pin
 //      block(1,2,1/3,reinforcement=false,flat_top=true);
 //   standard LEGO 2x1 flat has pin

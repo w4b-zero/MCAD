@@ -5,8 +5,11 @@ This library contains components commonly used in designing and moching up
 mechanical designs. It is currently unfinished and you can expect some API
 changes, however many things are already working.
 
-This library is licensed under the LGPL 2.1
-See http://creativecommons.org/licenses/LGPL/2.1/ or the included file, lgpl-2.1.txt.
+This library was created by various authors as named in the individual
+files' comments. All the files except those ThingDoc are licensed under
+the LGPL 2.1 (see http://creativecommons.org/licenses/LGPL/2.1/ or the
+included file lgpl-2.1.txt), some of them allow distribution under more
+permissive terms (as described in the files' comments).
 
 ## Usage ##
 
