@@ -2,7 +2,7 @@
 
 // This library is dual licensed under the GPL 3.0 and the GNU Lesser General Public License as per http://creativecommons.org/licenses/LGPL/2.1/ .
 
-include <math.scad>
+include <lib/mcad/math.scad>
 
 
 //generates a motor mount for the specified nema standard #.
@@ -64,12 +64,10 @@ module _stepper_motor_mount(
 	square([pilot_diameter,slide_distance],center=true);
 	translate([0,-slide_distance/2,0]) circle(r = pilot_diameter/2 + tolerance);
 
-	//todo: motor shaft hole
+		//todo: motor shaft hole
 	
-	//mounting screw holes
-	for (x = [-1,1])
-	{
-		for (y = [-1,1])
+		//mounting screw holes
+		for (x = [-1,1]) for (y = [-1,1])
 		{
 			translate([x*bolt_hole_distance/2,y*bolt_hole_distance/2,0])
 			{
@@ -78,20 +76,20 @@ module _stepper_motor_mount(
 				square([bolt_hole_size+2*tolerance,slide_distance],center=true);
 			}
 		}
-	}
-	// == motor mock-up ==
-	//motor box
-	if (mochup == true)
-	{
-		%translate([0,0,-5]) cylinder(h = 5, r = pilot_diameter/2);
-		%translate(v=[0,0,-motor_length/2])
+		// == motor mock-up ==
+		//motor box
+		if (mochup == true)
 		{
-			cube(size=[bolt_hole_distance+bolt_hole_size+5,bolt_hole_distance+bolt_hole_size+5,motor_length], center = true);
-		}
-		//shaft
-		%translate(v=[0,0,-(motor_length-motor_shaft_length-2)/2])
-		{
-			%cylinder(r=motor_shaft_diameter/2,h=motor_length+motor_shaft_length--1, center = true);
+			%translate([0,0,-5]) cylinder(h = 5, r = pilot_diameter/2);
+			%translate(v=[0,0,-motor_length/2])
+			{
+				cube(size=[bolt_hole_distance+bolt_hole_size+5,bolt_hole_distance+bolt_hole_size+5,motor_length], center = true);
+			}
+			//shaft
+			%translate(v=[0,0,-(motor_length-motor_shaft_length-2)/2])
+			{
+				%cylinder(r=motor_shaft_diameter/2,h=motor_length+motor_shaft_length--1, center = true);
+			}
 		}
 	}
 	}
