@@ -326,8 +326,8 @@ module gear (
 	twist=0,
 	involute_facets=0,
 	flat=false,
-	roundsize = 1
-	)
+	roundsize = 1,
+	two_d=false)
 {
 	if (circular_pitch==false && diametral_pitch==false)
 		echo("MCAD ERROR: gear module needs either a diametral_pitch or circular_pitch");
@@ -373,7 +373,18 @@ module gear (
 			0.70*circle_orbit_curcumference/circles,
 			(rim_radius-hub_diameter/2)*0.9);
 	//render()
-	difference()
+	//NOTE: doing this with a boolean isnt great, but passing all the variables is a PITA
+	if( two_d )
+	{   gear_shape (
+		number_of_teeth,
+		pitch_radius = pitch_radius,
+		root_radius = root_radius,
+		base_radius = base_radius,
+		outer_radius = outer_radius,
+		half_thick_angle = half_thick_angle,
+		involute_facets=involute_facets);
+	}
+	else difference()
 	{
 		union()
 		{
