@@ -14,41 +14,62 @@
 //	Circular pitch: Length of the arc from one tooth to the next
 //	Clearance: Radial distance between top of tooth on one gear to bottom of gap on another.
 
+function pitch_circular2diameter(number_of_teeth,circular_pitch) = number_of_teeth * circular_pitch / 180;
+function pitch_diametral2diameter(number_of_teeth,diametral_pitch) = number_of_teeth / diametral_pitch;
+
 module gear(number_of_teeth,
 		circular_pitch=false, diametral_pitch=false,
-		pressure_angle=20, clearance = 0)
+		pressure_angle=20, clearance = 0,
+		verbose=false)
 {
+	if(verbose) {
+		echo("gear arguments:");
+		echo(str("  number_of_teeth: ", number_of_teeth));
+		echo(str("  circular_pitch: ", circular_pitch));
+		echo(str("  diametral_pitch: ", diametral_pitch));
+		echo(str("  pressure_angle: ", pressure_angle));
+		echo(str("  clearance: ", clearance));
+	}
 	if (circular_pitch==false && diametral_pitch==false) echo("MCAD ERROR: gear module needs either a diametral_pitch or circular_pitch");
+	if(verbose) echo("gear calculations:");
 
 	//Convert diametrial pitch to our native circular pitch
 	circular_pitch = (circular_pitch!=false?circular_pitch:180/diametral_pitch);
 
 	// Pitch diameter: Diameter of pitch circle.
-	pitch_diameter  =  number_of_teeth * circular_pitch / 180;
+	pitch_diameter  =  pitch_circular2diameter(number_of_teeth,circular_pitch);
+	if(verbose) echo (str("  pitch_diameter: ", pitch_diameter));
 	pitch_radius = pitch_diameter/2;
 
 	// Base Circle
 	base_diameter = pitch_diameter*cos(pressure_angle);
+	if(verbose) echo (str("  base_diameter: ", base_diameter));
 	base_radius = base_diameter/2;
 
 	// Diametrial pitch: Number of teeth per unit length.
 	pitch_diametrial = number_of_teeth / pitch_diameter;
+	if(verbose) echo (str("  pitch_diametrial: ", pitch_diametrial));
 
 	// Addendum: Radial distance from pitch circle to outside circle.
 	addendum = 1/pitch_diametrial;
+	if(verbose) echo (str("  addendum: ", addendum));
 
 	//Outer Circle
 	outer_radius = pitch_radius+addendum;
 	outer_diameter = outer_radius*2;
+	if(verbose) echo (str("  outer_diameter: ", outer_diameter));
 
 	// Dedendum: Radial distance from pitch circle to root diameter
 	dedendum = addendum + clearance;
+	if(verbose) echo (str("  dedendum: ", dedendum));
 
 	// Root diameter: Diameter of bottom of tooth spaces.
 	root_radius = pitch_radius-dedendum;
 	root_diameter = root_radius * 2;
+	if(verbose) echo (str("  root_diameter: ", root_diameter));
 
 	half_thick_angle = 360 / (4 * number_of_teeth);
+	if(verbose) echo (str("  half_thick_angle: ", half_thick_angle));
 
 	union()
 	{
