@@ -5,6 +5,11 @@
  * Dual licenced under Creative Commons Attribution-Share Alike 3.0 and LGPL2 or later
  */
 
+/*
+change list 13/6/2013
+ added ,604,606,607,628,629,6200,6201,6202,6203,6205,6206   bearing sizes 
+*/
+
 include <units.scad>
 include <materials.scad>
 
@@ -35,12 +40,33 @@ SkateBearing = 608;
 // Bearing dimensions
 // model == XXX ? [inner dia, outer dia, width]:
 function bearingDimensions(model) =
-  model == 608 ? [8*mm, 22*mm, 7*mm]:
-  model == 623 ? [3*mm, 10*mm, 4*mm]:
-  model == 624 ? [4*mm, 13*mm, 5*mm]:
-  model == 627 ? [7*mm, 22*mm, 7*mm]:
-  model == 688 ? [8*mm, 16*mm, 4*mm]:
-  model == 698 ? [8*mm, 19*mm, 6*mm]:
+	model == 604 ? [4*mm, 12*mm, 4*mm]:
+	model == 606 ? [6*mm, 17*mm, 6*mm]:
+	model == 607 ? [7*mm, 19*mm, 6*mm]:
+	model == 608 ? [8*mm, 22*mm, 7*mm]:
+	model == 623 ? [3*mm, 10*mm, 4*mm]:
+	model == 624 ? [4*mm, 13*mm, 5*mm]:
+	model == 627 ? [7*mm, 22*mm, 7*mm]:
+	model == 628 ? [8*mm, 24*mm, 8*mm]:
+	model == 629 ? [9*mm, 26*mm, 8*mm]:
+	model == 688 ? [8*mm, 16*mm, 4*mm]:
+	model == 698 ? [8*mm, 19*mm, 6*mm]:
+	model == 6200 ? [10*mm, 30*mm, 9*mm]:
+	model == 6201 ? [12*mm, 32*mm, 10*mm]:
+	model == 6202 ? [15*mm, 35*mm, 11*mm]:
+	model == 6203 ? [17*mm, 40*mm, 12*mm]:
+	model == 6205 ? [25*mm, 52*mm, 15*mm]:
+	model == 6206 ? [30*mm, 62*mm, 16*mm]:
+
+//
+//todo:-
+// add
+//mr105		5			10			4
+//mr115		5			11			4
+//mr126		6			12			4
+// and other standard sizes   
+//
+
   [8*mm, 22*mm, 7*mm]; // this is the default
 
 
