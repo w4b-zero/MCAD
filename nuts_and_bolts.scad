@@ -2,14 +2,31 @@
 
 // This library is dual licensed under the GPL 3.0 and the GNU Lesser General Public License as per http://creativecommons.org/licenses/LGPL/2.1/ .
 
-//testNutsAndBolts();
-
-module SKIPtestNutsAndBolts()
+module test1()
 {
 	$fn = 360;
-	translate([0,15])nutHole(3, proj=2);
-	boltHole(3, length= 30, proj=2);
+
+	translate([0,15])
+		nutHole(3, proj=-1);
+	boltHole(3, length= 30,tolerance=10, proj=-1);
+
 }
+//test1();
+
+module test2()
+{
+	$fn = 360;
+	difference(){
+		cube(size = [10,20,10], center = true);
+		union(){
+			translate([0,15])
+				nutHole(3, proj=2);
+			linear_extrude(height = 20, center = true, convexity = 10, twist = 0)
+			boltHole(3, length= 30, proj=2);
+		}
+	}
+}
+//test2();
 
 MM = "mm";
 INCH = "inch"; //Not yet supported
@@ -160,14 +177,15 @@ module nutHole(size, units=MM, tolerance = +0.0001, proj = -1)
 module boltHole(size, units=MM, length, tolerance = +0.0001, proj = -1)
 {
 	radius = COURSE_METRIC_BOLT_MAJOR_THREAD_DIAMETERS[size]/2+tolerance;
-//TODO: proper screw cap values
+
 	capHeight = METRIC_NUT_THICKNESS[size]+tolerance; //METRIC_BOLT_CAP_HEIGHTS[size]+tolerance;
 	capRadius = METRIC_NUT_AC_WIDTHS[size]/2+tolerance; //METRIC_BOLT_CAP_RADIUS[size]+tolerance;
 
 	if (proj == -1)
 	{
 	translate([0, 0, -capHeight])
-		cylinder(r= capRadius, h=capHeight);
+		//cylinder(r= capRadius, h=capHeight);
+		nutHole(size=size, units=units, tolerance = tolerance, proj = proj);
 	cylinder(r = radius, h = length);
 	}
 	if (proj == 1)
@@ -176,8 +194,9 @@ module boltHole(size, units=MM, length, tolerance = +0.0001, proj = -1)
 	}
 	if (proj == 2)
 	{
-		translate([-capRadius/2, -capHeight])
+		translate([-capRadius, -capHeight])
 			square([capRadius*2, capHeight]);
-		square([radius*2, length]);
+		translate([-radius,0])
+			square([radius*2, length]);
 	}
 }

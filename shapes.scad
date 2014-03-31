@@ -57,10 +57,10 @@ module ellipsoid(w, h, center = false) {
 }
 
 // wall is wall thickness
-module tube(height, radius, wall, center = false) {
+module tube(h, r, wall, center = false) {
   difference() {
-    cylinder(h=height, r=radius, center=center);
-    cylinder(h=height, r=radius-wall, center=center);
+    cylinder(h=h, r=r, center=center);
+    cylinder(h=h, r=r-wall, center=center);
   }
 }
 
