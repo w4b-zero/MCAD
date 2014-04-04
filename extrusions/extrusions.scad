@@ -21,6 +21,11 @@
 // linear_extrude (height = 3.5) profile_square_tube(1.5, 1/8);
 //
 
+include <MCAD/extrusions/8020.scad>;
+include <MCAD/extrusions/makerbeam.scad>;
+include <MCAD/extrusions/misumi_hfs5.scad>;
+include <MCAD/extrusions/openbeam.scad>;
+
 $fn = 24;
 
 module profile_angle_equal(side, wall) {
@@ -76,14 +81,11 @@ module profile_tslot_generic (pitch, slot, lip, web, hole) {
 	}
 }
 
-module profile_8020_fractional_1010 () {
-	profile_tslot_generic (pitch = 1, slot = 0.26, lip = 0.1, web = 0.13, core = 0.45, hole = 0.28);
-}
-
 module profile_misumi_metric_2020 () {
 	profile_tslot_generic (pitch = 20, slot = 5.2, lip = 2, web = 2.6, core = 9, hole = 5.6);
 }
 
-module profile_makerbeam () {
-	profile_tslot_generic (pitch = 10, slot = 2.5, lip = 1, web = 2, core = 1, hole = 0);
-}
+// Line up and wait
+extrusion_makerbeam(30);
+translate([17.5, 0, 0]) extrusion_openbeam_v1(30);
+translate([37.5, 0, 0]) extrusion_openbeam_v2(30, $fn=36);
