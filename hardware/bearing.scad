@@ -10,17 +10,17 @@ change list 13/6/2013
  added ,604,606,607,628,629,6200,6201,6202,6203,6205,6206   bearing sizes 
 */
 
-include <units.scad>
-include <materials.scad>
+include <MCAD/units/metric.scad>
+include <MCAD/materials/materials.scad>
 
 // Example, uncomment to view
-//test_bearing();
+test_bearing();
 //test_bearing_hole();
 
 module test_bearing(){
     bearing();
-    bearing(pos=[5*cm, 0,0], angle=[90,0,0]);
-    bearing(pos=[-2.5*cm, 0,0], model=688);
+    bearing(pos=[5*length_cm, 0,0], angle=[90,0,0]);
+    bearing(pos=[-2.5*length_cm, 0,0], model=624);
 }
 
 module test_bearing_hole(){
@@ -40,24 +40,25 @@ SkateBearing = 608;
 // Bearing dimensions
 // model == XXX ? [inner dia, outer dia, width]:
 function bearingDimensions(model) =
-	model == 604 ? [4*mm, 12*mm, 4*mm]:
-	model == 606 ? [6*mm, 17*mm, 6*mm]:
-	model == 607 ? [7*mm, 19*mm, 6*mm]:
-	model == 608 ? [8*mm, 22*mm, 7*mm]:
-	model == 623 ? [3*mm, 10*mm, 4*mm]:
-	model == 624 ? [4*mm, 13*mm, 5*mm]:
-	model == 626 ? [6*mm, 19*mm, 6*mm]:
-	model == 627 ? [7*mm, 22*mm, 7*mm]:
-	model == 628 ? [8*mm, 24*mm, 8*mm]:
-	model == 629 ? [9*mm, 26*mm, 8*mm]:
-	model == 688 ? [8*mm, 16*mm, 4*mm]:
-	model == 698 ? [8*mm, 19*mm, 6*mm]:
-	model == 6200 ? [10*mm, 30*mm, 9*mm]:
-	model == 6201 ? [12*mm, 32*mm, 10*mm]:
-	model == 6202 ? [15*mm, 35*mm, 11*mm]:
-	model == 6203 ? [17*mm, 40*mm, 12*mm]:
-	model == 6205 ? [25*mm, 52*mm, 15*mm]:
-	model == 6206 ? [30*mm, 62*mm, 16*mm]:
+	model == 604 ? [4*length_mm, 12*length_mm, 4*length_mm]:
+	model == 606 ? [6*length_mm, 17*length_mm, 6*length_mm]:
+	model == 607 ? [7*length_mm, 19*length_mm, 6*length_mm]:
+	model == 608 ? [8*length_mm, 22*length_mm, 7*length_mm]:
+	model == 623 ? [3*length_mm, 10*length_mm, 4*length_mm]:
+	model == 624 ? [4*length_mm, 13*length_mm, 5*length_mm]:
+	model == 625 ? [5*length_mm, 16*length_mm, 5*length_mm]:
+	model == 626 ? [6*length_mm, 19*length_mm, 6*length_mm]:
+	model == 627 ? [7*length_mm, 22*length_mm, 7*length_mm]:
+	model == 628 ? [8*length_mm, 24*length_mm, 8*length_mm]:
+	model == 629 ? [9*length_mm, 26*length_mm, 8*length_mm]:
+	model == 688 ? [8*length_mm, 16*length_mm, 4*length_mm]:
+	model == 698 ? [8*length_mm, 19*length_mm, 6*length_mm]:
+	model == 6200 ? [10*length_mm, 30*length_mm, 9*length_mm]:
+	model == 6201 ? [12*length_mm, 32*length_mm, 10*length_mm]:
+	model == 6202 ? [15*length_mm, 35*length_mm, 11*length_mm]:
+	model == 6203 ? [17*length_mm, 40*length_mm, 12*length_mm]:
+	model == 6205 ? [25*length_mm, 52*length_mm, 15*length_mm]:
+	model == 6206 ? [30*length_mm, 62*length_mm, 16*length_mm]:
 
 //
 //todo:-
@@ -68,7 +69,7 @@ function bearingDimensions(model) =
 // and other standard sizes   
 //
 
-  [8*mm, 22*mm, 7*mm]; // this is the default
+  [8*length_mm, 22*length_mm, 7*length_mm]; // this is the default
 
 
 function bearingWidth(model) = bearingDimensions(model)[BEARING_WIDTH];
