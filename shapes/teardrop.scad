@@ -47,11 +47,3 @@ module flat_teardrop(radius, length, angle) {
 		teardrop(radius, length, angle);
 	}
 }
-
-module test_teardrop(){
-    translate([0, -15, 0]) teardrop(5, 20, 90);
-    translate([0, 0, 0]) teardrop(5, 20, 60);
-    translate([0, 15, 0]) teardrop(5, 20, 45);
-}
-
-//test_teardrop();
