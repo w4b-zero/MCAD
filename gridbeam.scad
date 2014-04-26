@@ -27,14 +27,14 @@
 mode = "model";
 //mode = "dxf";
 
-include <units.scad>
+include <MCAD/units/us.scad>
 
-beam_width = inch * 1.5;
-beam_hole_diameter = inch * 5/16;
+beam_width = length_inch * 1.5;
+beam_hole_diameter = length_inch * 5/16;
 beam_hole_radius = beam_hole_diameter / 2;
 beam_is_hollow = 1;
-beam_wall_thickness = inch * 1/8;
-beam_shelf_thickness = inch * 1/4;
+beam_wall_thickness = length_inch * 1/8;
+beam_shelf_thickness = length_inch * 1/4;
 
 module zBeam(segments) {
 if (mode == "model") {

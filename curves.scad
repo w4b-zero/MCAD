@@ -1,8 +1,8 @@
 // Parametric curves, to be used as paths
 // Licensed under the MIT license.
 // © 2010 by Elmo Mäntynen
-use <math.scad>
-include <constants.scad>
+use <MCAD/general/math.scad>
+include <MCAD/general/constants.scad>
 
 
 
