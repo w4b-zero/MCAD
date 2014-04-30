@@ -5,7 +5,7 @@
  * Dual licenced under Creative Commons Attribution-Share Alike 3.0 and LGPL2 or later
  */
 
-//include <units.scad>
+include <MCAD/general/constants.scad>
 
 
 /******************** Disance Poins ******************************/
@@ -42,7 +42,7 @@ function angle_betweentTwoPoints2D (a,b) = _angleVectore2D(b-a);
 
 /********************** Circel ***************************/
 
-function circel_area(r) = PI * r * r;
+function circel_area(r) = const_pi * r * r;
 
 function circel_radius3Points(a,b,c) = (distance2D(a,b) * distance2D(b,c) * distance2D(c,a)) / (4 * triangle_area3Points(a,b,c));
 
