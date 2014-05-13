@@ -326,7 +326,8 @@ module gear (
 	twist=0,
 	involute_facets=0,
 	flat=false,
-	roundsize = 1)
+	roundsize = 1,
+	internal = false)
 {
 	if (circular_pitch==false && diametral_pitch==false)
 		echo("MCAD ERROR: gear module needs either a diametral_pitch or circular_pitch");
@@ -346,79 +347,104 @@ module gear (
 	pitch_diametrial = number_of_teeth / pitch_diameter;
 
 	// Addendum: Radial distance from pitch circle to outside circle.
-	addendum = 1/pitch_diametrial;
+	addendum = 1/pitch_diametrial + (internal ? clearance : 0);
 
 	//Outer Circle
 	outer_radius = pitch_radius+addendum;
 
 	// Dedendum: Radial distance from pitch circle to root diameter
-	dedendum = addendum + clearance;
+	dedendum = addendum + (internal ? -clearance : clearance);
 
 	// Root diameter: Diameter of bottom of tooth spaces.
 	root_radius = pitch_radius-dedendum;
-	backlash_angle = backlash / pitch_radius * 180 / pi;
+	backlash_angle = (internal ? -backlash : backlash) / pitch_radius * 180 / pi;
 	half_thick_angle = (360 / number_of_teeth - backlash_angle) / 4;
 
 	// Variables controlling the rim.
-	rim_radius = root_radius - rim_width;
+	rim_radius = internal ? outer_radius + rim_width : root_radius - rim_width;
 
 	// Variables controlling the circular holes in the gear.
-	circle_orbit_diameter=hub_diameter/2+rim_radius;
+	circle_orbit_diameter=hub_diameter/2+min(rim_radius, root_radius);
 	circle_orbit_curcumference=pi*circle_orbit_diameter;
 
 	// Limit the circle size to 90% of the gear face.
 	circle_diameter=
 		min (
 			0.70*circle_orbit_curcumference/circles,
-			(rim_radius-hub_diameter/2)*0.9);
+			(min(rim_radius, root_radius)-hub_diameter/2)*0.9);
+
+	module common_gear_shape ()
+	{
+		difference() {
+			gear_shape (
+				number_of_teeth,
+				pitch_radius = pitch_radius,
+				root_radius = root_radius,
+				base_radius = base_radius,
+				outer_radius = outer_radius,
+				half_thick_angle = half_thick_angle,
+				involute_facets=involute_facets);
+
+			if(roundsize > 0) {
+				if(number_of_teeth % 4 == 0) {
+					for(i=[1:number_of_teeth]) {
+						rotate([0,0,(i+0.5)*(360/number_of_teeth) - (half_thick_angle*0)])
+						translate([0,root_radius,-50])
+						circle(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, $fn = 20);
+					}
+				}
+				if(number_of_teeth % 4 == 1) {
+					for(i=[1:number_of_teeth]) {
+						rotate([0,0,(i+0.5)*(360/number_of_teeth) - (half_thick_angle)])
+						translate([0,root_radius,-50])
+						circle(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, $fn = 20);
+					}
+				}
+				if(number_of_teeth % 4 == 2) {
+					for(i=[1:number_of_teeth]) {
+						rotate([0,0,(i)*(360/number_of_teeth) + (half_thick_angle*0)])
+						translate([0,root_radius,-50])
+						circle(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, $fn = 20);
+					}
+				}
+				if(number_of_teeth % 4 == 3) {
+					for(i=[1:number_of_teeth]) {
+						rotate([0,0,(i)*(360/number_of_teeth) - (half_thick_angle)])
+						translate([0,root_radius,-50])
+						circle(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, $fn = 20);
+					}
+				}
+			}
+        }
+	}
 
 	difference()
 	{
 		union()
 		{
+			if (internal) {
+				if (flat)
+					common_gear_shape ();
+				else
+					difference ()
+					{
+						cylinder (r=rim_radius, h=rim_thickness);
 
-		    linear_exturde_flat_option(flat=flat, height=rim_thickness, convexity=10, twist=twist)
-                    difference() {
-			gear_shape (
-			    number_of_teeth,
-			    pitch_radius = pitch_radius,
-			    root_radius = root_radius,
-			    base_radius = base_radius,
-			    outer_radius = outer_radius,
-			    half_thick_angle = half_thick_angle,
-			    involute_facets=involute_facets);
+						translate ([0,0,gear_thickness == 0 ? - 0.1 : gear_thickness])
+						linear_extrude(height=rim_thickness + 1, convexity=10, twist=twist)
+						common_gear_shape ();
+					}
 
-			if(roundsize > 0) {
-			    if(number_of_teeth % 4 == 0) {
-				for(i=[1:number_of_teeth]) {
-				    rotate([0,0,(i+0.5)*(360/number_of_teeth) - (half_thick_angle*0)])
-				    translate([0,root_radius,-50])
-				    circle(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, $fn = 20);
+			} else
+				difference ()
+				{
+					linear_exturde_flat_option(flat=flat, height=rim_thickness, convexity=10, twist=twist)
+					common_gear_shape ();
+
+					if (gear_thickness < rim_thickness)
+					translate ([0,0,gear_thickness])
+					cylinder (r=rim_radius,h=rim_thickness-gear_thickness+1);
 				}
-			    }
-			    if(number_of_teeth % 4 == 1) {
-				for(i=[1:number_of_teeth]) {
-				    rotate([0,0,(i+0.5)*(360/number_of_teeth) - (half_thick_angle)])
-				    translate([0,root_radius,-50])
-				    circle(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, $fn = 20);
-				}
-			    }
-			    if(number_of_teeth % 4 == 2) {
-				for(i=[1:number_of_teeth]) {
-				    rotate([0,0,(i)*(360/number_of_teeth) + (half_thick_angle*0)])
-				    translate([0,root_radius,-50])
-				    circle(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, $fn = 20);
-				}
-			    }
-			    if(number_of_teeth % 4 == 3) {
-				for(i=[1:number_of_teeth]) {
-				    rotate([0,0,(i)*(360/number_of_teeth) - (half_thick_angle)])
-				    translate([0,root_radius,-50])
-				    circle(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, $fn = 20);
-				}
-			    }
-			}
-                    }
 
 			if (gear_thickness > rim_thickness)
 				linear_exturde_flat_option(flat=flat, height=gear_thickness)
