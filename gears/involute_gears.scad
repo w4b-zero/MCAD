@@ -431,7 +431,7 @@ module gear (
 						cylinder (r=rim_radius, h=rim_thickness);
 
 						translate ([0,0,gear_thickness == 0 ? - 0.1 : gear_thickness])
-						linear_extrude(height=rim_thickness + 1, convexity=10, twist=twist)
+						linear_extrude(height=rim_thickness + 0.2, convexity=10, twist=twist / rim_thickness * (rim_thickness + 0.2))
 						common_gear_shape ();
 					}
 
