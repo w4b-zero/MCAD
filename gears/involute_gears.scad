@@ -377,15 +377,48 @@ module gear (
 		union()
 		{
 
-				linear_exturde_flat_option(flat=flat, height=rim_thickness, convexity=10, twist=twist)
-				gear_shape (
-					number_of_teeth,
-					pitch_radius = pitch_radius,
-					root_radius = root_radius,
-					base_radius = base_radius,
-					outer_radius = outer_radius,
-					half_thick_angle = half_thick_angle,
-					involute_facets=involute_facets);
+		    linear_exturde_flat_option(flat=flat, height=rim_thickness, convexity=10, twist=twist)
+                    difference() {
+			gear_shape (
+			    number_of_teeth,
+			    pitch_radius = pitch_radius,
+			    root_radius = root_radius,
+			    base_radius = base_radius,
+			    outer_radius = outer_radius,
+			    half_thick_angle = half_thick_angle,
+			    involute_facets=involute_facets);
+
+			if(roundsize > 0) {
+			    if(number_of_teeth % 4 == 0) {
+				for(i=[1:number_of_teeth]) {
+				    rotate([0,0,(i+0.5)*(360/number_of_teeth) - (half_thick_angle*0)])
+				    translate([0,root_radius,-50])
+				    circle(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, $fn = 20);
+				}
+			    }
+			    if(number_of_teeth % 4 == 1) {
+				for(i=[1:number_of_teeth]) {
+				    rotate([0,0,(i+0.5)*(360/number_of_teeth) - (half_thick_angle)])
+				    translate([0,root_radius,-50])
+				    circle(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, $fn = 20);
+				}
+			    }
+			    if(number_of_teeth % 4 == 2) {
+				for(i=[1:number_of_teeth]) {
+				    rotate([0,0,(i)*(360/number_of_teeth) + (half_thick_angle*0)])
+				    translate([0,root_radius,-50])
+				    circle(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, $fn = 20);
+				}
+			    }
+			    if(number_of_teeth % 4 == 3) {
+				for(i=[1:number_of_teeth]) {
+				    rotate([0,0,(i)*(360/number_of_teeth) - (half_thick_angle)])
+				    translate([0,root_radius,-50])
+				    circle(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, $fn = 20);
+				}
+			    }
+			}
+                    }
 
 			if (gear_thickness > rim_thickness)
 				linear_exturde_flat_option(flat=flat, height=gear_thickness)
@@ -396,37 +429,6 @@ module gear (
 				circle (r=hub_diameter/2);
 		}
 		render() {		
-			if(roundsize > 0) {
-				if(number_of_teeth % 4 == 0) { 
-					for(i=[1:number_of_teeth]) {
-						rotate([0,0,(i+0.5)*(360/number_of_teeth) - (half_thick_angle*0)])
-						translate([0,root_radius,-50])
-						cylinder(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, h = 100, $fn = 20);
-					}
-				}
-				if(number_of_teeth % 4 == 1) { 
-					for(i=[1:number_of_teeth]) {
-						rotate([0,0,(i+0.5)*(360/number_of_teeth) - (half_thick_angle)])
-						translate([0,root_radius,-50])
-						cylinder(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, h = 100, $fn = 20);
-					}
-				}
-				if(number_of_teeth % 4 == 2) { 
-					for(i=[1:number_of_teeth]) {
-						rotate([0,0,(i)*(360/number_of_teeth) + (half_thick_angle*0)])
-						translate([0,root_radius,-50])
-						cylinder(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, h = 100, $fn = 20);
-					}
-				}
-				if(number_of_teeth % 4 == 3) { 
-					for(i=[1:number_of_teeth]) {
-						rotate([0,0,(i)*(360/number_of_teeth) - (half_thick_angle)])
-						translate([0,root_radius,-50])
-						cylinder(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, h = 100, $fn = 20);
-					}
-				}
-			}
-
 			if (gear_thickness < rim_thickness)
 				translate ([0,0,gear_thickness])
 				cylinder (r=rim_radius,h=rim_thickness-gear_thickness+1);
