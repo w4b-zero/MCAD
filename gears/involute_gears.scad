@@ -14,7 +14,8 @@ gear (
 	roundsize = 0
 	);
 
-translate([100,0,0])
+translate ([700 * PI / 180 * 30 / 2 / PI * 2,0,0])
+rotate (180 + 360 / 30 / 2)
 gear (
 	number_of_teeth = 30,
 	circular_pitch=700,
