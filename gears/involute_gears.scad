@@ -327,7 +327,7 @@ module gear (
 	twist=0,
 	involute_facets=0,
 	flat=false,
-	roundsize = 1,
+	roundsize=1,
 	internal = false)
 {
 	if (circular_pitch==false && diametral_pitch==false)
@@ -376,7 +376,8 @@ module gear (
 
 	module common_gear_shape ()
 	{
-		difference() {
+		module _gear_shape ()
+		{
 			gear_shape (
 				number_of_teeth,
 				pitch_radius = pitch_radius,
@@ -385,37 +386,32 @@ module gear (
 				outer_radius = outer_radius,
 				half_thick_angle = half_thick_angle,
 				involute_facets=involute_facets);
+		}
 
-			if(roundsize > 0) {
-				if(number_of_teeth % 4 == 0) {
-					for(i=[1:number_of_teeth]) {
-						rotate([0,0,(i+0.5)*(360/number_of_teeth) - (half_thick_angle*0)])
-						translate([0,root_radius,-50])
-						circle(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, $fn = 20);
-					}
-				}
-				if(number_of_teeth % 4 == 1) {
-					for(i=[1:number_of_teeth]) {
-						rotate([0,0,(i+0.5)*(360/number_of_teeth) - (half_thick_angle)])
-						translate([0,root_radius,-50])
-						circle(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, $fn = 20);
-					}
-				}
-				if(number_of_teeth % 4 == 2) {
-					for(i=[1:number_of_teeth]) {
-						rotate([0,0,(i)*(360/number_of_teeth) + (half_thick_angle*0)])
-						translate([0,root_radius,-50])
-						circle(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, $fn = 20);
-					}
-				}
-				if(number_of_teeth % 4 == 3) {
-					for(i=[1:number_of_teeth]) {
-						rotate([0,0,(i)*(360/number_of_teeth) - (half_thick_angle)])
-						translate([0,root_radius,-50])
-						circle(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, $fn = 20);
-					}
-				}
-			}
+		module rounding_circles ()
+		{
+			path_radius = internal ? outer_radius : root_radius;
+                        circle_positions = (internal ?
+                            [0:1:number_of_teeth] :
+                            [0.5:1:number_of_teeth - 0.5]);
+
+                        if (roundsize > 0)
+                        for (i=circle_positions) {
+                            echo(i);
+                            rotate([0, 0, (i*360/number_of_teeth)])
+                            translate([path_radius, 0])
+                            circle(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, $fn = 20);
+                        }
+		}
+
+		if (internal)
+		union () {
+			_gear_shape ();
+			rounding_circles ();
+		} else
+		difference() {
+			_gear_shape ();
+			rounding_circles ();
                 }
 	}
 
@@ -776,3 +772,18 @@ module test_backlash ()
 	translate([0,0,-5])
 	cylinder ($fn=20,r=backlash / 4,h=25);
 }
+
+module test_internal_gear ()
+{
+	gear (
+		number_of_teeth = 30,
+		circular_pitch = 5 * 180 / PI,
+		hub_thickness = 0,
+		rim_thickness = 10,
+		rim_width = 5,
+		gear_thickness = 0,
+		internal = true
+	);
+}
+
+!test_internal_gear ();
