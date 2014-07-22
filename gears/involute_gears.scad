@@ -455,11 +455,7 @@ module gear (
 				linear_exturde_flat_option(flat=flat, height=hub_thickness-gear_thickness)
 				circle (r=hub_diameter/2);
 		}
-		render() {		
-			if (gear_thickness < rim_thickness)
-				translate ([0,0,gear_thickness])
-				cylinder (r=rim_radius,h=rim_thickness-gear_thickness+1);
-
+		render() {
 			translate ([0,0,-1])
 			linear_exturde_flat_option(flat =flat, height=2+max(rim_thickness,hub_thickness,gear_thickness))
 			circle (r=bore_diameter/2);
