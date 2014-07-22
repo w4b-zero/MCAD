@@ -416,7 +416,7 @@ module gear (
 					}
 				}
 			}
-        }
+                }
 	}
 
 	difference()
