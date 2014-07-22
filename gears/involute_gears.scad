@@ -397,7 +397,6 @@ module gear (
 
                         if (roundsize > 0)
                         for (i=circle_positions) {
-                            echo(i);
                             rotate([0, 0, (i*360/number_of_teeth)])
                             translate([path_radius, 0])
                             circle(r=((360/number_of_teeth - half_thick_angle)/360) * pi*root_radius/2 * roundsize, $fn = 20);
