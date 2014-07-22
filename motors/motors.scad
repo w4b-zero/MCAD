@@ -2,7 +2,7 @@
 
 // This library is dual licensed under the GPL 3.0 and the GNU Lesser General Public License as per http://creativecommons.org/licenses/LGPL/2.1/ .
 
-include <lib/mcad/math.scad>
+include <MCAD/general/math.scad>
 
 
 //generates a motor mount for the specified nema standard #.

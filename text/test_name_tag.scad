@@ -1,4 +1,4 @@
-include <../bitmap/name_tag.scad>;
+include <name_tag.scad>;
 
 translate([0,0,0])
 name_tag("name_tag");

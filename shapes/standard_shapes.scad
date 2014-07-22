@@ -17,8 +17,8 @@
  *
 */
 
-include <utilities.scad>;
-include <units.scad>;
+include <MCAD/general/utilities.scad>;
+include <MCAD/units/metric.scad>;
 
 module cylinderSegment_angle(r,h,Phi,center = false){
 	a = Phi/2;
