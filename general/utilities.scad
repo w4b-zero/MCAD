@@ -39,6 +39,20 @@ function angleBetweenTwoPoints(a, b) = angle(normalized(b-a));
 function _angleVectore2D(a) = atan2(a[0],a[1]);
 function angle_betweentTwoPoints2D (a,b) = _angleVectore2D(b-a);
 
+function mirror_2dvector (coord) =
+[
+	coord[0],
+	-coord[1]
+];
+
+function rotate_2dvector (rotate, coord) =
+[
+	cos (rotate) * coord[0] + sin (rotate) * coord[1],
+	cos (rotate) * coord[1] - sin (rotate) * coord[0]
+];
+
+
+
 
 /********************** Circel ***************************/
 

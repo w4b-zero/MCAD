@@ -17,18 +17,13 @@
 //metric_thread(34, 1, 10, internal=true, n_starts=6);
 
 // ----------------------------------------------------------------------------
+use <MCAD/general/utilities.scad>
 pi = 3.14159265;
 
 
 // ----------------------------------------------------------------------------
 function segments(diameter) = min(50, ceil(diameter*6));
 
-
-function rotate_vector (rotate, coord) =
-[
-	cos (rotate) * coord[0] + sin (rotate) * coord[1],
-	cos (rotate) * coord[1] - sin (rotate) * coord[0]
-];
 
 // ----------------------------------------------------------------------------
 // internal - true = clearances for internal thread (e.g., a nut).
@@ -61,7 +56,7 @@ module metric_thread (
     function normalize_angle (angle) = peak_angle - abs (peak_angle - angle);
     function length_for_angle (angle) = Droot/2 +
     normalize_angle (angle) / peak_angle * H;
-    function get_vertex (angle) = rotate_vector (angle,
+    function get_vertex (angle) = rotate_2dvector (angle,
         [-length_for_angle (angle), 0]);
 
     linear_extrude (height=length, twist=-turns*360, $fa=10, $fs=0.1)

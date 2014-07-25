@@ -3,6 +3,8 @@
 // © 2010 by GregFrost, thingiverse.com/Amp
 // http://www.thingiverse.com/thing:3575 and http://www.thingiverse.com/thing:3752
 
+use <MCAD/general/utilities.scad>
+
 // Simple Test:
 gear (
 	number_of_teeth = 30,
@@ -289,10 +291,10 @@ module involute_bevel_gear_tooth (
 					involute (base_radius*2,start_angle+(stop_angle - start_angle)*(i)/res))
 			{
 				assign (
-					side1_point1 = rotate_point (centre_angle, point1),
-					side1_point2 = rotate_point (centre_angle, point2),
-					side2_point1 = mirror_point (rotate_point (centre_angle, point1)),
-					side2_point2 = mirror_point (rotate_point (centre_angle, point2)))
+					side1_point1 = rotate_2dvector (centre_angle, point1),
+					side1_point2 = rotate_2dvector (centre_angle, point2),
+					side2_point1 = mirror_2dvector (rotate_2dvector (centre_angle, point1)),
+					side2_point2 = mirror_2dvector (rotate_2dvector (centre_angle, point2)))
 				{
 					polyhedron (
 						points=[
@@ -541,10 +543,10 @@ module involute_gear_tooth (
 			point2=involute (base_radius,start_angle+(stop_angle - start_angle)*i/res))
 		{
 			assign (
-				side1_point1=rotate_point (centre_angle, point1),
-				side1_point2=rotate_point (centre_angle, point2),
-				side2_point1=mirror_point (rotate_point (centre_angle, point1)),
-				side2_point2=mirror_point (rotate_point (centre_angle, point2)))
+				side1_point1=rotate_2dvector (centre_angle, point1),
+				side1_point2=rotate_2dvector (centre_angle, point2),
+				side2_point1=mirror_2dvector (rotate_2dvector (centre_angle, point1)),
+				side2_point2=mirror_2dvector (rotate_2dvector (centre_angle, point2)))
 			{
 				polygon (
 					points=[[0,0],side1_point1,side1_point2,side2_point2,side2_point1],
@@ -568,18 +570,6 @@ function rotated_involute (rotate, base_radius, involute_angle) =
 [
 	cos (rotate) * involute (base_radius, involute_angle)[0] + sin (rotate) * involute (base_radius, involute_angle)[1],
 	cos (rotate) * involute (base_radius, involute_angle)[1] - sin (rotate) * involute (base_radius, involute_angle)[0]
-];
-
-function mirror_point (coord) =
-[
-	coord[0],
-	-coord[1]
-];
-
-function rotate_point (rotate, coord) =
-[
-	cos (rotate) * coord[0] + sin (rotate) * coord[1],
-	cos (rotate) * coord[1] - sin (rotate) * coord[0]
 ];
 
 function involute (base_radius, involute_angle) =
@@ -784,5 +774,3 @@ module test_internal_gear ()
 		internal = true
 	);
 }
-
-!test_internal_gear ();
