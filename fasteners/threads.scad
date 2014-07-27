@@ -11,6 +11,7 @@
 
 // Examples:
 //metric_thread(8, 1.5, 10);
+//acme_thread(8, 1.5, 10);
 //english_thread(1/4, 20, 1);
 
 // Rohloff hub thread:
@@ -42,6 +43,26 @@ module metric_thread (
         outer_flat_length = pitch / 8,
         major_radius = diameter / 2,
         minor_radius = diameter / 2 - 5/8 * cos(30) * pitch,
+        internal = internal,
+        n_starts = n_starts
+    );
+}
+
+module acme_thread (
+    diameter = 8,
+    pitch = 1,
+    length = 1,
+    internal = false,
+    n_starts = 1
+)
+{
+    trapezoidal_thread (
+        pitch = pitch,
+        length = length,
+        upper_angle = 29/2, lower_angle = 29/2,
+        outer_flat_length = 0.3707 * pitch,
+        major_radius = diameter / 2,
+        minor_radius = diameter / 2 - pitch / 2,
         internal = internal,
         n_starts = n_starts
     );
