@@ -116,8 +116,7 @@ module trapezoidal_thread (
     major_radius,
     minor_radius,
     internal = false,
-    n_starts = 1,
-    $fn = 30 // screws look bad below this figure, so set a default
+    n_starts = 1
 )
 {
     // trapezoid calculation:
@@ -145,7 +144,7 @@ module trapezoidal_thread (
 
     // facet calculation
     facets = $fn > 0 ? $fn :
-    max (10, min (2 * PI * minor_radius / $fs, 360 / $fa));
+    max (30, min (2 * PI * minor_radius / $fs, 360 / $fa));
     tmp_fa = 360 / facets;
     $fa = length2twist (length) / round (length2twist (length) / tmp_fa);
 
