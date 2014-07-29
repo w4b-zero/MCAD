@@ -13,7 +13,7 @@
 // Examples:
 //metric_thread(8, 1.5, 10);
 //acme_thread(8, 1.5, 10);
-//buttress_thread(8, 1.5, 10);
+buttress_thread(8, 1.5, 10);
 //english_thread(1/4, 20, 1);
 
 // Rohloff hub thread:
@@ -70,22 +70,24 @@ module acme_thread (
     );
 }
 
-// TODO: Handle different buttress profiles
 module buttress_thread (
     diameter = 8,
     pitch = 1,
     length = 1,
     internal = false,
-    n_starts = 1
+    n_starts = 1,
+    buttress_angles = [3, 33],
+    pitch_flat_ratio = 6,       // ratio of pitch to flat length
+    pitch_depth_ratio = 3/2     // ratio of pitch to thread depth
 )
 {
     trapezoidal_thread (
         pitch = pitch,
         length = length,
-        upper_angle = 7, lower_angle = 45,
-        outer_flat_length = pitch / 8,
+        upper_angle = buttress_angles[0], lower_angle = buttress_angles[1],
+        outer_flat_length = pitch / pitch_flat_ratio,
         major_radius = diameter / 2,
-        minor_radius = diameter / 2 - 3/4 * pitch,
+        minor_radius = diameter / 2 - pitch / pitch_depth_ratio,
         internal = internal,
         n_starts = n_starts
     );
