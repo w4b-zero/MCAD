@@ -11,13 +11,30 @@
  */
 
 // Examples:
-//metric_thread(8, 1.5, 10);
-//acme_thread(8, 1.5, 10);
-buttress_thread(8, 1.5, 10);
-//english_thread(1/4, 20, 1);
 
-// Rohloff hub thread:
-//metric_thread(34, 1, 10, internal=true, n_starts=6);
+test_threads ();
+
+module test_threads ($fa=5, $fs=0.1)
+{
+    // M8
+    metric_thread(8, 1.5, 10);
+
+    translate ([10, 0, 0])
+    square_thread(8, 1.5, 10);
+
+    translate ([20, 0, 0])
+    acme_thread(8, 1.5, 10);
+
+    translate ([30, 0, 0])
+    buttress_thread(8, 1.5, 10);
+
+    translate ([40, 0, 0])
+    english_thread(1/4, 20, 1);
+
+    // Rohloff hub thread:
+    translate ([65, 0, 0])
+    metric_thread(34, 1, 10, internal=true, n_starts=6);
+}
 
 // ----------------------------------------------------------------------------
 use <MCAD/general/utilities.scad>
