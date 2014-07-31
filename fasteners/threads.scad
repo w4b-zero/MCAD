@@ -50,6 +50,26 @@ module metric_thread (
     );
 }
 
+module square_thread (
+    diameter = 8,
+    pitch = 1,
+    length = 1,
+    internal = false,
+    n_starts = 1
+)
+{
+    trapezoidal_thread (
+        pitch = pitch,
+        length = length,
+        upper_angle = 0, lower_angle = 0,
+        outer_flat_length = pitch / 2,
+        major_radius = diameter / 2,
+        minor_radius = diameter / 2 - pitch / 2,
+        internal = internal,
+        n_starts = n_starts
+    );
+}
+
 module acme_thread (
     diameter = 8,
     pitch = 1,
