@@ -578,6 +578,9 @@ function involute (base_radius, involute_angle) =
 	base_radius*(sin (involute_angle) - involute_angle*pi/180*cos (involute_angle))
 ];
 
+// For ease of conversion from proper circular pitch to this broken library's
+// values
+function convertcp (circular_pitch) = circular_pitch / PI * 180;
 
 // Test Cases
 //===============
