@@ -327,6 +327,7 @@ module gear (
 	circles=0,
 	backlash=0,
 	twist=0,
+	helix_angle=0,
 	involute_facets=0,
 	flat=false,
 	roundsize=1,
@@ -341,7 +342,15 @@ module gear (
 	// Pitch diameter: Diameter of pitch circle.
 	pitch_diameter  =  number_of_teeth * circular_pitch / 180;
 	pitch_radius = pitch_diameter/2;
+	pitch_circumference = PI * pitch_diameter;
 	echo ("Teeth:", number_of_teeth, " Pitch radius:", pitch_radius);
+
+	twist = (
+		(twist != 0) ? twist :
+		(tan (helix_angle) * rim_thickness /
+			pitch_circumference * 360)
+	);
+	echo ("Twist: ", twist);
 
 	// Base Circle
 	base_radius = pitch_radius*cos(pressure_angle);
