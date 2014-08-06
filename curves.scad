@@ -13,7 +13,7 @@ z(t) = b*t
 */
 
 
-function b(pitch) = pitch/(TAU);
+function b(pitch) = pitch/(const_tau);
 function t(pitch, z) = z/b(pitch);
 
 function helix_curve(pitch, radius, z) =
