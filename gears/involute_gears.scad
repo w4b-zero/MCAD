@@ -445,7 +445,7 @@ module gear (
 			} else
 				difference ()
 				{
-					linear_exturde_flat_option(flat=flat, height=rim_thickness, convexity=10, twist=twist)
+					linear_extrude_flat_option(flat=flat, height=rim_thickness, convexity=10, twist=twist)
 					common_gear_shape ();
 
 					if (gear_thickness < rim_thickness)
@@ -454,16 +454,16 @@ module gear (
 				}
 
 			if (gear_thickness > rim_thickness)
-				linear_exturde_flat_option(flat=flat, height=gear_thickness)
+				linear_extrude_flat_option(flat=flat, height=gear_thickness)
 				circle (r=rim_radius);
 			if (flat == false && hub_thickness > gear_thickness)
 				translate ([0,0,gear_thickness])
-				linear_exturde_flat_option(flat=flat, height=hub_thickness-gear_thickness)
+				linear_extrude_flat_option(flat=flat, height=hub_thickness-gear_thickness)
 				circle (r=hub_diameter/2);
 		}
 		render() {
 			translate ([0,0,-1])
-			linear_exturde_flat_option(flat =flat, height=2+max(rim_thickness,hub_thickness,gear_thickness))
+			linear_extrude_flat_option(flat =flat, height=2+max(rim_thickness,hub_thickness,gear_thickness))
 			circle (r=bore_diameter/2);
 
 			if (circles>0)
@@ -471,14 +471,14 @@ module gear (
 			for(i=[0:circles-1])
 				rotate([0,0,i*360/circles])
 				translate([circle_orbit_diameter/2,0,-1])
-				linear_exturde_flat_option(flat =flat, height=max(gear_thickness,rim_thickness)+3)
+				linear_extrude_flat_option(flat =flat, height=max(gear_thickness,rim_thickness)+3)
 				circle(r=circle_diameter/2);
 			}
 		}
 	}
 }
 
-module linear_exturde_flat_option(flat =false, height = 10, center = false, convexity = 2, twist = 0)
+module linear_extrude_flat_option(flat =false, height = 10, center = false, convexity = 2, twist = 0)
 {
 	if(flat==false)
 	{
