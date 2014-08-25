@@ -590,6 +590,10 @@ function involute (base_radius, involute_angle) =
 // For ease of conversion from proper circular pitch to this broken library's
 // values
 function convertcp (circular_pitch) = circular_pitch / PI * 180;
+function circumference2radius (circumference) = circumference / (2 * PI);
+function gear_spacing (cp1, nt1, cp2, nt2) = circumference2radius (cp1 * nt1) +
+				             circumference2radius (cp2 * nt2);
+
 
 // Test Cases
 //===============
