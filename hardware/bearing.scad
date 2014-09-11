@@ -23,6 +23,7 @@ SkateBearing = 608;
 // Bearing dimensions
 // model == XXX ? [inner dia, outer dia, width]:
 function bearingDimensions(model) =
+	model == 603 ? [3*length_mm, 10*length_mm, 4*length_mm]:
 	model == 604 ? [4*length_mm, 12*length_mm, 4*length_mm]:
 	model == 606 ? [6*length_mm, 17*length_mm, 6*length_mm]:
 	model == 607 ? [7*length_mm, 19*length_mm, 6*length_mm]:
