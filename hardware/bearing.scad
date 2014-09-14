@@ -61,7 +61,7 @@ function bearingInnerDiameter(model) = bearingDimensions(model)[BEARING_INNER_DI
 function bearingOuterDiameter(model) = bearingDimensions(model)[BEARING_OUTER_DIAMETER];
 
 module bearing(pos=[0,0,0], angle=[0,0,0], model=SkateBearing, outline=false,
-                material=Steel, sideMaterial=Brass) {
+                material=Steel, sideMaterial=Brass, center=false) {
   // Common bearing names
   model =
     model == "Skate" ? 608 :
@@ -75,7 +75,9 @@ module bearing(pos=[0,0,0], angle=[0,0,0], model=SkateBearing, outline=false,
   outerRim = outerD - (outerD - innerD) * 0.2;
   midSink = w * 0.1;
 
-  translate(pos) rotate(angle) union() {
+  centering_pos = (center) ? [0, 0, -w/2] : [0, 0, 0];
+
+  translate(pos) rotate(angle) translate (centering_pos) union() {
     color(material)
       difference() {
         // Basic ring
