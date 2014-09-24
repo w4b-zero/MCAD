@@ -515,12 +515,12 @@ module gear (
 
 	module hub ()
 	{
-		linear_extrude_flat_option (
-			flat = flat,
-			height = hub_thickness,
-			convexity = 10
-		)
-		circle (d=hub_diameter);
+		if (internal)
+		cylinder (d=hub_diameter, h=hub_thickness);
+
+		else if (!flat)
+		translate ([0, 0, gear_thickness])
+		cylinder (d=hub_diameter, h=hub_thickness - gear_thickness);
 	}
 
 	module _circles ()
@@ -872,4 +872,4 @@ module test_internal_gear ()
 	);
 }
 
-!test_internal_gear ();
+*test_internal_gear ();
