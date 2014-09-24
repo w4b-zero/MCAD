@@ -328,6 +328,7 @@ module gear (
 	backlash=0,
 	twist=0,
 	helix_angle=0,
+	herringbone=false,
 	involute_facets=0,
 	flat=false,
 	roundsize=1,
@@ -425,42 +426,74 @@ module gear (
                 }
 	}
 
+	// render the extruded gear shape (or cutout for internal gear)
+	module common_external_extruded_gear ()
+	{
+		if (herringbone)
+		translate ([0, 0, rim_thickness / 2])
+		mirror_duplicate ([0, 0, 1])
+		linear_extrude (
+			height = rim_thickness / 2 + (internal ? 0.1 : 0),
+			convexity = 10,
+			twist = twist / 2
+		)
+		common_gear_shape ();
+
+		else
+		linear_extrude(
+			height = rim_thickness + (internal ? 0.2 : 0),
+			convexity = 10,
+			twist = -twist
+		)
+		common_gear_shape ();
+	}
+
+	module common_extruded_gear ()
+	{
+		if (flat)
+		common_gear_shape ();
+
+		else if (internal)
+		difference () {
+			// housing
+			cylinder (r=rim_radius, h=rim_thickness);
+
+			// gear cutout
+			translate ([0, 0, gear_thickness])
+			common_external_extruded_gear ();
+		}
+
+		else
+		common_external_extruded_gear ();
+	}
+
 	difference()
 	{
-		union()
-		{
-			if (internal) {
-				if (flat)
-					common_gear_shape ();
-				else
-					difference ()
-					{
-						cylinder (r=rim_radius, h=rim_thickness);
+		union () {
+			if (internal)
+			common_extruded_gear ();
 
-						translate ([0,0,gear_thickness == 0 ? - 0.1 : gear_thickness])
-						linear_extrude(height=rim_thickness + 0.2, convexity=10, twist=twist / rim_thickness * (rim_thickness + 0.2))
-						common_gear_shape ();
-					}
-
-			} else
-				difference ()
-				{
-					linear_extrude_flat_option(flat=flat, height=rim_thickness, convexity=10, twist=twist)
-					common_gear_shape ();
+			else
+			union () {
+				difference () {
+					common_external_extruded_gear ();
 
 					if (gear_thickness < rim_thickness)
 					translate ([0,0,gear_thickness])
 					cylinder (r=rim_radius,h=rim_thickness-gear_thickness+1);
 				}
 
-			if (gear_thickness > rim_thickness)
+				if (gear_thickness > rim_thickness)
 				linear_extrude_flat_option(flat=flat, height=gear_thickness)
 				circle (r=rim_radius);
+			}
+
 			if (flat == false && hub_thickness > gear_thickness)
-				translate ([0,0,gear_thickness])
-				linear_extrude_flat_option(flat=flat, height=hub_thickness-gear_thickness)
-				circle (r=hub_diameter/2);
+			translate ([0,0,gear_thickness])
+			linear_extrude_flat_option(flat=flat, height=hub_thickness-gear_thickness)
+			circle (r=hub_diameter/2);
 		}
+
 		render() {
 			translate ([0,0,-1])
 			linear_extrude_flat_option(flat =flat, height=2+max(rim_thickness,hub_thickness,gear_thickness))
@@ -721,8 +754,9 @@ module test_double_helix_gear (
 			hub_diameter=15,
 			bore_diameter=5,
 			circles=circles,
-			twist=twist/teeth);
-		mirror([0,0,1])
+			helix_angle=45,
+		herringbone=true);
+		*mirror([0,0,1])
 		gear (number_of_teeth=teeth,
 			circular_pitch=700,
 			pressure_angle=pressure_angle,
@@ -787,6 +821,10 @@ module test_internal_gear ()
 		rim_thickness = 10,
 		rim_width = 5,
 		gear_thickness = 0,
-		internal = true
+		internal = true,
+		helix_angle = 45,
+		herringbone = true
 	);
 }
+
+!test_internal_gear ();
