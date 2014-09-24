@@ -109,3 +109,11 @@ module part(name) {
   echo("");
   echo(str(name, ":"));
 }
+
+module mirror_duplicate (plane = [0, 0, 1])
+union () {
+    child ();
+
+    mirror (plane)
+    child ();
+}
