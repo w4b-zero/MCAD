@@ -4,6 +4,10 @@
 // Using this holes should come out approximately right when printed
 module polyhole(h, d) {
     n = max(round(2 * d),3);
+    flat = h < 0;
     rotate([0,0,180])
-        cylinder(h = h, r = (d / 2) / cos (180 / n), $fn = n);
+        if (h < 0)
+            circle (r = (d / 2) / cos (180 / n), $fn = n);
+        else
+            cylinder(h = h, r = (d / 2) / cos (180 / n), $fn = n);
 }
