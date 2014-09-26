@@ -525,6 +525,7 @@ module gear (
 
 	module _circles ()
 	{
+		if (circles > 1)
 		for (i=[0:circles-1])
 		rotate ([0, 0, i*360/circles])
 		translate ([circle_orbit_diameter / 2, 0, 0])
