@@ -214,6 +214,8 @@ function motorWidth(model=Nema23) = lookup(NemaSideSize, model);
 function motorLength(model=Nema23, size=NemaMedium) = lookup(size, model);
 function motorScrewSpacing(model=Nema23) = lookup(NemaDistanceBetweenMountingHoles, model);
 
+function Nema(number) = NemaDefinitions[number];
+
 module motor(model=Nema23, size=NemaMedium, dualAxis=false, pos=[0,0,0], orientation = [0,0,0]) {
 
   //motorDef = NemaDefinitions[model];
