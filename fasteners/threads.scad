@@ -38,6 +38,8 @@ module test_threads ($fa=5, $fs=0.1)
 
 // ----------------------------------------------------------------------------
 use <MCAD/general/utilities.scad>
+use <scad-utils/transformations.scad>
+use <sweep.scad>
 
 
 // ----------------------------------------------------------------------------
@@ -179,57 +181,49 @@ module trapezoidal_thread (
     lower_flat = upper_flat + left_flat + right_flat;
     clearance = 0.3/8 * tooth_height;
 
+    function tooth_profile () = [
+        [0, 0],
+        [tooth_height, right_flat],
+        [tooth_height, right_flat + upper_flat],
+        [0, lower_flat]
+    ];
+
     // facet calculation
     facets = $fn > 0 ? $fn :
     max (30, min (2 * PI * minor_radius / $fs, 360 / $fa));
-    fa = length2twist (length) / round (length2twist (length) / (360 / facets));
+    fa = 360 / facets;
+
+    slices = length2twist (length) / fa;
 
     // convert length along the tooth profile to angle of twist of the screw
     function length2twist (length) = length / pitch * (360 / n_starts);
     function twist2length (angle) = angle / (360 / n_starts) * pitch;
 
-    // polar coordinate function representing tooth profile
-    function get_radius (angle) =
-    minor_radius +
-    (
-        // left slant
-        (angle < length2twist (left_flat)) ?
-        tan (left_angle) * twist2length (angle) :
+    path_transforms = [
+        for (i=[0:slices + length2twist (pitch) / fa])
+        let (a=i * fa)
+        (
+            rotation (axis=[0, 0, a]) *
+            translation ([0, 0, twist2length (a) - pitch]) *
+            translation ([minor_radius, 0, 0]) *
+            rotation ([90, 0, 0])
+        )
+    ];
 
-        // upper flat portion
-        (angle < length2twist (left_flat + upper_flat)) ?
-        tooth_height - (internal ? -clearance : 0):
+    cylinder (r=minor_radius, h=length);
 
-        // right slant
-        (angle < length2twist (lower_flat)) ?
-        tan (right_angle) * (lower_flat - twist2length (angle)) :
+    difference () {
+        for (i=[0:n_starts])
+        rotate ([0, 0, i / n_starts * 360])
+        sweep (tooth_profile (), path_transforms);
 
-        // past the end of the tooth
-        internal ? 0 : clearance
-    );
+        translate ([0, 0, length + pitch / 2])
+        cube ([major_radius * 2 + .1, major_radius * 2+ .1, pitch],
+            center=true);
 
-    // obtain vertex for angle on cross-section
-    function get_vertex (angle) =
-    conv2D_polar2cartesian ([get_radius (angle), angle]);
-
-    linear_extrude (
-        height = length,
-        twist = -length2twist (length),
-        slices = length2twist (length) / fa,
-        $fa = fa
-    )
-    union () {
-        for (start = [0:n_starts])
-        rotate ([0, 0, start / n_starts * 360])
-        for (angle = [0:fa:360]) {
-            // draw the profile of the tooth along the perimeter of
-            // circle(minor_radius)
-            polygon (points=[
-                    [0, 0],
-                    get_vertex (angle),
-                    get_vertex (angle + fa + 0.1)
-                ]);
-        }
+        translate ([0, 0, -pitch / 2])
+        cube ([major_radius * 2 + .1, major_radius * 2+ .1, pitch],
+            center=true);
     }
 }
 
