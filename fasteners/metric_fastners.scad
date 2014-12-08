@@ -18,7 +18,7 @@
  *
 */
 
-$fn=50;
+// $fn=50;
 apply_chamfer=true;
 
 module cap_bolt(dia,len)
