@@ -182,8 +182,7 @@ module trapezoidal_thread (
     // facet calculation
     facets = $fn > 0 ? $fn :
     max (30, min (2 * PI * minor_radius / $fs, 360 / $fa));
-    tmp_fa = 360 / facets;
-    $fa = length2twist (length) / round (length2twist (length) / tmp_fa);
+    fa = length2twist (length) / round (length2twist (length) / (360 / facets));
 
     // convert length along the tooth profile to angle of twist of the screw
     function length2twist (length) = length / pitch * (360 / n_starts);
@@ -216,18 +215,19 @@ module trapezoidal_thread (
     linear_extrude (
         height = length,
         twist = -length2twist (length),
-        slices = length2twist (length) / $fa
+        slices = length2twist (length) / fa,
+        $fa = fa
     )
     union () {
         for (start = [0:n_starts])
         rotate ([0, 0, start / n_starts * 360])
-        for (angle = [0:$fa:360]) {
+        for (angle = [0:fa:360]) {
             // draw the profile of the tooth along the perimeter of
             // circle(minor_radius)
             polygon (points=[
                     [0, 0],
                     get_vertex (angle),
-                    get_vertex (angle + $fa + 0.1)
+                    get_vertex (angle + fa + 0.1)
                 ]);
         }
     }
