@@ -3,31 +3,31 @@ include <MCAD/units/metric.scad>
 
 // This library is dual licensed under the GPL 3.0 and the GNU Lesser General Public License as per http://creativecommons.org/licenses/LGPL/2.1/ .
 
-module test1()
+module mcad_test_nuts_and_bolts_1()
 {
 	$fn = 360;
 
 	translate([0,15])
-		nutHole(3, proj=-1);
-	boltHole(3, length= 30,tolerance=10, proj=-1);
+		mcad_nut_hole(3, proj=-1);
+	mcad_bolt_hole(3, length= 30,tolerance=10, proj=-1);
 
 }
-//test1();
+//mcad_test_nuts_and_bolts_1();
 
-module test2()
+module mcad_test_nuts_and_bolts_2()
 {
 	$fn = 360;
 	difference(){
 		cube(size = [10,20,10], center = true);
 		union(){
 			translate([0,15])
-				nutHole(3, proj=2);
+				mcad_nut_hole(3, proj=2);
 			linear_extrude(height = 20, center = true, convexity = 10, twist = 0)
-			boltHole(3, length= 30, proj=2);
+			mcad_bolt_hole(3, length= 30, proj=2);
 		}
 	}
 }
-//test2();
+//mcad_test_nuts_and_bolts_2();
 
 MM = "mm";
 INCH = "inch"; //Not yet supported
@@ -155,7 +155,7 @@ COARSE_THREAD_METRIC_BOLT_MAJOR_DIAMETERS =
 	35.940//m36
 ];
 
-module nutHole(size, units=MM, tolerance = +0.0001, proj = -1)
+module mcad_nut_hole(size, units = MM, tolerance = +0.0001, proj = -1)
 {
 	//takes a metric screw/nut size and looksup nut dimensions
 	radius = METRIC_NUT_AC_WIDTHS[size]/2+tolerance;
@@ -175,7 +175,7 @@ module nutHole(size, units=MM, tolerance = +0.0001, proj = -1)
 	}
 }
 
-module boltHole(size, units=MM, length, tolerance = +0.0001, proj = -1)
+module mcad_bolt_hole(size, units = MM, length, tolerance = +0.0001, proj = -1)
 {
 	radius = COARSE_THREAD_METRIC_BOLT_MAJOR_DIAMETERS[size]/2+tolerance;
 
@@ -184,9 +184,9 @@ module boltHole(size, units=MM, length, tolerance = +0.0001, proj = -1)
 
 	if (proj == -1)
 	{
-	translate([0, 0, -capHeight])
-		cylinder(r= capRadius, h=capHeight);
-	cylinder(r = radius, h = length);
+		translate([0, 0, -capHeight])
+			cylinder(r= capRadius, h=capHeight);
+		cylinder(r = radius, h = length);
 	}
 	if (proj == 1)
 	{
