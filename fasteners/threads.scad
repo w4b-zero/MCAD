@@ -181,12 +181,16 @@ module trapezoidal_thread (
     lower_flat = upper_flat + left_flat + right_flat;
     clearance = 0.3/8 * tooth_height;
 
-    function tooth_profile () = [
+    tooth_profile = [
         [0, 0],
-        [tooth_height, right_flat],
-        [tooth_height, right_flat + upper_flat],
+        [tooth_height + 0.001, right_flat],
+        [tooth_height + 0.001, right_flat + upper_flat],
         [0, lower_flat]
     ];
+
+    // convert length along the tooth profile to angle of twist of the screw
+    function length2twist (length) = length / pitch * (360 / n_starts);
+    function twist2length (angle) = angle / (360 / n_starts) * pitch;
 
     // facet calculation
     facets = $fn > 0 ? $fn :
@@ -195,18 +199,14 @@ module trapezoidal_thread (
 
     slices = length2twist (length) / fa;
 
-    // convert length along the tooth profile to angle of twist of the screw
-    function length2twist (length) = length / pitch * (360 / n_starts);
-    function twist2length (angle) = angle / (360 / n_starts) * pitch;
-
     path_transforms = [
         for (i=[0:slices + length2twist (pitch) / fa])
         let (a=i * fa)
         (
             rotation (axis=[0, 0, a]) *
             translation ([0, 0, twist2length (a) - pitch]) *
-            translation ([minor_radius, 0, 0]) *
-            rotation ([90, 0, 0])
+            translation ([minor_radius - 0.001, 0, 0]) *
+            rotation (axis=[90, 0, 0])
         )
     ];
 
@@ -215,7 +215,7 @@ module trapezoidal_thread (
     difference () {
         for (i=[0:n_starts])
         rotate ([0, 0, i / n_starts * 360])
-        sweep (tooth_profile (), path_transforms);
+        sweep (tooth_profile, path_transforms);
 
         translate ([0, 0, length + pitch / 2])
         cube ([major_radius * 2 + .1, major_radius * 2+ .1, pitch],
