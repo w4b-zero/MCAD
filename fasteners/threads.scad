@@ -38,8 +38,8 @@ module test_threads ($fa=5, $fs=0.1)
 
 // ----------------------------------------------------------------------------
 use <MCAD/general/utilities.scad>
+use <MCAD/general/sweep.scad>
 use <scad-utils/transformations.scad>
-use <sweep.scad>
 
 
 // ----------------------------------------------------------------------------
