@@ -8,7 +8,7 @@
 // mcad_rounded_box([20, 30, 40], 5, true);
 
 // size is a vector [w, h, d]
-module mcad_rounded_box (size, radius, sidesonly)
+module mcad_rounded_box (size, radius, sidesonly, center=false)
 {
     module place_xy ()
     for (x = [size[0]/2 - radius, -size[0]/2 + radius])
@@ -16,6 +16,7 @@ module mcad_rounded_box (size, radius, sidesonly)
     translate ([x, y, 0])
     children ();
 
+    translate (center ? [0, 0, 0] : size / 2)
     hull ()
     if (sidesonly) {
         place_xy ()
