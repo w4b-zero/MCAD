@@ -2,11 +2,13 @@
 // This file is licensed under the terms of Creative Commons Attribution 3.0 Unported.
 
 // Using this holes should come out approximately right when printed
-module polyhole(h, d) {
-    n = max(round(2 * d),3);
-    flat = h < 0;
+
+module mcad_polyhole(d, h = undef) {
+    n = max (round (2 * d), 3);
+    flat = (h == undef);
+
     rotate([0,0,180])
-        if (h < 0)
+        if (flat)
             circle (r = (d / 2) / cos (180 / n), $fn = n);
         else
             cylinder(h = h, r = (d / 2) / cos (180 / n), $fn = n);
