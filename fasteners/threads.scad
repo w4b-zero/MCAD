@@ -194,7 +194,7 @@ module trapezoidal_thread (
 
     // facet calculation
     facets = $fn > 0 ? $fn :
-    max (30, min (2 * PI * minor_radius / $fs, 360 / $fa));
+    ceil (max (5, min (2 * PI * minor_radius / $fs, 360 / $fa)));
     fa = 360 / facets;
 
     slices = length2twist (length) / fa;
