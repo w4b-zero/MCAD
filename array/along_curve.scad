@@ -9,16 +9,19 @@ include <MCAD/units/metric.scad>
 use <MCAD/general/utilities.scad>
 
 // TODO check that the axis parameter works as intended
-// Duplicate everything $no of times around an $axis, for $angle/360 rounds
+// Duplicate everything $no-1 of times around an $axis.
+// If no $angle is given, space $no-1 items evenly around $axis.
+// If $angle is given, rotate $no-1 items around $axis by $angle.
+// children(0) is not moved.
 module spin(no, angle=360, axis=Z){
-	for (i = [1:no]){
-		rotate(normalized_axis(axis)*angle*no/i) union(){
-			for (i = [0 : $children-1]) children(i);
+	angle = ( angle == 360 ) ? angle / no : angle;
+	for (i = [0:no-1]){
+		rotate(normalized_axis(axis)*angle*i) union(){
+			for (j = [0 : $children-1]) children(j);
 		}
 	}
 }
 
-//Doesn't work currently
 module duplicate(axis=Z) spin(no=2, axis=axis) child(0);
 
 module linear_multiply(no, separation, axis=Z){
