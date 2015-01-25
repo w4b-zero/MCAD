@@ -8,11 +8,9 @@
 include <MCAD/units/metric.scad>
 use <MCAD/general/utilities.scad>
 
-// TODO check that the axis parameter works as intended
-// Duplicate everything $no-1 of times around an $axis.
-// If no $angle is given, space $no-1 items evenly around $axis.
-// If $angle is given, rotate $no-1 items around $axis by $angle.
-// children(0) is not moved.
+// Place children $no times around $axis, with the first duplicate being unmoved
+// from its original spot. $angle is the angle of rotation between children(n)
+// and children(n-1).
 module spin(no, angle=360, axis=Z){
 	angle = ( angle == 360 ) ? angle / no : angle;
 	for (i = [0:no-1]){
