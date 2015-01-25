@@ -6,7 +6,6 @@
  */
 
 include <MCAD/units/metric.scad>
-use <MCAD/general/utilities.scad>
 
 // Place children $no times around $axis, with the first duplicate being unmoved
 // from its original spot. $angle is the angle of rotation between children(n)
@@ -15,7 +14,7 @@ module mcad_rotate_multiply (no, angle = undef, axis = Z)
 {
     angle = ( angle == undef ) ? 360 / no : angle;
     for (i = [0:no-1]){
-	rotate(normalized_axis(axis)*angle*i)
+        rotate (angle * i, axis)
         children ();
     }
 }
