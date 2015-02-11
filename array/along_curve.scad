@@ -31,3 +31,20 @@ module mcad_linear_multiply (no, separation, axis = Z)
     translate (i * separation * axis)
     children (0);
 }
+
+/**
+ * Make copies.
+ * @param transformations Vector of transformation matrices to use with
+ *        multmatrix
+ * @param keep_original Whether to render children without any transformations
+ */
+module mcad_multiply (transformations, keep_original = true)
+{
+    if (keep_original)
+    children ();
+
+    for (transformation = transformations) {
+        multmatrix (transformation)
+        children ();
+    }
+}
