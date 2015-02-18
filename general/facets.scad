@@ -29,6 +29,6 @@ polygon (
         let (r = 10)
         for (t = gen_facet_series (r, $fn = 10))
         let (angle = t * 360)
-        [cos (angle) * 10, sin (angle) * 10]
+        [cos (angle) * r, sin (angle) * r]
     ]
 );
