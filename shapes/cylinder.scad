@@ -69,16 +69,18 @@ module mcad_rounded_cylinder (
                     round_corner (round_r2, [r2, h])
                     basic_section ();
 
-                    translate ([-epsilon, 0])
-                    square ([max (r1, r2) + epsilon * 2, h - round_r2]);
+                    translate ([-epsilon, -epsilon])
+                    square ([max (r1, r2) + epsilon * 2,
+                            max (epsilon, round_r1 + epsilon)]);
                 }
 
                 difference () {
                     round_corner (round_r1, [r1, 0])
                     basic_section ();
 
-                    translate ([-epsilon, round_r1])
-                    square ([max (r1, r2) + epsilon * 2, h - round_r1]);
+                    translate ([-epsilon, h + epsilon])
+                    mirror (Y)
+                    square ([max (r1, r2) + epsilon * 2, round_r2]);
                 }
             }
 
@@ -87,5 +89,6 @@ module mcad_rounded_cylinder (
     }
 }
 
-mcad_rounded_cylinder (r1 = 3, r2 = 10, h = 40, round_r1 = 3, round_r2 = 10,
+*mcad_rounded_cylinder (r1 = 3, r2 = 10, h = 40, round_r1 = 3, round_r2 = 10,
     slices = 100);
+*mcad_rounded_cylinder (r = 3, h = 40, round_r1 = 3, slices = 100);
