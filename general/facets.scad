@@ -16,7 +16,7 @@ function get_fragments_from_r (r) = (
  *
  * @param r Radius of circle
  */
-function gen_facet_series (r) = [0 : 1.0 / get_fragments_from_r (r) : 1.01];
+function gen_facet_series (r) = [0 : 1.0 / get_fragments_from_r (r) : 1.0001];
 
 // example
 translate ([0, 0, 10])
