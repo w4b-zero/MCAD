@@ -297,9 +297,9 @@ module motor(model=Nema23, size=NemaMedium, dualAxis=false, pos=[0,0,0], orienta
           // Grinded flat
           color(stepperAluminum) {
             difference() {
-              translate([-1*length_mm, -1*length_mm, -extrSize]) 
+              translate([-1*length_mm, -1*length_mm, -1*length_mm]) 
                 cube(size=[side+2*length_mm, side+2*length_mm, extrSize + 1*length_mm]);
-              translate([side/2, side/2, -extrSize - 1*length_mm]) 
+              translate([side/2, side/2, -1.1*length_mm]) 
                 cylinder(h=4*length_mm, r=extrRad);
             }
           }
@@ -333,3 +333,4 @@ module motor(model=Nema23, size=NemaMedium, dualAxis=false, pos=[0,0,0], orienta
     }
   }
 }
+
