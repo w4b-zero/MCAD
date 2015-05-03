@@ -39,6 +39,7 @@ module test_threads ($fa=5, $fs=0.1)
 // ----------------------------------------------------------------------------
 use <MCAD/general/utilities.scad>
 use <MCAD/general/sweep.scad>
+use <MCAD/general/facets.scad>
 use <scad-utils/transformations.scad>
 
 
@@ -193,8 +194,7 @@ module trapezoidal_thread (
     function twist2length (angle) = angle / (360 / n_starts) * pitch;
 
     // facet calculation
-    facets = $fn > 0 ? $fn :
-    ceil (max (5, min (2 * PI * minor_radius / $fs, 360 / $fa)));
+    facets = get_fragments_from_r (minor_radius);
     fa = 360 / facets;
 
     slices = length2twist (length) / fa;
