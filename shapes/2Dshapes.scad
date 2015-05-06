@@ -161,3 +161,25 @@ module pieSlice(size, start_angle, end_angle) //size in radius(es)
 module ellipse(width, height) {
   scale([1, height/width, 1]) circle(r=width/2);
 }
+
+module trapezoid (bottom, height, top = undef,
+    left_angle = undef, right_angle = undef)
+{
+    function tan90 (angle) = (angle == 90) ? 0 : tan (angle);
+
+    function get_trapezoid_offset (adjacent, opposite) = (
+        (adjacent == undef && opposite == undef) ? (bottom - top) / 2 :
+        (adjacent == undef) ? bottom - tan90 (90 - opposite) * height - top :
+        tan90 (90 - adjacent) * height
+    );
+
+    offset_left = get_trapezoid_offset (left_angle, right_angle);
+    offset_right = get_trapezoid_offset (right_angle, left_angle);
+
+    polygon ([
+            [-bottom / 2, 0],
+            [bottom / 2, 0],
+            [bottom / 2 - offset_right, height],
+            [-bottom / 2 + offset_left, height]
+        ]);
+}
