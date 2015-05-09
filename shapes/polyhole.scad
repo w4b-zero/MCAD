@@ -3,7 +3,7 @@
 
 // Using this holes should come out approximately right when printed
 
-module mcad_polyhole(d, h = undef) {
+module mcad_polyhole(d, h = undef, center = true) {
     n = max (round (2 * d), 3);
     flat = (h == undef);
 
@@ -11,5 +11,10 @@ module mcad_polyhole(d, h = undef) {
         if (flat)
             circle (r = (d / 2) / cos (180 / n), $fn = n);
         else
-            cylinder(h = h, r = (d / 2) / cos (180 / n), $fn = n);
+            cylinder (
+                h = h,
+                r = (d / 2) / cos (180 / n),
+                center = true,
+                $fn = n
+            );
 }
