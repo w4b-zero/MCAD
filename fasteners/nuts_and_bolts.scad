@@ -155,6 +155,12 @@ COARSE_THREAD_METRIC_BOLT_MAJOR_DIAMETERS =
 	35.940//m36
 ];
 
+function mcad_metric_nut_ac_width (size) = METRIC_NUT_AC_WIDTHS[size];
+function mcad_metric_nut_thickness (size) = METRIC_NUT_THICKNESS[size];
+function mcad_metric_bolt_major_diameter (size) = (
+    COARSE_THREAD_METRIC_BOLT_MAJOR_DIAMETERS[size]
+);
+
 module mcad_nut_hole(size, units = MM, tolerance = +0.0001, proj = -1)
 {
 	//takes a metric screw/nut size and looksup nut dimensions
