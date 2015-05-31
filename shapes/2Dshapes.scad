@@ -184,9 +184,9 @@ module trapezoid (bottom, height, top = undef,
         ]);
 }
 
-module ccube (size, center)
+module ccube (size, center = false)
 {
-    center = (len (center) == undef) ? [true, true, true] : center;
+    center = (len (center) == undef) ? [center, center, center] : center;
     size = (len (size) == undef) ? [size, size, size] : size;
 
     function get_offset (i) = center[i] ? - size[i] / 2 : 0;
