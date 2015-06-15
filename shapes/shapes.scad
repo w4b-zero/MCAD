@@ -58,9 +58,10 @@ module ellipsoid(w, h, center = false) {
 
 // wall is wall thickness
 module tube(h, r, wall, center = false) {
+  linear_extrude (height=h, center=center)
   difference() {
-    cylinder(h=h, r=r, center=center);
-    cylinder(h=h, r=r-wall, center=center);
+    circle(r=r, center=center);
+    circle(r=r-wall, center=center);
   }
 }
 
