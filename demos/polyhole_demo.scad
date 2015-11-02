@@ -6,11 +6,11 @@ difference() {
     union() {
     	for(i = [1:10]) {
             translate([(i * i + i)/2 + 3 * i , 8,-1])
-                polyhole(h = 5, d = i);
+                mcad_polyhole(h = 5, d = i);
                 
             assign(d = i + 0.5)
                 translate([(d * d + d)/2 + 3 * d, 19,-1])
-                    polyhole(h = 5, d = d);
+                    mcad_polyhole(h = 5, d = d);
     	}
     }
 }
