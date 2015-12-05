@@ -401,11 +401,11 @@ module linear_exturde_flat_option(flat =false, height = 10, center = false, conv
 {
 	if(flat==false)
 	{
-		linear_extrude(height = height, center = center, convexity = convexity, twist= twist) child(0);
+		linear_extrude(height = height, center = center, convexity = convexity, twist= twist) children(0);
 	}
 	else
 	{
-		child(0);
+		children(0);
 	}
 
 }
