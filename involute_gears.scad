@@ -310,7 +310,8 @@ module gear (
 	involute_facets=0,
 	flat=false)
 {
-	if (circular_pitch==false && diametral_pitch==false)
+	// Check for undefined circular pitch (happens when neither circular_pitch or diametral_pitch are specified)
+	if (circular_pitch==undef)
 		echo("MCAD ERROR: gear module needs either a diametral_pitch or circular_pitch");
 
 	//Convert diametrial pitch to our native circular pitch
