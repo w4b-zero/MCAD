@@ -297,7 +297,7 @@ module gear (
 	number_of_teeth=15,
 	circular_pitch=false, diametral_pitch=false,
 	pressure_angle=28,
-	clearance = 0.2,
+	clearance = false,
 	gear_thickness=5,
 	rim_thickness=8,
 	rim_width=5,
@@ -317,10 +317,13 @@ module gear (
 	//Convert diametrial pitch to our native circular pitch
 	circular_pitch = (circular_pitch!=false?circular_pitch:pi/diametral_pitch);
 
+	// Calculate default clearance if not specified
+	clearance = (clearance!=false?clearance:0.25 * circular_pitch / pi);
+	
 	// Pitch diameter: Diameter of pitch circle.
 	pitch_diameter  =  number_of_teeth * circular_pitch / pi;
 	pitch_radius = pitch_diameter/2;
-	echo ("Teeth:", number_of_teeth, " Pitch radius:", pitch_radius);
+	echo (str("Teeth: ", number_of_teeth, ", Pitch Radius: ", pitch_radius, ", Clearance: ", clearance));
 
 	// Base Circle
 	base_radius = pitch_radius*cos(pressure_angle);
