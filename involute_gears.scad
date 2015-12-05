@@ -297,7 +297,7 @@ module gear (
 	number_of_teeth=15,
 	circular_pitch=undef, diametral_pitch=undef,
 	pressure_angle=28,
-	clearance = false,
+	clearance = undef,
 	gear_thickness=5,
 	rim_thickness=8,
 	rim_width=5,
@@ -318,7 +318,7 @@ module gear (
 	circular_pitch = (circular_pitch!=undef?circular_pitch:pi/diametral_pitch);
 
 	// Calculate default clearance if not specified
-	clearance = (clearance!=false?clearance:0.25 * circular_pitch / pi);
+	clearance = (clearance!=undef?clearance:0.25 * circular_pitch / pi);
 	
 	// Pitch diameter: Diameter of pitch circle.
 	pitch_diameter  =  number_of_teeth * circular_pitch / pi;
