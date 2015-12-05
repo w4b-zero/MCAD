@@ -315,10 +315,10 @@ module gear (
 		echo("MCAD ERROR: gear module needs either a diametral_pitch or circular_pitch");
 
 	//Convert diametrial pitch to our native circular pitch
-	circular_pitch = (circular_pitch!=false?circular_pitch:180/diametral_pitch);
+	circular_pitch = (circular_pitch!=false?circular_pitch:pi/diametral_pitch);
 
 	// Pitch diameter: Diameter of pitch circle.
-	pitch_diameter  =  number_of_teeth * circular_pitch / 180;
+	pitch_diameter  =  number_of_teeth * circular_pitch / pi;
 	pitch_radius = pitch_diameter/2;
 	echo ("Teeth:", number_of_teeth, " Pitch radius:", pitch_radius);
 
