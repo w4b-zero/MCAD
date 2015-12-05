@@ -299,11 +299,11 @@ module gear (
 	pressure_angle=28,
 	clearance = undef,
 	gear_thickness=5,
-	rim_thickness=8,
-	rim_width=5,
-	hub_thickness=10,
-	hub_diameter=15,
-	bore_diameter=5,
+	rim_thickness=undef,
+	rim_width=undef,
+	hub_thickness=undef,
+	hub_diameter=undef,
+	bore_diameter=undef,
 	circles=0,
 	backlash=0,
 	twist=0,
@@ -346,7 +346,16 @@ module gear (
 	half_thick_angle = (360 / number_of_teeth - backlash_angle) / 4;
 
 	// Variables controlling the rim.
+	rim_thickness = (rim_thickness!=undef?(rim_thickness!=0?rim_thickness:gear_thickness):gear_thickness * 1.5);
+	rim_width = (rim_width!=undef?rim_width:root_radius * .1);
 	rim_radius = root_radius - rim_width;
+	
+	// Variables controlling the hub_diameter
+	hub_thickness = (hub_thickness!=undef?(hub_thickness!=0?hub_thickness:gear_thickness):gear_thickness * 2);
+	hub_diameter = (hub_diameter!=undef?hub_diameter:root_radius * .3);
+	
+	// Variables controlling the bore
+	bore_diameter = (bore_diameter!=undef?bore_diameter:root_radius * .1);
 
 	// Variables controlling the circular holes in the gear.
 	circle_orbit_diameter=hub_diameter/2+rim_radius;
