@@ -295,7 +295,7 @@ module involute_bevel_gear_tooth (
 
 module gear (
 	number_of_teeth=15,
-	circular_pitch=false, diametral_pitch=false,
+	circular_pitch=undef, diametral_pitch=undef,
 	pressure_angle=28,
 	clearance = false,
 	gear_thickness=5,
@@ -315,7 +315,7 @@ module gear (
 		echo("MCAD ERROR: gear module needs either a diametral_pitch or circular_pitch");
 
 	//Convert diametrial pitch to our native circular pitch
-	circular_pitch = (circular_pitch!=false?circular_pitch:pi/diametral_pitch);
+	circular_pitch = (circular_pitch!=undef?circular_pitch:pi/diametral_pitch);
 
 	// Calculate default clearance if not specified
 	clearance = (clearance!=false?clearance:0.25 * circular_pitch / pi);
