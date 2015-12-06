@@ -295,31 +295,35 @@ module involute_bevel_gear_tooth (
 
 module gear (
 	number_of_teeth=15,
-	circular_pitch=false, diametral_pitch=false,
+	circular_pitch=undef, diametral_pitch=undef,
 	pressure_angle=28,
-	clearance = 0.2,
+	clearance = undef,
 	gear_thickness=5,
-	rim_thickness=8,
-	rim_width=5,
-	hub_thickness=10,
-	hub_diameter=15,
-	bore_diameter=5,
+	rim_thickness=undef,
+	rim_width=undef,
+	hub_thickness=undef,
+	hub_diameter=undef,
+	bore_diameter=undef,
 	circles=0,
 	backlash=0,
 	twist=0,
 	involute_facets=0,
 	flat=false)
 {
-	if (circular_pitch==false && diametral_pitch==false)
+	// Check for undefined circular pitch (happens when neither circular_pitch or diametral_pitch are specified)
+	if (circular_pitch==undef)
 		echo("MCAD ERROR: gear module needs either a diametral_pitch or circular_pitch");
 
 	//Convert diametrial pitch to our native circular pitch
-	circular_pitch = (circular_pitch!=false?circular_pitch:180/diametral_pitch);
+	circular_pitch = (circular_pitch!=undef?circular_pitch:pi/diametral_pitch);
 
+	// Calculate default clearance if not specified
+	clearance = (clearance!=undef?clearance:0.25 * circular_pitch / pi);
+	
 	// Pitch diameter: Diameter of pitch circle.
-	pitch_diameter  =  number_of_teeth * circular_pitch / 180;
+	pitch_diameter  =  number_of_teeth * circular_pitch / pi;
 	pitch_radius = pitch_diameter/2;
-	echo ("Teeth:", number_of_teeth, " Pitch radius:", pitch_radius);
+	echo (str("Teeth: ", number_of_teeth, ", Pitch Radius: ", pitch_radius, ", Clearance: ", clearance));
 
 	// Base Circle
 	base_radius = pitch_radius*cos(pressure_angle);
@@ -342,7 +346,16 @@ module gear (
 	half_thick_angle = (360 / number_of_teeth - backlash_angle) / 4;
 
 	// Variables controlling the rim.
+	rim_thickness = (rim_thickness!=undef?(rim_thickness!=0?rim_thickness:gear_thickness):gear_thickness * 1.5);
+	rim_width = (rim_width!=undef?rim_width:root_radius * .1);
 	rim_radius = root_radius - rim_width;
+	
+	// Variables controlling the hub_diameter
+	hub_thickness = (hub_thickness!=undef?(hub_thickness!=0?hub_thickness:gear_thickness):gear_thickness * 2);
+	hub_diameter = (hub_diameter!=undef?hub_diameter:root_radius * .3);
+	
+	// Variables controlling the bore
+	bore_diameter = (bore_diameter!=undef?bore_diameter:root_radius * .1);
 
 	// Variables controlling the circular holes in the gear.
 	circle_orbit_diameter=hub_diameter/2+rim_radius;
@@ -360,7 +373,7 @@ module gear (
 		{
 			difference ()
 			{
-				linear_exturde_flat_option(flat=flat, height=rim_thickness, convexity=10, twist=twist)
+				linear_extrude_flat_option(flat=flat, height=rim_thickness, convexity=10, twist=twist)
 				gear_shape (
 					number_of_teeth,
 					pitch_radius = pitch_radius,
@@ -375,36 +388,36 @@ module gear (
 					cylinder (r=rim_radius,h=rim_thickness-gear_thickness+1);
 			}
 			if (gear_thickness > rim_thickness)
-				linear_exturde_flat_option(flat=flat, height=gear_thickness)
+				linear_extrude_flat_option(flat=flat, height=gear_thickness)
 				circle (r=rim_radius);
 			if (flat == false && hub_thickness > gear_thickness)
 				translate ([0,0,gear_thickness])
-				linear_exturde_flat_option(flat=flat, height=hub_thickness-gear_thickness)
+				linear_extrude_flat_option(flat=flat, height=hub_thickness-gear_thickness)
 				circle (r=hub_diameter/2);
 		}
 		translate ([0,0,-1])
-		linear_exturde_flat_option(flat =flat, height=2+max(rim_thickness,hub_thickness,gear_thickness))
+		linear_extrude_flat_option(flat =flat, height=2+max(rim_thickness,hub_thickness,gear_thickness))
 		circle (r=bore_diameter/2);
 		if (circles>0)
 		{
 			for(i=[0:circles-1])
 				rotate([0,0,i*360/circles])
 				translate([circle_orbit_diameter/2,0,-1])
-				linear_exturde_flat_option(flat =flat, height=max(gear_thickness,rim_thickness)+3)
+				linear_extrude_flat_option(flat =flat, height=max(gear_thickness,rim_thickness)+3)
 				circle(r=circle_diameter/2);
 		}
 	}
 }
 
-module linear_exturde_flat_option(flat =false, height = 10, center = false, convexity = 2, twist = 0)
+module linear_extrude_flat_option(flat =false, height = 10, center = false, convexity = 2, twist = 0)
 {
 	if(flat==false)
 	{
-		linear_extrude(height = height, center = center, convexity = convexity, twist= twist) child(0);
+		linear_extrude(height = height, center = center, convexity = convexity, twist= twist) children(0);
 	}
 	else
 	{
-		child(0);
+		children(0);
 	}
 
 }
