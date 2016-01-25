@@ -1,51 +1,36 @@
-// array functions
-// by david powell 
-// licence LGPL V2 or later 
-//
-// this lib provides 2 functions 
-// Cubic_Array() , and Radial_Array()
-//
-//Cubic_Array(sx,sy,sz,nx,ny,nz,center){childobject}
-//  produces a cubic grid of child objects 
-//  sx,sy,sz = spacing for each axis 
-//  nx,ny,nz and number of objects on each axis 
-//  center = true/false on if geometery is centered or not
+/**
+  * Copyright (C) 2016 Chow Loong Jin <hyperair@debian.org>
+  *
+  * This library is free software; you can redistribute it and/or
+  * modify it under the terms of the GNU Lesser General Public
+  * License as published by the Free Software Foundation; either
+  * version 2.1 of the License, or (at your option) any later version.
+  *
+  * This library is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  * Lesser General Public License for more details.
+  *
+  * You should have received a copy of the GNU Lesser General Public
+  * License along with this library; if not, write to the Free Software
+  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+  * 02110-1301  USA
+  */
 
-// main lib modules
-module array_rectangular(sx,sy,sz,nx,ny,nz,center)
+
+use <MCAD/array/translations.scad>
+
+/**
+ * Rectangular array, i.e. place objects on a grid. @see mcad_generate_grid
+ *
+ * @param grid_size 2- or 3-vector indicating grid size in terms of elements
+ * @param separation 2- or 3-vector indicating separation in respective axes
+ * @param center Boolean or vector indicating which axes to center
+ */
+module mcad_array_rectangular (grid_size, separation, center = true)
 {
-	if (center==true)
-	{
-		translate([-(((nx+1)*sx)/2),-(((ny+1)*sy)/2),-(((nz+1)*sz)/2)])
-		{
-			for(x=[1:nx])
-			{
-				for(y=[1:ny])
-				{
-					for(z=[1:nz])
-					{
-						translate([x*sx,y*sy,z*sz])
-							for (k = [0:$children-1]) children(k,center=true);;
-					}
-				}
-			}
-		}
-	}
-	else
-	{
-		translate([0,0,0])
-		{
-			for(x=[1:nx])
-			{
-				for(y=[1:ny])
-				{
-					for(z=[1:nz])
-					{
-						translate([x*sx,y*sy,z*sz])
-							for (k = [0:$children-1]) children(k);
-					}
-				}
-			}
-		}
-	}
+	mcad_place_at (mcad_generate_grid (grid_size = grid_size,
+									   separation = separation,
+									   center = true))
+		children ();
 }
