@@ -117,3 +117,15 @@ union () {
     mirror (plane)
     child ();
 }
+
+module linear_extrude_if (condition, height, center = undef, convexity = undef,
+                          twist = undef, slices = undef)
+{
+  if (condition)
+    linear_extrude (height = height, center = center, convexity = convexity,
+                    twist = twist, slices = slices)
+      children ();
+
+  else
+    children ();
+}

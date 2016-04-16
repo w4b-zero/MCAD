@@ -1,5 +1,6 @@
 include <MCAD/units/metric.scad>
 use <MCAD/shapes/polyhole.scad>
+use <MCAD/general/utilities.scad>
 
 module mcad_rounded_cylinder (
     // same options as cylinder()
@@ -90,9 +91,9 @@ module mcad_rounded_cylinder (
     }
 }
 
-module mcad_tube (od, id, h)
+module mcad_tube (od, id, h = undef)
 {
-    linear_extrude (height = h)
+    linear_extrude_if (h != undef, height = h)
     difference () {
         circle (d = od);
         mcad_polyhole (d = id);
