@@ -34,13 +34,56 @@ SkateBearing = 608;
 
 // Bearing dimensions
 // model == XXX ? [inner dia, outer dia, width]:
+// http://www.gizmology.net/bearings.htm has some valuable information on that
+// https://www.bearingworks.com/bearing-sizes has a very exhaustive table of dimensions
 function bearingDimensions(model) =
-  model == 608 ? [8*mm, 22*mm, 7*mm]:
-  model == 623 ? [3*mm, 10*mm, 4*mm]:
-  model == 624 ? [4*mm, 13*mm, 5*mm]:
-  model == 627 ? [7*mm, 22*mm, 7*mm]:
-  model == 688 ? [8*mm, 16*mm, 4*mm]:
-  model == 698 ? [8*mm, 19*mm, 6*mm]:
+  model == 603 ? [3*mm,  9*mm,  5*mm]:
+  model == 604 ? [4*mm, 12*mm,  4*mm]:
+  model == 605 ? [5*mm, 14*mm,  5*mm]:
+  model == 606 ? [6*mm, 17*mm,  6*mm]:
+  model == 607 ? [7*mm, 19*mm,  6*mm]:
+  model == 608 ? [8*mm, 22*mm,  7*mm]:
+  model == 609 ? [9*mm, 24*mm,  7*mm]:
+
+  model == 623 ? [3*mm, 10*mm,  4*mm]:
+  model == 624 ? [4*mm, 13*mm,  5*mm]:
+  model == 625 ? [5*mm, 16*mm,  5*mm]:
+  model == 626 ? [6*mm, 19*mm,  6*mm]:
+  model == 627 ? [7*mm, 22*mm,  7*mm]:
+  model == 628 ? [8*mm, 24*mm,  8*mm]:
+  model == 629 ? [9*mm, 26*mm,  8*mm]:
+
+  model == 633 ? [3*mm, 13*mm,  5*mm]:
+  model == 634 ? [4*mm, 16*mm,  5*mm]:
+  model == 635 ? [5*mm, 19*mm,  6*mm]:
+  model == 636 ? [6*mm, 22*mm,  7*mm]:
+  model == 637 ? [7*mm, 26*mm,  9*mm]:
+  model == 638 ? [8*mm, 28*mm,  9*mm]:
+  model == 639 ? [9*mm, 30*mm, 10*mm]:
+
+  model == 673 ? [3*mm,  6*mm,  2.5*mm]:
+  model == 674 ? [4*mm,  7*mm,  2.5*mm]:
+  model == 675 ? [5*mm,  8*mm,  2.5*mm]:
+  model == 676 ? [6*mm, 10*mm,  3*mm]:
+  model == 677 ? [7*mm, 11*mm,  3*mm]:
+  model == 678 ? [8*mm, 12*mm,  3.5*mm]:
+
+  model == 683 ? [3*mm,  7*mm,  3*mm]:
+  model == 684 ? [4*mm,  9*mm,  4*mm]:
+  model == 685 ? [5*mm, 11*mm,  5*mm]:
+  model == 686 ? [6*mm, 13*mm,  5*mm]:
+  model == 687 ? [7*mm, 14*mm,  5*mm]:
+  model == 688 ? [8*mm, 16*mm,  5*mm]:
+  model == 689 ? [9*mm, 17*mm,  5*mm]:
+
+  model == 693 ? [3*mm,  8*mm,  4*mm]:
+  model == 694 ? [4*mm, 11*mm,  4*mm]:
+  model == 695 ? [5*mm, 13*mm,  4*mm]:
+  model == 696 ? [6*mm, 15*mm,  5*mm]:
+  model == 697 ? [7*mm, 17*mm,  5*mm]:
+  model == 698 ? [8*mm, 19*mm,  6*mm]:
+  model == 699 ? [9*mm, 20*mm,  6*mm]:
+
   [8*mm, 22*mm, 7*mm]; // this is the default
 
 
