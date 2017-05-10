@@ -48,7 +48,9 @@ module mcad_duplicate (axis = Z)
  */
 module mcad_linear_multiply (no, separation, axis = Z, center = false)
 {
-    translate (-1 * axis * (no - 1) * separation / 2)
+    centering_offset = -1 * axis * (no - 1) * separation / 2;
+
+    translate (center ? centering_offset : [0, 0, 0])
     for (i = [0:no - 1])
         translate (i * separation * axis)
             children ();
