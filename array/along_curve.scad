@@ -51,5 +51,5 @@ module mcad_linear_multiply (no, separation, axis = Z, center = false)
     translate (-1 * axis * (no - 1) * separation / 2)
     for (i = [0:no - 1])
         translate (i * separation * axis)
-            children (0);
+            children ();
 }
