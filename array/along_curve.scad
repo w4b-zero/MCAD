@@ -46,8 +46,9 @@ module mcad_duplicate (axis = Z)
  * @param separation Separation between centers of adjacent copies
  * @param axis Direction to project toward
  */
-module mcad_linear_multiply (no, separation, axis = Z)
+module mcad_linear_multiply (no, separation, axis = Z, center = false)
 {
+    translate (-1 * axis * (no - 1) * separation / 2)
     for (i = [0:no - 1])
         translate (i * separation * axis)
             children (0);
