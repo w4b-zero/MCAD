@@ -153,12 +153,13 @@ module test_gears()
 module demo_3d_gears()
 {
 	//double helical gear
-	// (helics don't line up perfectly - for display purposes only ;)
 	translate([50,0])
 	{
 	linear_extrude(height = 10, center = true, convexity = 10, twist = -45)
 	 gear(number_of_teeth=17,diametral_pitch=1);
-	translate([0,0,10]) linear_extrude(height = 10, center = true, convexity = 10, twist = 45)
+	translate([0,0,10])
+        rotate([0,180,180/17])
+        linear_extrude(height = 10, center = true, convexity = 10, twist = 45)
 	 gear(number_of_teeth=17,diametral_pitch=1);
 	}
 
