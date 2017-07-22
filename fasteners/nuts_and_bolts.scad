@@ -1,7 +1,9 @@
 include <MCAD/units/metric.scad>
 // Copyright 2010 D1plo1d
+// Copyright 2017 Chow Loong Jin <hyperair@debian.org>
 
-// This library is dual licensed under the GPL 3.0 and the GNU Lesser General Public License as per http://creativecommons.org/licenses/LGPL/2.1/ .
+// This library is dual licensed under the GPL 3.0 and the GNU Lesser General
+// Public License as per http://creativecommons.org/licenses/LGPL/2.1/ .
 
 module mcad_test_nuts_and_bolts_1 ()
 {
