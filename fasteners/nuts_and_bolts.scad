@@ -73,6 +73,7 @@ METRIC_NUT_AC_WIDTHS =
 	-1,
 	63.5//m36
 ];
+
 METRIC_NUT_THICKNESS =
 [
 	-1, //0 index is not used but reduces computation
@@ -114,9 +115,41 @@ METRIC_NUT_THICKNESS =
 	29.00//m36
 ];
 
+METRIC_BOLT_CAP_DIAMETERS = [
+	-1,
+	-1,
+	-1,
+	5.5, // m3
+	7, // m4
+	8.5, // m5
+	10, // m6
+	-1,
+	13, // m8
+	-1,
+	16, // m10
+	-1,
+	18, // m12
+	-1,
+	-1,
+	-1,
+	24, // m16
+	-1,
+	-1,
+	-1,
+	30, // m20
+	-1,
+	-1,
+	-1,
+	36 // m24
+];
+
 function mcad_metric_nut_ac_width (size) = METRIC_NUT_AC_WIDTHS[size];
 function mcad_metric_nut_thickness (size) = METRIC_NUT_THICKNESS[size];
 function mcad_metric_bolt_major_diameter (size) = size;
+function mcad_metric_bolt_cap_height (size) = size;
+function mcad_metric_bolt_cap_diameter (size) = (
+	METRIC_BOLT_CAP_DIAMETERS[size]
+);
 
 module mcad_nut_hole(size, units = MM, tolerance = +0.0001, proj = -1)
 {
@@ -140,15 +173,15 @@ module mcad_nut_hole(size, units = MM, tolerance = +0.0001, proj = -1)
 
 module mcad_bolt_hole(size, units = MM, length, tolerance = +0.0001, proj = -1)
 {
-	radius = COARSE_THREAD_METRIC_BOLT_MAJOR_DIAMETERS[size]/2+tolerance;
+	radius = mcad_metric_bolt_major_diameter (size) / 2;
 
-	capHeight = METRIC_NUT_THICKNESS[size]+tolerance; //METRIC_BOLT_CAP_HEIGHTS[size]+tolerance;
-	capRadius = METRIC_NUT_AC_WIDTHS[size]/2+tolerance; //METRIC_BOLT_CAP_RADIUS[size]+tolerance;
+	cap_height = mcad_metric_bolt_cap_height (size) + tolerance;
+	cap_radius = mcad_metric_bolt_cap_diameter (size) / 2 + tolerance;
 
 	if (proj == -1)
 	{
 		translate([0, 0, -capHeight])
-			cylinder(r= capRadius, h=capHeight);
+			cylinder(r = cap_radius, h = cap_height);
 		cylinder(r = radius, h = length);
 	}
 	if (proj == 1)
@@ -157,9 +190,9 @@ module mcad_bolt_hole(size, units = MM, length, tolerance = +0.0001, proj = -1)
 	}
 	if (proj == 2)
 	{
-		translate([-capRadius, -capHeight])
-			square([capRadius*2, capHeight]);
-		translate([-radius,0])
-			square([radius*2, length]);
+		translate([-cap_radius, - cap_height])
+			square([cap_radius * 2, cap_height]);
+		translate([-radius, 0])
+			square([radius * 2, length]);
 	}
 }
