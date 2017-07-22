@@ -1,3 +1,4 @@
+use <MCAD/array/along_curve.scad>
 include <MCAD/units/metric.scad>
 // Copyright 2010 D1plo1d
 // Copyright 2017 Chow Loong Jin <hyperair@debian.org>
@@ -34,6 +35,18 @@ module mcad_test_nuts_and_bolts_2 ()
 	}
 }
 //mcad_test_nuts_and_bolts_2 ();
+
+module mcad_test_nuts_and_bolts_3 ()
+{
+	$fn = 360;
+
+	mcad_bolt_hole_with_nut (
+		size = 3,
+		length = 10
+	);
+}
+
+//mcad_test_nuts_and_bolts_3 ();
 
 //Based on: http://www.roymech.co.uk/Useful_Tables/Screws/Hex_Screws.htm
 METRIC_NUT_AC_WIDTHS =
@@ -175,17 +188,18 @@ module mcad_nut_hole (size, tolerance = +0.0001, proj = -1)
 	}
 }
 
-module mcad_bolt_hole (size, units = MM, length, tolerance = +0.0001, proj = -1)
+module mcad_bolt_hole (size, length, cap_extra_length, tolerance = +0.0001,
+                       proj = -1)
 {
-	radius = mcad_metric_bolt_major_diameter (size) / 2;
+	radius = mcad_metric_bolt_major_diameter (size) / 2 + tolerance;
 
 	cap_height = mcad_metric_bolt_cap_height (size) + tolerance;
 	cap_radius = mcad_metric_bolt_cap_diameter (size) / 2 + tolerance;
 
 	if (proj == -1)
 	{
-		translate([0, 0, -cap_height])
-			cylinder(r = cap_radius, h = cap_height);
+		translate([0, 0, -cap_height - cap_extra_length])
+			cylinder(r = cap_radius, h = cap_height + cap_extra_length);
 		cylinder(r = radius, h = length);
 	}
 	if (proj == 1)
@@ -198,5 +212,54 @@ module mcad_bolt_hole (size, units = MM, length, tolerance = +0.0001, proj = -1)
 			square([cap_radius * 2, cap_height]);
 		translate([-radius, 0])
 			square([radius * 2, length]);
+	}
+}
+
+/**
+ * mcad_bolt_hole_with_nut - renders a cap screw hole with corresponding nut
+ *
+ * @param size Diameter of screw
+ * @param length Fastened length (distance between screw and nut)
+ * @param nut_projection Direction to project nut in (axial, radial)
+ * @param align_with Alignment of whole set (above_head, below_head, center,
+ *                                           below_nut, above_nut)
+ */
+module mcad_bolt_hole_with_nut (size, length, nut_projection = "axial",
+                                align_with = "above_head",
+                                screw_extra_length = 9999,
+                                head_extra_length = 9999,
+                                nut_projection_length = 100,
+                                bolt_tolerance = 0.15,
+                                nut_tolerance = 0.001)
+{
+	cap_head_d = mcad_metric_bolt_cap_diameter (size);
+	cap_head_h = size;
+
+	nut_thickness = mcad_metric_nut_thickness (size);
+
+	elevation = (
+		(align_with == "above_head") ? 0 :
+		(align_with == "below_head") ? cap_head_h :
+		(align_with == "center") ? cap_head_h + length / 2 :
+		(align_with == "below_nut") ? cap_head_h + length :
+		(align_with == "above_nut") ? cap_head_h + length + nut_thickness : 0
+	);
+
+	translate ([0, 0, -elevation]) {
+		/* screw head */
+		translate ([0, 0, cap_head_h])
+		mcad_bolt_hole (size = size, length = length + screw_extra_length,
+		                cap_extra_length = head_extra_length,
+		                tolerance = bolt_tolerance);
+
+		/* nut */
+		translate ([0, 0, cap_head_h + length - epsilon])
+		hull () {
+			axis = (nut_projection == "axial") ? +Z : +X;
+
+			mcad_linear_multiply (no = 2, separation = nut_projection_length,
+			                      axis = axis)
+			mcad_nut_hole (size = size, tolerance = nut_tolerance);
+		}
 	}
 }
