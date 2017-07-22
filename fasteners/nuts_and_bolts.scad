@@ -185,7 +185,7 @@ module mcad_bolt_hole (size, units = MM, length, tolerance = +0.0001, proj = -1)
 
 	if (proj == -1)
 	{
-		translate([0, 0, -capHeight])
+		translate([0, 0, -cap_height])
 			cylinder(r = cap_radius, h = cap_height);
 		cylinder(r = radius, h = length);
 	}
