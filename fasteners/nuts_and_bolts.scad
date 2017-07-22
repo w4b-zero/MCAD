@@ -35,9 +35,6 @@ module mcad_test_nuts_and_bolts_2 ()
 }
 //mcad_test_nuts_and_bolts_2 ();
 
-MM = "mm";
-INCH = "inch"; //Not yet supported
-
 //Based on: http://www.roymech.co.uk/Useful_Tables/Screws/Hex_Screws.htm
 METRIC_NUT_AC_WIDTHS =
 [
@@ -157,7 +154,7 @@ function mcad_metric_bolt_cap_diameter (size) = (
 	METRIC_BOLT_CAP_DIAMETERS[size]
 );
 
-module mcad_nut_hole (size, units = MM, tolerance = +0.0001, proj = -1)
+module mcad_nut_hole (size, tolerance = +0.0001, proj = -1)
 {
 	//takes a metric screw/nut size and looksup nut dimensions
 	radius = mcad_metric_nut_ac_width (size) / 2 + tolerance;

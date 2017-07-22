@@ -11,11 +11,11 @@ module SKIPtestNutsAndBolts()
 // @deprecated
 module nutHole(size, units = MM, tolerance = +0.0001, proj = -1)
 {
-	mcad_nut_hole(size, units, tolerance, proj);
+	mcad_nut_hole(size, tolerance, proj);
 }
 
 // @deprecated
 module boltHole(size, units = MM, length, tolerance = +0.0001, proj = -1)
 {
-	mcad_bolt_hole(size, units, length, tolerance, proj);
+	mcad_bolt_hole(size, length, tolerance, proj);
 }
