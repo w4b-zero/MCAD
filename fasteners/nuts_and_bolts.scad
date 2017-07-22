@@ -114,52 +114,9 @@ METRIC_NUT_THICKNESS =
 	29.00//m36
 ];
 
-COARSE_THREAD_METRIC_BOLT_MAJOR_DIAMETERS =
-[//based on max values
-	-1, //0 index is not used but reduces computation
-	-1,
-	-1,
-	2.98,//m3
-	3.978,//m4
-	4.976,//m5
-	5.974,//m6
-	-1,
-	7.972,//m8
-	-1,
-	9.968,//m10
-	-1,
-	11.966,//m12
-	-1,
-	-1,
-	-1,
-	15.962,//m16
-	-1,
-	-1,
-	-1,
-	19.958,//m20
-	-1,
-	-1,
-	-1,
-	23.952,//m24
-	-1,
-	-1,
-	-1,
-	-1,
-	-1,
-	29.947,//m30
-	-1,
-	-1,
-	-1,
-	-1,
-	-1,
-	35.940//m36
-];
-
 function mcad_metric_nut_ac_width (size) = METRIC_NUT_AC_WIDTHS[size];
 function mcad_metric_nut_thickness (size) = METRIC_NUT_THICKNESS[size];
-function mcad_metric_bolt_major_diameter (size) = (
-    COARSE_THREAD_METRIC_BOLT_MAJOR_DIAMETERS[size]
-);
+function mcad_metric_bolt_major_diameter (size) = size;
 
 module mcad_nut_hole(size, units = MM, tolerance = +0.0001, proj = -1)
 {
