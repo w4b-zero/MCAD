@@ -3,31 +3,35 @@ include <MCAD/units/metric.scad>
 
 // This library is dual licensed under the GPL 3.0 and the GNU Lesser General Public License as per http://creativecommons.org/licenses/LGPL/2.1/ .
 
-module mcad_test_nuts_and_bolts_1()
+module mcad_test_nuts_and_bolts_1 ()
 {
 	$fn = 360;
 
-	translate([0,15])
-		mcad_nut_hole(3, proj=-1);
-	mcad_bolt_hole(3, length= 30,tolerance=10, proj=-1);
+	translate ([0, 15])
+		mcad_nut_hole (3, proj = -1);
+
+	mcad_bolt_hole (3, length = 30,tolerance =10, proj = -1);
 
 }
-//mcad_test_nuts_and_bolts_1();
+//mcad_test_nuts_and_bolts_1 ();
 
-module mcad_test_nuts_and_bolts_2()
+module mcad_test_nuts_and_bolts_2 ()
 {
 	$fn = 360;
+
 	difference(){
-		cube(size = [10,20,10], center = true);
+		cube(size = [10, 20, 10], center = true);
 		union(){
-			translate([0,15])
-				mcad_nut_hole(3, proj=2);
-			linear_extrude(height = 20, center = true, convexity = 10, twist = 0)
-			mcad_bolt_hole(3, length= 30, proj=2);
+			translate ([0, 15])
+				mcad_nut_hole (3, proj = 2);
+
+			linear_extrude (height = 20, center = true, convexity = 10,
+			                twist = 0)
+			mcad_bolt_hole (3, length = 30, proj = 2);
 		}
 	}
 }
-//mcad_test_nuts_and_bolts_2();
+//mcad_test_nuts_and_bolts_2 ();
 
 MM = "mm";
 INCH = "inch"; //Not yet supported
@@ -151,27 +155,28 @@ function mcad_metric_bolt_cap_diameter (size) = (
 	METRIC_BOLT_CAP_DIAMETERS[size]
 );
 
-module mcad_nut_hole(size, units = MM, tolerance = +0.0001, proj = -1)
+module mcad_nut_hole (size, units = MM, tolerance = +0.0001, proj = -1)
 {
 	//takes a metric screw/nut size and looksup nut dimensions
-	radius = METRIC_NUT_AC_WIDTHS[size]/2+tolerance;
-	height = METRIC_NUT_THICKNESS[size]+tolerance;
-	if (proj == -1)
-	{
-		cylinder(r= radius, h=height, $fn = 6, center=[0,0]);
+	radius = mcad_metric_nut_ac_width (size) / 2 + tolerance;
+	height = mcad_metric_nut_thickness (size) + tolerance;
+
+	if (proj == -1) {
+		cylinder (r = radius, h = height, $fn = 6, center = [0, 0]);
 	}
-	if (proj == 1)
-	{
-		circle(r= radius, $fn = 6);
+
+	else if (proj == 1) {
+		circle(r = radius, $fn = 6);
 	}
-	if (proj == 2)
+
+	else if (proj == 2)
 	{
-		translate([-radius/2, 0])
-			square([radius*2, height]);
+		translate ([-radius/2, 0])
+			square ([radius*2, height]);
 	}
 }
 
-module mcad_bolt_hole(size, units = MM, length, tolerance = +0.0001, proj = -1)
+module mcad_bolt_hole (size, units = MM, length, tolerance = +0.0001, proj = -1)
 {
 	radius = mcad_metric_bolt_major_diameter (size) / 2;
 
