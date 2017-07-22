@@ -22,27 +22,55 @@ SkateBearing = 608;
 
 // Bearing dimensions
 // model == XXX ? [inner dia, outer dia, width]:
+// http://www.gizmology.net/bearings.htm has some valuable information on that
+// https://www.bearingworks.com/bearing-sizes has a very exhaustive table of dimensions
 function bearingDimensions(model) =
-	model == 603 ? [3*length_mm, 10*length_mm, 4*length_mm]:
-	model == 604 ? [4*length_mm, 12*length_mm, 4*length_mm]:
-	model == 606 ? [6*length_mm, 17*length_mm, 6*length_mm]:
-	model == 607 ? [7*length_mm, 19*length_mm, 6*length_mm]:
-	model == 608 ? [8*length_mm, 22*length_mm, 7*length_mm]:
-	model == 623 ? [3*length_mm, 10*length_mm, 4*length_mm]:
-	model == 624 ? [4*length_mm, 13*length_mm, 5*length_mm]:
-	model == 625 ? [5*length_mm, 16*length_mm, 5*length_mm]:
-	model == 626 ? [6*length_mm, 19*length_mm, 6*length_mm]:
-	model == 627 ? [7*length_mm, 22*length_mm, 7*length_mm]:
-	model == 628 ? [8*length_mm, 24*length_mm, 8*length_mm]:
-	model == 629 ? [9*length_mm, 26*length_mm, 8*length_mm]:
-	model == 688 ? [8*length_mm, 16*length_mm, 4*length_mm]:
-	model == 698 ? [8*length_mm, 19*length_mm, 6*length_mm]:
-	model == 6200 ? [10*length_mm, 30*length_mm, 9*length_mm]:
-	model == 6201 ? [12*length_mm, 32*length_mm, 10*length_mm]:
-	model == 6202 ? [15*length_mm, 35*length_mm, 11*length_mm]:
-	model == 6203 ? [17*length_mm, 40*length_mm, 12*length_mm]:
-	model == 6205 ? [25*length_mm, 52*length_mm, 15*length_mm]:
-	model == 6206 ? [30*length_mm, 62*length_mm, 16*length_mm]:
+  model == 603 ? [3*mm,  9*mm,  5*mm]:
+  model == 604 ? [4*mm, 12*mm,  4*mm]:
+  model == 605 ? [5*mm, 14*mm,  5*mm]:
+  model == 606 ? [6*mm, 17*mm,  6*mm]:
+  model == 607 ? [7*mm, 19*mm,  6*mm]:
+  model == 608 ? [8*mm, 22*mm,  7*mm]:
+  model == 609 ? [9*mm, 24*mm,  7*mm]:
+
+  model == 623 ? [3*length_mm, 10*length_mm,  4*length_mm]:
+  model == 624 ? [4*length_mm, 13*length_mm,  5*length_mm]:
+  model == 625 ? [5*length_mm, 16*length_mm,  5*length_mm]:
+  model == 626 ? [6*length_mm, 19*length_mm,  6*length_mm]:
+  model == 627 ? [7*length_mm, 22*length_mm,  7*length_mm]:
+  model == 628 ? [8*length_mm, 24*length_mm,  8*length_mm]:
+  model == 629 ? [9*length_mm, 26*length_mm,  8*length_mm]:
+
+  model == 633 ? [3*length_mm, 13*length_mm,  5*length_mm]:
+  model == 634 ? [4*length_mm, 16*length_mm,  5*length_mm]:
+  model == 635 ? [5*length_mm, 19*length_mm,  6*length_mm]:
+  model == 636 ? [6*length_mm, 22*length_mm,  7*length_mm]:
+  model == 637 ? [7*length_mm, 26*length_mm,  9*length_mm]:
+  model == 638 ? [8*length_mm, 28*length_mm,  9*length_mm]:
+  model == 639 ? [9*length_mm, 30*length_mm, 10*length_mm]:
+
+  model == 673 ? [3*length_mm,  6*length_mm,  2.5*length_mm]:
+  model == 674 ? [4*length_mm,  7*length_mm,  2.5*length_mm]:
+  model == 675 ? [5*length_mm,  8*length_mm,  2.5*length_mm]:
+  model == 676 ? [6*length_mm, 10*length_mm,  3*length_mm]:
+  model == 677 ? [7*length_mm, 11*length_mm,  3*length_mm]:
+  model == 678 ? [8*length_mm, 12*length_mm,  3.5*length_mm]:
+
+  model == 683 ? [3*length_mm,  7*length_mm,  3*length_mm]:
+  model == 684 ? [4*length_mm,  9*length_mm,  4*length_mm]:
+  model == 685 ? [5*length_mm, 11*length_mm,  5*length_mm]:
+  model == 686 ? [6*length_mm, 13*length_mm,  5*length_mm]:
+  model == 687 ? [7*length_mm, 14*length_mm,  5*length_mm]:
+  model == 688 ? [8*length_mm, 16*length_mm,  5*length_mm]:
+  model == 689 ? [9*length_mm, 17*length_mm,  5*length_mm]:
+
+  model == 693 ? [3*length_mm,  8*length_mm,  4*length_mm]:
+  model == 694 ? [4*length_mm, 11*length_mm,  4*length_mm]:
+  model == 695 ? [5*length_mm, 13*length_mm,  4*length_mm]:
+  model == 696 ? [6*length_mm, 15*length_mm,  5*length_mm]:
+  model == 697 ? [7*length_mm, 17*length_mm,  5*length_mm]:
+  model == 698 ? [8*length_mm, 19*length_mm,  6*length_mm]:
+  model == 699 ? [9*length_mm, 20*length_mm,  6*length_mm]:
 
 //
 //todo:-
