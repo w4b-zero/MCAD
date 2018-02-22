@@ -116,13 +116,14 @@ module complexRoundSquare(
 }
 
 module roundedSquare(pos=[10,10],r=2) {
-	minkowski()
+    minkowski()
     {
-		square([pos[0]-r*2,pos[1]-r*2],center=true);
+        square([pos[0]-r*2,pos[1]-r*2],center=true);
 
 		circle(r=r);
 	}
 }
+
 // round shapes
 // The orientation might change with the implementation of circle...
 module ngon(sides, radius, center=false) {
@@ -131,18 +132,18 @@ module ngon(sides, radius, center=false) {
 }
 module ellipsePart(width,height,numQuarters) {
     o = 1; //slight overlap to fix a bug
-	difference()
-	{
+    difference()
+    {
 		ellipse(width,height);
 
-		if(numQuarters <= 3)
-			translate([0-width/2-o,0-height/2-o,0])
+        if(numQuarters <= 3)
+            translate([0-width/2-o,0-height/2-o,0])
             square([width/2+o,height/2+o]);
-		if(numQuarters <= 2)
-			translate([0-width/2-o,-o,0])
+        if(numQuarters <= 2)
+            translate([0-width/2-o,-o,0])
             square([width/2+o,height/2+o*2]);
-		if(numQuarters < 2)
-			translate([-o,0,0])
+        if(numQuarters < 2)
+            translate([-o,0,0])
             square([width/2+o*2,height/2+o]);
 	}
 }
@@ -152,10 +153,10 @@ module donutSlice(innerSize,outerSize, start_angle, end_angle) {
     {
         pieSlice(outerSize, start_angle, end_angle);
         
-		if(len(innerSize) > 1) 
-			ellipse(innerSize[0]*2,innerSize[1]*2);
+        if(len(innerSize) > 1) 
+		    ellipse(innerSize[0]*2,innerSize[1]*2);
         else 
-			circle(innerSize);
+            circle(innerSize);
     }
 }
 
@@ -189,6 +190,6 @@ module pieSlice(size, start_angle, end_angle) { //size in radius(es)
 }
 
 module ellipse(width, height) {
-  scale([1, height/width, 1])
-  circle(r=width/2);
+    scale([1, height/width, 1])
+    circle(r=width/2);
 }
