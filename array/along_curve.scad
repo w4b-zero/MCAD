@@ -20,11 +20,13 @@ include <MCAD/units/metric.scad>
  */
 module mcad_rotate_multiply (no, angle = undef, axis = Z)
 {
-    angle = (angle == undef) ? 360 / no : angle;
+    if (no > 0) {
+        angle = (angle == undef) ? 360 / no : angle;
 
-    for (i = [0:no - 1]) {
-        rotate (angle * i, axis)
+        for (i = [0:no - 1]) {
+            rotate (angle * i, axis)
             children ();
+        }
     }
 }
 
