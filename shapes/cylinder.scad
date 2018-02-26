@@ -7,6 +7,7 @@ module mcad_rounded_cylinder (
     r = undef, h = undef, d = undef,
     r1 = undef, r2 = undef,
     d1 = undef, d2 = undef,
+    center = false,
 
     // rounding radius
     round_r = 0,
@@ -63,6 +64,7 @@ module mcad_rounded_cylinder (
         children ();
     }
 
+    translate ([0, 0, center ? -h / 2 : 0])
     rotate_extrude ()
     hull () {
         intersection () {
