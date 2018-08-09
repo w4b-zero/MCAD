@@ -19,7 +19,7 @@ METRIC_NUT_AC_WIDTHS =
 [
 	-1, //0 index is not used but reduces computation
 	-1,
-	-1,
+	4.38,//m2
 	6.40,//m3
 	8.10,//m4
 	9.20,//m5
@@ -59,7 +59,7 @@ METRIC_NUT_THICKNESS =
 [
 	-1, //0 index is not used but reduces computation
 	-1,
-	-1,
+	1.6,//m2
 	2.40,//m3
 	3.20,//m4
 	4.00,//m5
@@ -100,7 +100,7 @@ COURSE_METRIC_BOLT_MAJOR_THREAD_DIAMETERS =
 [//based on max values
 	-1, //0 index is not used but reduces computation
 	-1,
-	-1,
+	1.6,//m2
 	2.98,//m3
 	3.978,//m4
 	4.976,//m5
