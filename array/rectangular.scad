@@ -31,6 +31,6 @@ module mcad_array_rectangular (grid_size, separation, center = true)
 {
 	mcad_place_at (mcad_generate_grid (grid_size = grid_size,
 									   separation = separation,
-									   center = true))
+									   center = center))
 		children ();
 }

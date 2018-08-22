@@ -39,23 +39,27 @@ function mcad_points2translations (points) = [
  * @param center Boolean or vector indicating which axes to center
  */
 function mcad_generate_grid (grid_size, separation, center = false) = (
-    let (sep = len (separation) > 0 ? sep : [1, 1, 1] * separation)
-    let (g = grid_size)
+    let (
+        sep = len (separation) > 0 ? separation : [1, 1, 1] * separation,
+        g = grid_size,
+        center = len(center) > 0 ? center : [center, center, center],
+
+        center_offset = [
+            for (i = [0:len(g)])
+                (center[i]) ? (g[i] - 1) * sep[i] / 2 : 0
+        ]
+    )
+
     (len (grid_size) == 2) ? [
-        for (x = [0 : grid_size[0] - 1])
-            for (y = [0 : grid_size[1] - 1])
-                ([x * sep[0], y * sep[1]] -
-                 ((center) ? [g[0] * sep[0], g[1] * sep[1]] / 2 : [0, 0]))
+        for (x = [0 : g[0] - 1])
+            for (y = [0 : g[1] - 1])
+                [x * sep[0], y * sep[1]] - center_offset
     ] :
     (len (grid_size) == 3) ? [
         for (x = [0 : g[0] - 1])
             for (y = [0 : g[1] - 1])
                 for (z = [0 : g[2] - 1])
-                    ([x * sep[0], y * sep[1], z * sep[2]] -
-                     ((center) ?
-                      [g[0] * sep[0], g[1] * sep[1], g[2] * sep[2]] / 2 :
-                      [0, 0, 0]
-                     ))
+                    [x * sep[0], y * sep[1], z * sep[2]] - center_offset
     ] : []
 );
 
