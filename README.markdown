@@ -46,7 +46,7 @@ Currently Provided Tools:
 * motors.scad:
     - stepper_motor_mount(nema_standard, slide_distance OPTIONAL, mochup OPTIONAL)
 
-Other tools (alpha and beta quality):
+Tools (alpha and beta quality):
 
 * nuts_and_bolts.scad: for creating metric and imperial bolt/nut holes
 * bearing.scad: standard/custom bearings
@@ -68,6 +68,26 @@ Very generally useful functions and constants:
 * teardrop.scad (http://www.thingiverse.com/thing:3457): parametric teardrop module
 * shapes.scad: DEPRECATED simple shapes by Catarina Mota
 * polyholes.scad: holes that should come out well when printed
+
+Other:
+
+* alphabet_block.scad
+* bitmap.scad
+* letter_necklace.scad
+* name_tag.scad
+* height_map.scad
+* trochoids.scad
+* libtriangles.scad
+* layouts.scad
+* transformations.scad
+* 2Dshapes.scad
+* gridbeam.scad
+* fonts.scad
+* unregular_shapes.scad
+* metric_fastners.scad
+* lego_compatibility.scad
+* multiply.scad
+* hardware.scad
 
 External utils that generate and and process openscad code:
 
