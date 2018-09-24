@@ -1,4 +1,4 @@
-OpenSCAD MCAD Library [![](http://stillmaintained.com/elmom/MCAD.png)](http://stillmaintained.com/elmom/MCAD)
+OpenSCAD MCAD Library
 =====================
 
 This library contains components commonly used in designing and moching up
@@ -6,10 +6,10 @@ mechanical designs. It is currently unfinished and you can expect some API
 changes, however many things are already working.
 
 This library was created by various authors as named in the individual
-files' comments. All the files except those ThingDoc are licensed under
-the LGPL 2.1 (see http://creativecommons.org/licenses/LGPL/2.1/ or the
-included file lgpl-2.1.txt), some of them allow distribution under more
-permissive terms (as described in the files' comments).
+files' comments. All the files are licensed under the LGPL 2.1 (see
+http://creativecommons.org/licenses/LGPL/2.1/ or the included file
+lgpl-2.1.txt), some of them allow distribution under more permissive
+terms (as described in the files' comments).
 
 ## Usage ##
 
@@ -46,7 +46,7 @@ Currently Provided Tools:
 * motors.scad:
     - stepper_motor_mount(nema_standard, slide_distance OPTIONAL, mochup OPTIONAL)
 
-Other tools (alpha and beta quality):
+Tools (alpha and beta quality):
 
 * nuts_and_bolts.scad: for creating metric and imperial bolt/nut holes
 * bearing.scad: standard/custom bearings
@@ -69,11 +69,30 @@ Very generally useful functions and constants:
 * shapes.scad: DEPRECATED simple shapes by Catarina Mota
 * polyholes.scad: holes that should come out well when printed
 
+Other:
+
+* alphabet_block.scad
+* bitmap.scad
+* letter_necklace.scad
+* name_tag.scad
+* height_map.scad
+* trochoids.scad
+* libtriangles.scad
+* layouts.scad
+* transformations.scad
+* 2Dshapes.scad
+* gridbeam.scad
+* fonts.scad
+* unregular_shapes.scad
+* metric_fastners.scad
+* lego_compatibility.scad
+* multiply.scad
+* hardware.scad
+
 External utils that generate and and process openscad code:
 
 * openscad_testing.py: testing code, see below
 * openscad_utils.py: code for scraping function names etc.
-* SolidPython: An external Python library for solid cad
 
 ## Development ##
 
