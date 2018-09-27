@@ -27,7 +27,6 @@ If you host your project in git, you can do `git submodule add URL PATH` in your
 repo to import this library as a git submodule for easy usage. Then you need to do
 a `git submodule update --init` after cloning. When you want to update the submodule,
 do `cd PATH; git checkout master; git pull`. See `git help submodule` for more info.
-"./get_submodules.py" is shortcut that initializes and updates submodules.
 
 Currently Provided Tools:
 
