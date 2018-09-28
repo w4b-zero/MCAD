@@ -28,13 +28,23 @@
 
 //----------------------
 
+echoDeprecation();
+
+module echoDeprecation () {
+     echo("<font color='red'>
+           WARNING: 'shapes' library is now deprecated
+           please use 'reg_shapes' instead</font>");
+}
+
 // size is a vector [w, h, d]
 module box(width, height, depth) {
+  echoDeprecation();
   cube([width, height, depth], true);
 }
 
 // size is a vector [w, h, d]
 module roundedBox(width, height, depth, radius) {
+  echoDeprecation();
   size=[width, height, depth];
   cube(size - [2*radius,0,0], true);
   cube(size - [0,2*radius,0], true);
@@ -45,19 +55,23 @@ module roundedBox(width, height, depth, radius) {
 }
 
 module cone(height, radius, center = false) {
+  echoDeprecation();
   cylinder(height, radius, 0, center);
 }
 
 module ellipticalCylinder(w,h, height, center = false) {
+  echoDeprecation();
   scale([1, h/w, 1]) cylinder(h=height, r=w, center=center);
 }
 
 module ellipsoid(w, h, center = false) {
+  echoDeprecation();
   scale([1, h/w, 1]) sphere(r=w/2, center=center);
 }
 
 // wall is wall thickness
 module tube(height, radius, wall, center = false) {
+  echoDeprecation();
   difference() {
     cylinder(h=height, r=radius, center=center);
     cylinder(h=height, r=radius-wall, center=center);
@@ -66,6 +80,7 @@ module tube(height, radius, wall, center = false) {
 
 // wall is wall thickness
 module tube2(height, ID, OD, center = false) {
+  echoDeprecation();
   difference() {
     cylinder(h=height, r=OD/2, center=center);
     cylinder(h=height, r=ID/2, center=center);
@@ -74,6 +89,7 @@ module tube2(height, ID, OD, center = false) {
 
 // wall is wall thickness
 module ovalTube(height, rx, ry, wall, center = false) {
+  echoDeprecation();
   difference() {
     scale([1, ry/rx, 1]) cylinder(h=height, r=rx, center=center);
     scale([(rx-wall)/rx, (ry-wall)/rx, 1]) cylinder(h=height, r=rx, center=center);
@@ -82,12 +98,14 @@ module ovalTube(height, rx, ry, wall, center = false) {
 
 // size is the XY plane size, height in Z
 module hexagon(size, height) {
+  echoDeprecation();
   boxWidth = size/1.75;
   for (r = [-60, 0, 60]) rotate([0,0,r]) cube([boxWidth, size, height], true);
 }
 
 // size is the XY plane size, height in Z
 module octagon(size, height) {
+  echoDeprecation();
   intersection() {
     cube([size, size, height], true);
     rotate([0,0,45]) cube([size, size, height], true);
@@ -96,6 +114,7 @@ module octagon(size, height) {
 
 // size is the XY plane size, height in Z
 module dodecagon(size, height) {
+  echoDeprecation();
   intersection() {
     hexagon(size, height);
     rotate([0,0,90]) hexagon(size, height);
@@ -104,6 +123,7 @@ module dodecagon(size, height) {
 
 // size is the XY plane size, height in Z
 module hexagram(size, height) {
+  echoDeprecation();
   boxWidth=size/1.75;
   for (v = [[0,1],[0,-1],[1,-1]]) {
     intersection() {
@@ -114,6 +134,7 @@ module hexagram(size, height) {
 }
 
 module rightTriangle(adjacent, opposite, height) {
+  echoDeprecation();
   difference() {
     translate([-adjacent/2,opposite/2,0]) cube([adjacent, opposite, height], true);
     translate([-adjacent,0,0]) {
@@ -123,6 +144,7 @@ module rightTriangle(adjacent, opposite, height) {
 }
 
 module equiTriangle(side, height) {
+  echoDeprecation();
   difference() {
     translate([-side/2,side/2,0]) cube([side, side, height], true);
     rotate([0,0,30]) dislocateBox(side*2, side, height);
@@ -133,6 +155,7 @@ module equiTriangle(side, height) {
 }
 
 module 12ptStar(size, height) {
+  echoDeprecation();
   starNum = 3;
   starAngle = 360/starNum;
   for (s = [1:starNum]) {
