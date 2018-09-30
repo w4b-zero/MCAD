@@ -88,7 +88,7 @@ Other:
 * multiply.scad
 * hardware.scad
 
-External utils that generate and and process openscad code:
+External utils that generate and process openscad code:
 
 * openscad_testing.py: testing code, see below
 * openscad_utils.py: code for scraping function names etc.
