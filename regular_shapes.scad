@@ -33,7 +33,11 @@ module reg_polygon(sides,radius)
   if(sides<2) square([radius,0]);
   if(sides==3) triangle(radius);
   if(sides==4) square([dia(radius),dia(radius)],center=true);
-  if(sides>4) circle(r=radius,$fn=sides);
+  if(sides>4) {
+    angles=[ for (i = [0:sides-1]) i*(360/sides) ];
+    coords=[ for (th=angles) [radius*cos(th), radius*sin(th)] ];
+    polygon(coords);
+  }
 }
 
 module pentagon(radius)
