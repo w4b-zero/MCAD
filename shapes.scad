@@ -32,8 +32,8 @@ echoDeprecation();
 
 module echoDeprecation () {
      echo("<font color='red'>
-           WARNING: 'shapes' library is now deprecated
-           please use 'reg_shapes' instead</font>");
+           DEPRECATED: 'shapes' library is now deprecated
+           please use 'regular_shapes' instead</font>");
 }
 
 // size is a vector [w, h, d]
