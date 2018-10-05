@@ -27,7 +27,15 @@ module triangle(radius)
   polygon(points=[[-a,-o],[0,radius],[a,-o]],paths=[[0,1,2]]);
 }
 
-module reg_polygon(sides,radius)
+module reg_polygon(sides, radius) {
+  echo("<font color='red'>
+        DEPRECATED: function 'reg_polygon' is now deprecated
+        please use 'regular_polygon' instead</font>");
+
+     regular_polygon(sides, radius);
+}
+
+module regular_polygon(sides, radius)
 {
   function dia(r) = sqrt(pow(r*2,2)/2);  //sqrt((r*2^2)/2) if only we had an exponention op
   if(sides<2) square([radius,0]);
