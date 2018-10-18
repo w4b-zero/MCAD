@@ -43,9 +43,7 @@ module pentagon(radius)
 
 module hexagon(radius, diameter, across_flats)
 {
-  r = radius;
-  r = diameter ? diameter/2 : radius;
-  r = across_flats ? across_flats/2/cos(30) : radius;
+  r = across_flats ? across_flats/2/cos(30) : diameter ? diameter/2 : radius;
   reg_polygon(6,r);
 }
 
@@ -159,9 +157,8 @@ module pentagon_tube(height,radius,wall)
 
 module hexagon_prism(height, radius, across_flats)
 {
-  r = radius;
-  r = across_flats ? across_flats/2/cos(30) : radius;
-  linear_extrude(height=height) hexagon(r);
+  linear_extrude(height=height)
+    hexagon(radius=radius, across_flats=across_flats);
 }
 
 module hexagon_tube(height,radius,wall)
