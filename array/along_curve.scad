@@ -5,7 +5,6 @@
  * Licenced under LGPL2 or later
  */
 
-use <MCAD/array/generic-multiply.scad>
 include <MCAD/units/metric.scad>
 
 /**
@@ -41,19 +40,3 @@ module mcad_duplicate (axis = Z)
         children ();
 }
 
-/**
- * Make `no` copies of children along axis.
- *
- * @param no Number of copies
- * @param separation Separation between centers of adjacent copies
- * @param axis Direction to project toward
- */
-module mcad_linear_multiply (no, separation, axis = Z, center = false)
-{
-    centering_offset = -1 * axis * (no - 1) * separation / 2;
-
-    translate (center ? centering_offset : [0, 0, 0])
-    for (i = [0:no - 1])
-        translate (i * separation * axis)
-            children ();
-}

@@ -34,3 +34,21 @@ module mcad_array_rectangular (grid_size, separation, center = true)
 									   center = center))
 		children ();
 }
+
+/**
+ * Copyright by Elmo Mäntynen, 2012.
+ * Make `no` copies of children along axis.
+ *
+ * @param no Number of copies
+ * @param separation Separation between centers of adjacent copies
+ * @param axis Direction to project toward
+ */
+module mcad_linear_multiply (no, separation, axis = Z, center = false)
+{
+    centering_offset = -1 * axis * (no - 1) * separation / 2;
+
+    translate (center ? centering_offset : [0, 0, 0])
+    for (i = [0:no - 1])
+        translate (i * separation * axis)
+            children ();
+}
