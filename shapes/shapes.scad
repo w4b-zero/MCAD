@@ -8,7 +8,7 @@
 
 // 3D Shapes
 //box(width, height, depth);
-//roundedBox(width, height, depth, radius);
+//mcad_rounded_box (size, radius, sidesonly, center=false)
 //cone(height, radius);
 //ellipticalCylinder(width, height, depth);
 //ellipsoid(width, height);
@@ -32,15 +32,36 @@ module box(width, height, depth) {
   cube([width, height, depth], true);
 }
 
+// Author: Marius Kintel
+// Copyright: 2010
+// License: 2-clause BSD License (http://opensource.org/licenses/BSD-2-Clause)
+
+// mcad_rounded_box([width, height, depth], float radius, bool sidesonly);
+
+// EXAMPLE USAGE:
+// mcad_rounded_box([20, 30, 40], 5, true);
+
 // size is a vector [w, h, d]
-module roundedBox(width, height, depth, radius) {
-  size=[width, height, depth];
-  cube(size - [2*radius,0,0], true);
-  cube(size - [0,2*radius,0], true);
-  for (x = [radius-size[0]/2, -radius+size[0]/2],
-       y = [radius-size[1]/2, -radius+size[1]/2]) {
-    translate([x,y,0]) cylinder(r=radius, h=size[2], center=true);
-  }
+module mcad_rounded_box (size, radius, sidesonly, center=false)
+{
+    module place_xy ()
+    for (x = [size[0]/2 - radius, -size[0]/2 + radius])
+    for (y = [size[1]/2 - radius, -size[1]/2 + radius])
+    translate ([x, y, 0])
+    children ();
+
+    translate (center ? [0, 0, 0] : size / 2)
+    hull ()
+    if (sidesonly) {
+        place_xy ()
+        cylinder (r = radius, h = size[2], center=true);
+
+    } else {
+        for (z = [size[2]/2 - radius, -size[2]/2 + radius])
+        translate ([0, 0, z])
+        place_xy ()
+        sphere (r = radius);
+    }
 }
 
 module cone(height, radius, center = false) {
