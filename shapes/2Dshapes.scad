@@ -12,7 +12,8 @@
 //ellipsePart(width,height,numQuarters)
 //donutSlice(innerSize,outerSize, start_angle, end_angle) 
 //pieSlice(size, start_angle, end_angle) //size in radius(es)
-//ellipse(width, height) {
+//ellipse(width, height)
+//csquare(size, center = false)
 
 // Examples
 /*use <layouts.scad>;
@@ -182,17 +183,6 @@ module trapezoid (bottom, height, top = undef,
             [bottom / 2 - offset_right, height],
             [-bottom / 2 + offset_left, height]
         ]);
-}
-
-module ccube (size, center = false)
-{
-    center = (len (center) == undef) ? [center, center, center] : center;
-    size = (len (size) == undef) ? [size, size, size] : size;
-
-    function get_offset (i) = center[i] ? - size[i] / 2 : 0;
-
-    translate ([get_offset (0), get_offset (1), get_offset (2)])
-    cube (size);
 }
 
 module csquare (size, center = false)

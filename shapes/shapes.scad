@@ -6,9 +6,6 @@
  *  License: LGPL 2.1 or later
 */
 
-// 2D Shapes
-//ngon(sides, radius, center=false);
-
 // 3D Shapes
 //box(width, height, depth);
 //roundedBox(width, height, depth, radius);
@@ -25,6 +22,8 @@
 //rightTriangle(adjacent, opposite, depth);
 //equiTriangle(side, depth);
 //12ptStar(height, depth);
+//ccube (size, center = false)
+
 
 //----------------------
 
@@ -77,7 +76,8 @@ module tube2(height, ID, OD, center = false) {
 module ovalTube(height, rx, ry, wall, center = false) {
   difference() {
     scale([1, ry/rx, 1]) cylinder(h=height, r=rx, center=center);
-    scale([(rx-wall)/rx, (ry-wall)/rx, 1]) cylinder(h=height, r=rx, center=center);
+		translate([0,0,-0.1])
+			#scale([(rx-wall)/rx, (ry-wall)/rx, 1]) cylinder(h=height+0.2, r=rx, center=center);
   }
 }
 
@@ -139,6 +139,17 @@ module 12ptStar(size, height) {
   for (s = [1:starNum]) {
     rotate([0, 0, s*starAngle]) cube([size, size, height], true);
   }
+}
+
+module ccube (size, center = false)
+{
+    center = (len (center) == undef) ? [center, center, center] : center;
+    size = (len (size) == undef) ? [size, size, size] : size;
+
+    function get_offset (i) = center[i] ? - size[i] / 2 : 0;
+
+    translate ([get_offset (0), get_offset (1), get_offset (2)])
+    cube (size);
 }
 
 //-----------------------
