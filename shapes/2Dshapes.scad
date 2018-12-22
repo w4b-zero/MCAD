@@ -9,11 +9,16 @@
 //ngon(sides, radius, center=false);
 //complexRoundSquare(size,rads1=[0,0], rads2=[0,0], rads3=[0,0], rads4=[0,0], center=true)
 //roundedSquare(pos=[10,10],r=2)
+//csquare(size, center = false)
+//trapezoid (bottom, height, top = undef, left_angle = undef, right_angle = undef)
+
+//ring(inside_diameter, thickness)
+//ellipse(width, height)
 //ellipsePart(width,height,numQuarters)
+//egg_outline(width, length)
+
 //donutSlice(innerSize,outerSize, start_angle, end_angle) 
 //pieSlice(size, start_angle, end_angle) //size in radius(es)
-//ellipse(width, height)
-//csquare(size, center = false)
 
 // Examples
 /*use <layouts.scad>;
@@ -47,6 +52,63 @@ grid(105,105,true,4)
 	donutSlice([20,30],[50,40],0,270);
 }*/
 //----------------------
+
+// Regular 2D shapes
+// The orientation might change with the implementation of circle...
+module ngon(sides, radius, center=false){
+    rotate([0, 0, 360/sides/2]) circle(r=radius, $fn=sides, center=center);
+}
+
+// 2D regular shapes
+
+module reg_polygon(sides, radius, center=false)
+{
+  function dia(r) = sqrt(pow(r*2,2)/2);  //sqrt((r*2^2)/2) if only we had an exponention op
+  if(sides<2) square([radius,0]);
+  if(sides==3) triangle(radius);
+  if(sides==4) square([dia(radius),dia(radius)],center=true);
+  if(sides>4) circle(r=radius,$fn=sides,center=center);
+}
+
+module pentagon(radius)
+{
+  reg_polygon(5,radius);
+}
+
+module hexagon(radius)
+{
+  reg_polygon(6,radius);
+}
+
+module heptagon(radius)
+{
+  reg_polygon(7,radius);
+}
+
+module octagon(radius)
+{
+  reg_polygon(8,radius);
+}
+
+module nonagon(radius)
+{
+  reg_polygon(9,radius);
+}
+
+module decagon(radius)
+{
+  reg_polygon(10,radius);
+}
+
+module hendecagon(radius)
+{
+  reg_polygon(11,radius);
+}
+
+module dodecagon(radius)
+{
+  reg_polygon(12,radius);
+}
 
 // size, top left radius, top right radius, bottom right radius, bottom left radius, center
 module complexRoundSquare(size,rads1=[0,0], rads2=[0,0], rads3=[0,0], rads4=[0,0], center=true)
@@ -103,11 +165,58 @@ module roundedSquare(pos=[10,10],r=2) {
 		circle(r=r);
 	}
 }
-// round shapes
-// The orientation might change with the implementation of circle...
-module ngon(sides, radius, center=false){
-    rotate([0, 0, 360/sides/2]) circle(r=radius, $fn=sides, center=center);
+
+module csquare (size, center = false)
+{
+    center = (len (center) == undef) ? [center, center] : center;
+    size = (len (size) == undef) ? [size, size] : size;
+
+    function get_offset (i) = center[i] ? - size[i] / 2 : 0;
+
+    translate ([get_offset (0), get_offset (1)])
+    square (size);
 }
+
+module triangle(radius)
+{
+  o=radius/2;		//equivalent to radius*sin(30)
+  a=radius*sqrt(3)/2;	//equivalent to radius*cos(30)
+  polygon(points=[[-a,-o],[0,radius],[a,-o]],paths=[[0,1,2]]);
+}
+
+module trapezoid (bottom, height, top = undef,
+    left_angle = undef, right_angle = undef)
+{
+    function tan90 (angle) = (angle == 90) ? 0 : tan (angle);
+
+    function get_trapezoid_offset (adjacent, opposite) = (
+        (adjacent == undef && opposite == undef) ? (bottom - top) / 2 :
+        (adjacent == undef) ? bottom - tan90 (90 - opposite) * height - top :
+        tan90 (90 - adjacent) * height
+    );
+
+    offset_left = get_trapezoid_offset (left_angle, right_angle);
+    offset_right = get_trapezoid_offset (right_angle, left_angle);
+
+    polygon ([
+            [-bottom / 2, 0],
+            [bottom / 2, 0],
+            [bottom / 2 - offset_right, height],
+            [-bottom / 2 + offset_left, height]
+        ]);
+}
+
+module ring(inside_diameter, thickness){
+  difference(){
+    circle(r=(inside_diameter+thickness*2)/2);
+    circle(r=inside_diameter/2);
+  }
+}
+
+module ellipse(width, height) {
+  scale([1, height/width, 1]) circle(r=width/2);
+}
+
 module ellipsePart(width,height,numQuarters)
 {
     o = 1; //slight overlap to fix a bug
@@ -122,6 +231,18 @@ module ellipsePart(width,height,numQuarters)
 			translate([-o,0,0]) square([width/2+o*2,height/2+o]);
 	}
 }
+
+// The ratio of length and width is about 1.39 for a real egg
+module egg_outline(width, length){
+    translate([0, width/2, 0]) union(){
+        rotate([0, 0, 180]) difference(){
+            ellipse(width, 2*length-width);
+            translate([-length/2, 0, 0]) square(length);
+        }
+        circle(r=width/2);
+    }
+}
+
 module donutSlice(innerSize,outerSize, start_angle, end_angle) 
 {   
     difference()
@@ -158,40 +279,4 @@ module pieSlice(size, start_angle, end_angle) //size in radius(es)
             [0,0]
        ]);
     }
-}
-module ellipse(width, height) {
-  scale([1, height/width, 1]) circle(r=width/2);
-}
-
-module trapezoid (bottom, height, top = undef,
-    left_angle = undef, right_angle = undef)
-{
-    function tan90 (angle) = (angle == 90) ? 0 : tan (angle);
-
-    function get_trapezoid_offset (adjacent, opposite) = (
-        (adjacent == undef && opposite == undef) ? (bottom - top) / 2 :
-        (adjacent == undef) ? bottom - tan90 (90 - opposite) * height - top :
-        tan90 (90 - adjacent) * height
-    );
-
-    offset_left = get_trapezoid_offset (left_angle, right_angle);
-    offset_right = get_trapezoid_offset (right_angle, left_angle);
-
-    polygon ([
-            [-bottom / 2, 0],
-            [bottom / 2, 0],
-            [bottom / 2 - offset_right, height],
-            [-bottom / 2 + offset_left, height]
-        ]);
-}
-
-module csquare (size, center = false)
-{
-    center = (len (center) == undef) ? [center, center] : center;
-    size = (len (size) == undef) ? [size, size] : size;
-
-    function get_offset (i) = center[i] ? - size[i] / 2 : 0;
-
-    translate ([get_offset (0), get_offset (1)])
-    square (size);
 }
