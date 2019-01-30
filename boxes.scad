@@ -1,4 +1,4 @@
-use <MCAD/shapes/mcad_rounded_box.scad>
+use <MCAD/shapes/3Dshapes.scad>
 
 // @deprecated
 module roundedBox (size, radius, sidesonly, center = true)
