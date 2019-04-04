@@ -99,7 +99,7 @@ module ellipse(width, height) {
   scale([1, height/width, 1]) circle(r=width/2);
 }
 
-// The ratio of lenght and width is about 1.39 for a real egg
+// The ratio of length and width is about 1.39 for a real egg
 module egg_outline(width, length){
     translate([0, width/2, 0]) union(){
         rotate([0, 0, 180]) difference(){
