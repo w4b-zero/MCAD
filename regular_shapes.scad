@@ -247,11 +247,11 @@ module square_pyramid(base_x, base_y,height)
   polyhedron(points=[[-w,-h,0],[-w,h,0],[w,h,0],[w,-h,0],[0,0,height]],triangles=[[0,3,2,1], [0,1,4], [1,2,4], [2,3,4], [3,0,4]]);
 }
 
-module egg(width, lenght){
+module egg(width, length){
     rotate_extrude()
         difference(){
-            egg_outline(width, lenght);
-            translate([-lenght, 0, 0]) cube(2*lenght, center=true);
+            egg_outline(width, length);
+            translate([-length, 0, 0]) cube(2*length, center=true);
         }
 }
 
