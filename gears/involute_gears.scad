@@ -284,29 +284,24 @@ module involute_bevel_gear_tooth (
 	{
 		for (i=[1:res])
 		{
-			assign (
-				point1=
-					involute (base_radius*2,start_angle+(stop_angle - start_angle)*(i-1)/res),
-				point2=
-					involute (base_radius*2,start_angle+(stop_angle - start_angle)*(i)/res))
-			{
-				assign (
-					side1_point1 = rotate_2dvector (centre_angle, point1),
-					side1_point2 = rotate_2dvector (centre_angle, point2),
-					side2_point1 = mirror_2dvector (rotate_2dvector (centre_angle, point1)),
-					side2_point2 = mirror_2dvector (rotate_2dvector (centre_angle, point2)))
-				{
-					polyhedron (
-						points=[
-							[back_cone_radius*2+0.1,0,cone_distance*2],
-							[side1_point1[0],side1_point1[1],0],
-							[side1_point2[0],side1_point2[1],0],
-							[side2_point2[0],side2_point2[1],0],
-							[side2_point1[0],side2_point1[1],0],
-							[0.1,0,0]],
-						triangles=[[0,2,1],[0,3,2],[0,4,3],[0,1,5],[1,2,5],[2,3,5],[3,4,5],[0,5,4]]);
-				}
-			}
+			let (
+				point1=	involute (base_radius*2,start_angle+(stop_angle - start_angle)*(i-1)/res),
+				point2=	involute (base_radius*2,start_angle+(stop_angle - start_angle)*(i)/res),
+				side1_point1= rotate_2dvector (centre_angle, point1),
+				side1_point2= rotate_2dvector (centre_angle, point2),
+				side2_point1= mirror_2dvector (rotate_2dvector (centre_angle, point1)),
+				side2_point2= mirror_2dvector (rotate_2dvector (centre_angle, point2))
+			)
+			polyhedron (
+				points=[
+					[back_cone_radius*2+0.1,0,cone_distance*2],
+					[side1_point1[0],side1_point1[1],0],
+					[side1_point2[0],side1_point2[1],0],
+					[side2_point2[0],side2_point2[1],0],
+					[side2_point1[0],side2_point1[1],0],
+					[0.1,0,0]],
+				faces=[[0,2,1],[0,3,2],[0,4,3],[0,1,5],[1,2,5],[2,3,5],[3,4,5],[0,5,4]]
+			);
 		}
 	}
 }
