@@ -1,4 +1,4 @@
-//    Enhancement of OpenSCAD Primitives Solid with Trinagles 
+//    Enhancement of OpenSCAD Primitives Solid with Triangles 
 //    Copyright (C) 2011  Rene BAUMANN, Switzerland
 //
 //    This library is free software; you can redistribute it and/or
@@ -20,12 +20,12 @@
 //	File providing functions and modules to draw 3D - triangles 
 //	created in the X-Y plane with hight h, using various triangle 
 //	specification methods. 
-//	Standard traingle geometrical definition  is used. Vertices are named A,B,C, 
+//	Standard triangle geometrical definition  is used. Vertices are named A,B,C, 
 //	side a is opposite vertex A a.s.o. the angle at vertex A is named alpha, 
 //	B(beta), C(gamma).
 //
 //	This SW is a contribution to the Free Software Community doing a marvelous
-//	job of giving anyone access to knowledge and tools to educate himselfe.
+//	job of giving anyone access to knowledge and tools to educate himself.
 //
 //	Author:		Rene Baumann
 //	Date:		11.09.2011
@@ -39,9 +39,9 @@
 //	FUNCTION: 		3dtri_sides2coord
 //	DESCRIPTION:
 //		Enter triangle sides a,b,c and to get the A,B,C - corner
-// 		co-ordinates. The trinagle's c-side lies on the x-axis
+// 		co-ordinates. The triangle's c-side lies on the x-axis
 // 		and A-corner in the co-ordinates center [0,0,0]. Geometry rules
-//		required that a + b is greater then c.  The traingle's vertices are
+//		required that a + b is greater then c.  The triangle's vertices are
 //		computed such that it is located in the X-Y plane,  side c is on the 
 //		positive x-axis. 
 //	PARAMETER:
@@ -53,7 +53,7 @@
 //
 //	COMMENT:
 //		vertices = 3dtri_sides2coord (3,4,5);
-//		vertices[0] : Acord	vertex A cordinates the like [x,y,z] 
+//		vertices[0] : Acord	vertex A coordinates the like [x,y,z] 
 // -------------------------------------------------------------------------------------	
 //
 function 3dtri_sides2coord (a,b,c) = [
@@ -205,7 +205,7 @@ function 3dtri_centerOfIn_circle (Acord,Bcord,Ccord,r) =
 //		Acord	: [x,y,z] 	Coordinates of vertex A
 //		Bcord	: [x,y,z] 	Coordinates of vertex B
 //		Ccord	: [x,y,z] 	Coordinates of vertex C
-//		h	: real		Hight of the triangle
+//		h	: real		Height of the triangle
 //	RETURNS:
 //		none
 //
@@ -231,14 +231,14 @@ polyhedron (points=[Acord,Bcord,Ccord,
 //		Draw a round corner triangle with A,B,C - vertices specified by its 
 // 		co-ordinates, height h and round vertices having radius "r".
 //		As specified by the input parameters.
-//		Please note, the tringles side lenght gets extended by "2 * r",
+//		Please note, the triangles side length gets extended by "2 * r",
 //		and the vertices coordinates define the centers of the 
 //		circles with radius "r". 
 //	PARAMETER:
 //		Acord	: [x,y,z] 	Coordinates of vertex A
 //		Bcord	: [x,y,z] 	Coordinates of vertex B
 //		Ccord	: [x,y,z] 	Coordinates of vertex C
-//		h	: real		Hight of the triangle
+//		h	: real		Height of the triangle
 //		r	: real		Radius from vertices coordinates
 //	RETURNS:
 //		none
@@ -324,4 +324,3 @@ union () {
 //  	}
 //  	translate (ic+[0,0,5*h]) cylinder(h=12*h,r1=0.5*ir,r2=0.5*ir,center=true);
 //  }
-
