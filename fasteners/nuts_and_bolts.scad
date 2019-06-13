@@ -134,7 +134,7 @@ METRIC_NUT_THICKNESS =
 METRIC_BOLT_CAP_DIAMETERS = [
 	-1,
 	-1,
-	-1,
+	3.8, // m2
 	5.5, // m3
 	7, // m4
 	8.5, // m5
