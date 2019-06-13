@@ -1,4 +1,5 @@
 use <MCAD/array/along_curve.scad>
+use <MCAD/array/rectangular.scad>
 include <MCAD/units/metric.scad>
 // Copyright 2010 D1plo1d
 // Copyright 2017 Chow Loong Jin <hyperair@debian.org>
