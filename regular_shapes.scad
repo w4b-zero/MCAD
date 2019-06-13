@@ -53,9 +53,10 @@ module pentagon(radius)
   reg_polygon(5,radius);
 }
 
-module hexagon(radius)
+module hexagon(radius, diameter, across_flats)
 {
-  reg_polygon(6,radius);
+  r = across_flats ? across_flats/2/cos(30) : diameter ? diameter/2 : radius;
+  reg_polygon(6,r);
 }
 
 module heptagon(radius)
@@ -166,9 +167,10 @@ module pentagon_tube(height,radius,wall)
  tubify(radius,wall) pentagon_prism(height,radius);
 }
 
-module hexagon_prism(height,radius)
+module hexagon_prism(height, radius, across_flats)
 {
-  linear_extrude(height=height) hexagon(radius);
+  linear_extrude(height=height)
+    hexagon(radius=radius, across_flats=across_flats);
 }
 
 module hexagon_tube(height,radius,wall)
