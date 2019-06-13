@@ -199,7 +199,7 @@ module mcad_bolt_hole (size, length, cap_extra_length, tolerance = +0.0001,
 
 	if (proj == -1)
 	{
-		translate([0, 0, -cap_height - cap_extra_length])
+		translate([0, 0, -cap_height - cap_extra_length + epsilon])
 			cylinder(r = cap_radius, h = cap_height + cap_extra_length);
 		cylinder(r = radius, h = length);
 	}
