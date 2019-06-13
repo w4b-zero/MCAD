@@ -205,7 +205,7 @@ function 3dtri_centerOfIn_circle (Acord,Bcord,Ccord,r) =
 //		Acord	: [x,y,z] 	Coordinates of vertex A
 //		Bcord	: [x,y,z] 	Coordinates of vertex B
 //		Ccord	: [x,y,z] 	Coordinates of vertex C
-//		h	: real		Hight of the triangle
+//		h	: real		Height of the triangle
 //	RETURNS:
 //		none
 //
@@ -238,7 +238,7 @@ polyhedron (points=[Acord,Bcord,Ccord,
 //		Acord	: [x,y,z] 	Coordinates of vertex A
 //		Bcord	: [x,y,z] 	Coordinates of vertex B
 //		Ccord	: [x,y,z] 	Coordinates of vertex C
-//		h	: real		Hight of the triangle
+//		h	: real		Height of the triangle
 //		r	: real		Radius from vertices coordinates
 //	RETURNS:
 //		none
