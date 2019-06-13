@@ -1,4 +1,5 @@
 use <MCAD/array/along_curve.scad>
+use <MCAD/array/rectangular.scad>
 include <MCAD/units/metric.scad>
 // Copyright 2010 D1plo1d
 // Copyright 2017 Chow Loong Jin <hyperair@debian.org>
@@ -156,7 +157,19 @@ METRIC_BOLT_CAP_DIAMETERS = [
 	-1,
 	-1,
 	-1,
-	36 // m24
+	36, // m24
+	-1,
+	-1,
+	-1,
+	-1,
+	-1,
+	45, //m30
+	-1,
+	-1,
+	-1,
+	-1,
+	-1,
+	54 // m36
 ];
 
 function mcad_metric_nut_ac_width (size) = METRIC_NUT_AC_WIDTHS[size];
@@ -198,7 +211,7 @@ module mcad_bolt_hole (size, length, cap_extra_length, tolerance = +0.0001,
 
 	if (proj == -1)
 	{
-		translate([0, 0, -cap_height - cap_extra_length])
+		translate([0, 0, -cap_height - cap_extra_length + epsilon])
 			cylinder(r = cap_radius, h = cap_height + cap_extra_length);
 		cylinder(r = radius, h = length);
 	}
