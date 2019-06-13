@@ -157,7 +157,19 @@ METRIC_BOLT_CAP_DIAMETERS = [
 	-1,
 	-1,
 	-1,
-	36 // m24
+	36, // m24
+	-1,
+	-1,
+	-1,
+	-1,
+	-1,
+	45, //m30
+	-1,
+	-1,
+	-1,
+	-1,
+	-1,
+	54 // m36
 ];
 
 function mcad_metric_nut_ac_width (size) = METRIC_NUT_AC_WIDTHS[size];
