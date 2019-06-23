@@ -11,7 +11,7 @@ use <scad-utils/transformations.scad>
   * @param radius Radius of coordinates
   */
 function mcad_generate_polar_coords (angle, number, radius) = (
-    let (total = angle * number)
+    let (total = (angle == undef) ? 360 : angle * number)
     [
         for (i = [0:number-1])
             [radius, i * total / number]
