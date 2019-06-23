@@ -61,53 +61,66 @@ module ngon(sides, radius, center=false){
 
 // 2D regular shapes
 
-module reg_polygon(sides, radius, center=false)
+module reg_polygon(sides, radius) {
+  echo("<font color='red'>
+        DEPRECATED: function 'reg_polygon' is now deprecated
+        please use 'regular_polygon' instead</font>");
+
+     regular_polygon(sides, radius);
+}
+
+module regular_polygon(sides, radius)
 {
   function dia(r) = sqrt(pow(r*2,2)/2);  //sqrt((r*2^2)/2) if only we had an exponention op
   if(sides<2) square([radius,0]);
   if(sides==3) triangle(radius);
   if(sides==4) square([dia(radius),dia(radius)],center=true);
-  if(sides>4) circle(r=radius,$fn=sides,center=center);
+  if(sides>4) {
+    angles=[ for (i = [0:sides-1]) i*(360/sides) ];
+    coords=[ for (th=angles) [radius*cos(th), radius*sin(th)] ];
+    polygon(coords);
+  }
 }
 
 module pentagon(radius)
 {
-  reg_polygon(5,radius);
+  regular_polygon(5,radius);
 }
 
-module hexagon(radius)
+module hexagon(radius, diameter, across_flats)
 {
-  reg_polygon(6,radius);
+  r = across_flats ? across_flats/2/cos(30) : diameter ? diameter/2 : radius;
+  regular_polygon(6,r);
 }
 
 module heptagon(radius)
 {
-  reg_polygon(7,radius);
+  regular_polygon(7,radius);
 }
 
 module octagon(radius)
 {
-  reg_polygon(8,radius);
+  regular_polygon(8,radius);
 }
 
 module nonagon(radius)
 {
-  reg_polygon(9,radius);
+  regular_polygon(9,radius);
 }
 
 module decagon(radius)
 {
-  reg_polygon(10,radius);
+  regular_polygon(10,radius);
 }
 
 module hendecagon(radius)
 {
-  reg_polygon(11,radius);
+  regular_polygon(11,radius);
 }
 
 module dodecagon(radius)
 {
-  reg_polygon(12,radius);
+  regular_polygon(12,radius);
 }
 
 // size, top left radius, top right radius, bottom right radius, bottom left radius, center

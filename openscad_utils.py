@@ -1,4 +1,4 @@
-import py, re, os, signal, time, commands, sys
+import py, re, os, signal, time, subprocess, sys
 from subprocess import Popen, PIPE
 
 mod_re = (r"\bmodule\s+(", r")\s*\(\s*")
@@ -17,11 +17,11 @@ def extract_func_names(fpath, name_re=r"\w+"):
 
 def collect_test_modules(dirpath=None):
     dirpath = dirpath or py.path.local("./")
-    print "Collecting openscad test module names"
+    print("Collecting openscad test module names")
 
     test_files = {}
     for fpath in dirpath.visit('*.scad'):
-        #print fpath
+        #print(fpath)
         modules = extract_mod_names(fpath, r"test\w*")
         #functions = extract_func_names(fpath, r"test\w*")
         test_files[fpath] = modules
@@ -32,20 +32,20 @@ class Timeout(Exception): pass
 def call_openscad(path, stlpath, timeout=5):
     if sys.platform == 'darwin': exe = 'OpenSCAD.app/Contents/MacOS/OpenSCAD'
     else: exe = 'openscad'
-    command = [exe, '-s', str(stlpath),  str(path)]
-    print command
+    command = [exe, '-o', str(stlpath),  str(path)]
+    print(command)
     if timeout:
         try:
             proc = Popen(command,
                 stdout=PIPE, stderr=PIPE, close_fds=True)
             calltime = time.time()
             time.sleep(0.05)
-            #print calltime
+            #print(calltime)
             while True:
                 if proc.poll() is not None:
                     break
                 time.sleep(0.5)
-                #print time.time()
+                #print(time.time())
                 if time.time() > calltime + timeout:
                     raise Timeout()
         finally:
@@ -57,7 +57,7 @@ def call_openscad(path, stlpath, timeout=5):
 
         return (proc.returncode,) + proc.communicate()
     else:
-        output = commands.getstatusoutput(" ".join(command))
+        output = subprocess.getstatusoutput(" ".join(command)).decode("utf-8")
         return output + ('', '')
 
 def parse_output(text):

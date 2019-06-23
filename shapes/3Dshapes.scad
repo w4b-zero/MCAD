@@ -101,11 +101,11 @@ module ellipsoid(w, h, center = false) {
   scale([1, h/w, 1]) sphere(r=w/2, center=center);
 }
 
-module egg(width, lenght){
+module egg(width, length){
     rotate_extrude()
         difference(){
-            egg_outline(width, lenght);
-            translate([-lenght, 0, 0]) cube(2*lenght, center=true);
+            egg_outline(width, length);
+            translate([-length, 0, 0]) cube(2*length, center=true);
         }
 }
 
@@ -138,7 +138,7 @@ be wrong.
 module teardrop(radius, length, angle) {
 	rotate([0, angle, 0]) union() {
 		linear_extrude(height = length, center = true, convexity = radius, twist = 0)
-			circle(r = radius, center = true, $fn = 30);
+			circle(r = radius, $fn = 30);
 		linear_extrude(height = length, center = true, convexity = radius, twist = 0)
 			projection(cut = false) rotate([0, -angle, 0]) translate([0, 0, radius * sin(45) * 1.5]) cylinder(h = radius * sin(45), r1 = radius * sin(45), r2 = 0, center = true, $fn = 30);
 	}
@@ -247,9 +247,10 @@ module pentagon_tube(height,radius,wall)
  tubify(radius,wall) pentagon_prism(height,radius);
 }
 
-module hexagon_prism(height,radius)
+module hexagon_prism(height,radius, across_flats)
 {
-  linear_extrude(height=height) hexagon(radius);
+  linear_extrude(height=height)
+    hexagon(radius, across_flats=across_flats);
 }
 
 module hexagon_tube(height,radius,wall)
