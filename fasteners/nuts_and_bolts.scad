@@ -51,135 +51,75 @@ module mcad_test_nuts_and_bolts_3 ()
 //mcad_test_nuts_and_bolts_3 ();
 
 //Based on: http://www.roymech.co.uk/Useful_Tables/Screws/Hex_Screws.htm
-METRIC_NUT_AC_WIDTHS =
+METRIC_NUT_AC_WIDTH =
 [
-	-1, //0 index is not used but reduces computation
-	-1,
-	4.32, //m2
-	6.40,//m3
-	8.10,//m4
-	9.20,//m5
-	11.50,//m6
-	-1,
-	15.00,//m8
-	-1,
-	19.60,//m10
-	-1,
-	22.10,//m12
-	-1,
-	-1,
-	-1,
-	27.70,//m16
-	-1,
-	-1,
-	-1,
-	34.60,//m20
-	-1,
-	-1,
-	-1,
-	41.60,//m24
-	-1,
-	-1,
-	-1,
-	-1,
-	-1,
-	53.1,//m30
-	-1,
-	-1,
-	-1,
-	-1,
-	-1,
-	63.5//m36
+	[1.6,  3.41],
+	[  2,  4.32],
+	[2.5,  5.45],
+	[  3,  6.40],
+	[  4,  8.10],
+	[  5,  9.20],
+	[  6, 11.50],
+	[  8, 15.00],
+	[ 10, 19.60],
+	[ 12, 22.10],
+	[ 16, 27.70],
+	[ 20, 34.60],
+	[ 24, 41.60],
+	[ 30, 53.10],
+	[ 36, 63.50]
 ];
 
+// ISO 4032 nut thickness:
+// http://www.fasteners.eu/standards/ISO/4032/
 METRIC_NUT_THICKNESS =
 [
-	-1, //0 index is not used but reduces computation
-	-1,
-	1.6,//m2
-	2.40,//m3
-	3.20,//m4
-	4.00,//m5
-	5.00,//m6
-	-1,
-	6.50,//m8
-	-1,
-	8.00,//m10
-	-1,
-	10.00,//m12
-	-1,
-	-1,
-	-1,
-	13.00,//m16
-	-1,
-	-1,
-	-1,
-	16.00//m20
-	-1,
-	-1,
-	-1,
-	19.00,//m24
-	-1,
-	-1,
-	-1,
-	-1,
-	-1,
-	24.00,//m30
-	-1,
-	-1,
-	-1,
-	-1,
-	-1,
-	29.00//m36
+	[1.6, 1.3],
+	[  2, 1.6],
+	[2.5, 2.0],
+	[ 3,  2.4],
+	[ 4,  3.2],
+	[ 5,  4.7],
+	[ 6,  5.2],
+	[ 8,  6.8],
+	[10,  8.4],
+	[12, 10.8],
+	[16, 14.8],
+	[20, 18.0],
+	[24, 21.5],
+	[30, 25.6],
+	[36, 31.0]
 ];
 
-METRIC_BOLT_CAP_DIAMETERS = [
-	-1,
-	-1,
-	3.8, // m2
-	5.5, // m3
-	7, // m4
-	8.5, // m5
-	10, // m6
-	-1,
-	13, // m8
-	-1,
-	16, // m10
-	-1,
-	18, // m12
-	-1,
-	-1,
-	-1,
-	24, // m16
-	-1,
-	-1,
-	-1,
-	30, // m20
-	-1,
-	-1,
-	-1,
-	36, // m24
-	-1,
-	-1,
-	-1,
-	-1,
-	-1,
-	45, //m30
-	-1,
-	-1,
-	-1,
-	-1,
-	-1,
-	54 // m36
+// ISO 4762 cap screw diameters:
+// http://www.fasteners.eu/standards/ISO/4762/
+METRIC_BOLT_CAP_DIAMETER =
+[
+	[1.6, 3.0],
+	[  2, 3.8],
+	[2.5, 4.5],
+	[ 3,  5.5],
+	[ 4,  7.0],
+	[ 5,  8.5],
+	[ 6, 10.0],
+	[ 8, 13.0],
+	[10, 16.0],
+	[12, 18.0],
+	[16, 24.0],
+	[20, 30.0],
+	[24, 36.0],
+	[30, 45.0],
+	[36, 54.0]
 ];
 
-function mcad_metric_nut_ac_width (size) = METRIC_NUT_AC_WIDTHS[size];
-function mcad_metric_nut_thickness (size) = METRIC_NUT_THICKNESS[size];
+function mcad_metric_nut_ac_width (size) =
+    lookup (size, METRIC_NUT_AC_WIDTH);
+function mcad_metric_nut_thickness (size) =
+    lookup (size, METRIC_NUT_THICKNESS);
+function mcad_metric_bolt_cap_diameter (size) =
+    lookup (size, METRIC_BOLT_CAP_DIAMETER);
 function mcad_metric_bolt_major_diameter (size) = size;
 function mcad_metric_bolt_cap_height (size) = size;
-function mcad_metric_bolt_cap_diameter (size) = (
-	METRIC_BOLT_CAP_DIAMETERS[size]
-);
 
 module mcad_nut_hole (size, tolerance = +0.0001, proj = -1)
 {
