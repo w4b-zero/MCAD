@@ -201,7 +201,9 @@ module mcad_nut_hole (size, tolerance = +0.0001, proj = -1)
 	}
 }
 
-module mcad_bolt_hole (size, length, cap_extra_length, tolerance = +0.0001,
+module mcad_bolt_hole (size, length,
+                       cap_extra_length = 0,
+                       tolerance = +0.0001,
                        proj = -1)
 {
 	radius = mcad_metric_bolt_major_diameter (size) / 2 + tolerance;
