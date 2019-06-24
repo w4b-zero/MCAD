@@ -23,15 +23,15 @@ module mcad_test_nuts_and_bolts_2 ()
 {
 	$fn = 360;
 
-	difference(){
-		cube(size = [10, 20, 10], center = true);
-		union(){
-			translate ([0, 15])
-				mcad_nut_hole (3, proj = 2);
-
+	difference () {
+		cube (size = [10, 40, 10], center = true);
+		union () {
 			linear_extrude (height = 20, center = true, convexity = 10,
-			                twist = 0)
-			mcad_bolt_hole (3, length = 30, proj = 2);
+			                twist = 0) {
+				mcad_nut_hole (3, proj = 2);
+				translate ([0, -15])
+					mcad_bolt_hole (3, length = 30, proj = 2);
+			}
 		}
 	}
 }
