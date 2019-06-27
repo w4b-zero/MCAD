@@ -15,8 +15,7 @@ module mcad_test_nuts_and_bolts_1 ()
 	translate ([0, 15])
 		mcad_nut_hole (3, proj = -1);
 
-	mcad_bolt_hole (3, length = 30,tolerance =10, proj = -1);
-
+	mcad_bolt_hole (3, length = 30, tolerance = 10, proj = -1);
 }
 //mcad_test_nuts_and_bolts_1 ();
 
@@ -42,12 +41,8 @@ module mcad_test_nuts_and_bolts_3 ()
 {
 	$fn = 360;
 
-	mcad_bolt_hole_with_nut (
-		size = 3,
-		length = 10
-	);
+	mcad_bolt_hole_with_nut (size = 3, length = 10);
 }
-
 //mcad_test_nuts_and_bolts_3 ();
 
 // ISO 4032 nut width across flats:
@@ -148,27 +143,29 @@ module mcad_bolt_hole (size, length,
                        tolerance = +0.0001,
                        proj = -1)
 {
+	//look up nut dimensions from screw size
 	radius = mcad_metric_bolt_major_diameter (size) / 2 + tolerance;
-
 	cap_height = mcad_metric_bolt_cap_height (size) + tolerance;
 	cap_radius = mcad_metric_bolt_cap_diameter (size) / 2 + tolerance;
 
 	if (proj == -1)
 	{
-		translate([0, 0, -cap_height - cap_extra_length + epsilon])
-			cylinder(r = cap_radius, h = cap_height + cap_extra_length);
-		cylinder(r = radius, h = length);
+		translate ([0, 0, -cap_height - cap_extra_length + epsilon])
+			cylinder (r = cap_radius, h = cap_height + cap_extra_length);
+		cylinder (r = radius, h = length);
 	}
+
 	if (proj == 1)
 	{
-		circle(r = radius);
+		circle (r = radius);
 	}
+
 	if (proj == 2)
 	{
-		translate([-cap_radius, - cap_height])
-			square([cap_radius * 2, cap_height]);
-		translate([-radius, 0])
-			square([radius * 2, length]);
+		translate ([-cap_radius, - cap_height])
+			square ([cap_radius * 2, cap_height]);
+		translate ([-radius, 0])
+			square ([radius * 2, length]);
 	}
 }
 
@@ -181,7 +178,8 @@ module mcad_bolt_hole (size, length,
  * @param align_with Alignment of whole set (above_head, below_head, center,
  *                                           below_nut, above_nut)
  */
-module mcad_bolt_hole_with_nut (size, length, nut_projection = "axial",
+module mcad_bolt_hole_with_nut (size, length,
+                                nut_projection = "axial",
                                 align_with = "above_head",
                                 screw_extra_length = 9999,
                                 head_extra_length = 9999,
