@@ -45,6 +45,27 @@ module mcad_test_nuts_and_bolts_3 ()
 }
 //mcad_test_nuts_and_bolts_3 ();
 
+// DEPRECATED dimensions across corners: backcompat only
+METRIC_NUT_AC_WIDTH =
+[
+	[1.6,  3.41],
+	[  2,  4.32],
+	[2.5,  5.45],
+	[  3,  6.40],
+	[  4,  8.10],
+	[  5,  9.20],
+	[  6, 11.50],
+	[  8, 15.00],
+	[ 10, 19.60],
+	[ 12, 22.10],
+	[ 16, 27.70],
+	[ 20, 34.60],
+	[ 24, 41.60],
+	[ 30, 53.10],
+	[ 36, 63.50]
+];
+
+
 // ISO 4032 nut width across flats:
 // http://www.fasteners.eu/standards/ISO/4032/
 METRIC_NUT_AF_WIDTH =
@@ -108,6 +129,10 @@ METRIC_BOLT_CAP_DIAMETER =
 	[36, 54.0]
 ];
 
+// DEPRECATED: backcompat only
+function mcad_metric_nut_ac_width (size) =
+    lookup (size, METRIC_NUT_AC_WIDTH);
+
 function mcad_metric_nut_af_width (size) =
     lookup (size, METRIC_NUT_AF_WIDTH);
 function mcad_metric_nut_thickness (size) =
@@ -119,22 +144,37 @@ function mcad_metric_bolt_cap_height (size) = size;
 
 module mcad_nut_hole (size, tolerance = +0.0001, proj = -1)
 {
-	//takes a metric screw/nut size and looksup nut dimensions
-	radius = mcad_metric_nut_ac_width (size) / 2 + tolerance;
+	//look up nut dimensions from screw size
+	width = mcad_metric_nut_af_width (size) + tolerance;
 	height = mcad_metric_nut_thickness (size) + tolerance;
 
-	if (proj == -1) {
-		cylinder (r = radius, h = height, $fn = 6, center = [0, 0]);
-	}
+	//DEPRECATED: backcompat only
+	radius = (mcad_metric_nut_ac_width (size) / 2) + tolerance;
 
-	else if (proj == 1) {
-		circle(r = radius, $fn = 6);
-	}
-
-	else if (proj == 2)
+	if (proj == -1)
 	{
-		translate ([-radius/2, 0])
+		linear_extrude (height = height) {
+			hexagon (across_flats = width);
+		}
+	}
+
+	if (proj == 1)
+	{
+		hexagon (across_flats = width);
+	}
+
+	if (proj == 2)
+	{
+		echo ("<font color = 'red'>
+              DEPRECATED: proj = 2 uses dimensions across corners and nuts will not trap.
+              Please use proj = 3 instead to use dimensions across flats instead</font>");
+		translate ([-radius, 0])
 			square ([radius*2, height]);
+	}
+	if (proj == 3)
+	{
+		translate ([-width/2, 0])
+			square ([width, height]);
 	}
 }
 
