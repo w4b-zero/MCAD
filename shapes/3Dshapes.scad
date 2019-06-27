@@ -247,7 +247,7 @@ module pentagon_tube(height,radius,wall)
  tubify(radius,wall) pentagon_prism(height,radius);
 }
 
-module hexagon_prism(height,radius, across_flats)
+module hexagon_prism(height, radius, across_flats)
 {
   linear_extrude(height=height)
     hexagon(radius, across_flats=across_flats);
