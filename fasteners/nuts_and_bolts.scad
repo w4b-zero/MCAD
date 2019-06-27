@@ -50,24 +50,25 @@ module mcad_test_nuts_and_bolts_3 ()
 
 //mcad_test_nuts_and_bolts_3 ();
 
-//Based on: http://www.roymech.co.uk/Useful_Tables/Screws/Hex_Screws.htm
-METRIC_NUT_AC_WIDTH =
+// ISO 4032 nut width across flats:
+// http://www.fasteners.eu/standards/ISO/4032/
+METRIC_NUT_AF_WIDTH =
 [
-	[1.6,  3.41],
-	[  2,  4.32],
-	[2.5,  5.45],
-	[  3,  6.40],
-	[  4,  8.10],
-	[  5,  9.20],
-	[  6, 11.50],
-	[  8, 15.00],
-	[ 10, 19.60],
-	[ 12, 22.10],
-	[ 16, 27.70],
-	[ 20, 34.60],
-	[ 24, 41.60],
-	[ 30, 53.10],
-	[ 36, 63.50]
+	[1.6,  3.20],
+	[  2,  4.00],
+	[2.5,  5.00],
+	[  3,  5.50],
+	[  4,  7.00],
+	[  5,  8.00],
+	[  6, 10.00],
+	[  8, 13.00],
+	[ 10, 16.00],
+	[ 12, 18.00],
+	[ 16, 24.00],
+	[ 20, 30.00],
+	[ 24, 36.00],
+	[ 30, 46.00],
+	[ 36, 55.00]
 ];
 
 // ISO 4032 nut thickness:
@@ -112,8 +113,8 @@ METRIC_BOLT_CAP_DIAMETER =
 	[36, 54.0]
 ];
 
-function mcad_metric_nut_ac_width (size) =
-    lookup (size, METRIC_NUT_AC_WIDTH);
+function mcad_metric_nut_af_width (size) =
+    lookup (size, METRIC_NUT_AF_WIDTH);
 function mcad_metric_nut_thickness (size) =
     lookup (size, METRIC_NUT_THICKNESS);
 function mcad_metric_bolt_cap_diameter (size) =
