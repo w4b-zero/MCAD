@@ -137,6 +137,9 @@ COARSE_THREAD_METRIC_BOLT_MAJOR_DIAMETERS =
 	35.940//m36
 ];
 
+// Deprecated, but kept around for people who use the wrong spelling.
+COURSE_METRIC_BOLT_MAJOR_THREAD_DIAMETERS = COARSE_THREAD_METRIC_BOLT_MAJOR_DIAMETERS;
+
 //Based on: http://www.roymech.co.uk/Useful_Tables/Screws/cap_screws.htm
 METRIC_BOLT_CAP_DIAMETERS =
 [
