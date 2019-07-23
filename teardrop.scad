@@ -36,6 +36,18 @@ module teardrop(radius, length, angle) {
 	*/
 }
 
+/*
+ * Simple intersection method to implement a flat/truncated teardrop
+ */
+module flat_teardrop(radius, length, angle) {
+	intersection() {
+		rotate([0, angle, 0]) {
+			cube(size=[radius * 2, radius * 2, length], center=true);
+		}
+		teardrop(radius, length, angle);
+	}
+}
+
 module test_teardrop(){
     translate([0, -15, 0]) teardrop(5, 20, 90);
     translate([0, 0, 0]) teardrop(5, 20, 60);
