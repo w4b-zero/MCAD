@@ -6,25 +6,30 @@
  *  License: LGPL 2.1 or later
 */
 
-// 2D Shapes
-//ngon(sides, radius, center=false);
+include <units.scad>
 
-// 3D Shapes
-//box(width, height, depth);
-//roundedBox(width, height, depth, radius);
-//cone(height, radius);
-//ellipticalCylinder(width, height, depth);
-//ellipsoid(width, height);
-//tube(height, radius, wall, center = false);
-//tube2(height, ID, OD, center = false);
-//ovalTube(width, height, depth, wall, center = false);
-//hexagon(height, depth);
-//octagon(height, depth);
-//dodecagon(height, depth);
-//hexagram(height, depth);
-//rightTriangle(adjacent, opposite, depth);
-//equiTriangle(side, depth);
-//12ptStar(height, depth);
+/*
+2D Shapes
+ngon(sides, radius, center=false);
+
+3D Shapes
+box(width, height, depth);
+roundedBox(width, height, depth, radius);
+cone(height, radius);
+ellipticalCylinder(width, height, depth);
+ellipsoid(width, height);
+tube(height, radius, wall, center = false);
+tube2(height, ID, OD, center = false);
+ovalTube(width, height, depth, wall, center = false);
+hexagon(height, depth);
+octagon(height, depth);
+dodecagon(height, depth);
+hexagram(height, depth);
+
+rightTriangle(adjacent, opposite, depth);
+equiTriangle(side, depth);
+12ptStar(height, depth);
+*/
 
 //----------------------
 
@@ -72,19 +77,21 @@ module ellipsoid(w, h, center = false) {
 // wall is wall thickness
 module tube(height, radius, wall, center = false) {
   echo_deprecated_shapes_library();
+  linear_extrude (height = height, center = center) {
+    difference() {
+      circle(r = radius);
+      circle(r = radius - wall);
+    }
+  }
   difference() {
     cylinder(h=height, r=radius, center=center);
-    cylinder(h=height, r=radius-wall, center=center);
+    translate([0,0,-epsilon])
+      cylinder(h=height+2*epsilon, r=radius-wall, center=center);
   }
 }
 
-// wall is wall thickness
 module tube2(height, ID, OD, center = false) {
-  echo_deprecated_shapes_library();
-  difference() {
-    cylinder(h=height, r=OD/2, center=center);
-    cylinder(h=height, r=ID/2, center=center);
-  }
+  tube(height = height, center = center, radius = OD / 2, wall = (OD - ID)/2);
 }
 
 // wall is wall thickness
@@ -100,7 +107,9 @@ module ovalTube(height, rx, ry, wall, center = false) {
 module hexagon(size, height) {
   echo_deprecated_shapes_library();
   boxWidth = size/1.75;
-  for (r = [-60, 0, 60]) rotate([0,0,r]) cube([boxWidth, size, height], true);
+  for (r = [-60, 0, 60])
+    rotate([0,0,r])
+      cube([boxWidth, size, height], true);
 }
 
 // size is the XY plane size, height in Z
@@ -108,7 +117,8 @@ module octagon(size, height) {
   echo_deprecated_shapes_library();
   intersection() {
     cube([size, size, height], true);
-    rotate([0,0,45]) cube([size, size, height], true);
+    rotate([0,0,45])
+      cube([size, size, height], true);
   }
 }
 
@@ -136,9 +146,11 @@ module hexagram(size, height) {
 module rightTriangle(adjacent, opposite, height) {
   echo_deprecated_shapes_library();
   difference() {
-    translate([-adjacent/2,opposite/2,0]) cube([adjacent, opposite, height], true);
+    translate([-adjacent/2,opposite/2,0])
+      cube([adjacent, opposite, height], true);
     translate([-adjacent,0,0]) {
-      rotate([0,0,atan(opposite/adjacent)]) dislocateBox(adjacent*2, opposite, height+2);
+      rotate([0,0,atan(opposite/adjacent)])
+        dislocateBox(adjacent*2, opposite, height+2);
     }
   }
 }
@@ -157,7 +169,7 @@ module equiTriangle(side, height) {
 module 12ptStar(size, height) {
   echo_deprecated_shapes_library();
   starNum = 3;
-  starAngle = 360/starNum;
+  starAngle = 90/starNum;
   for (s = [1:starNum]) {
     rotate([0, 0, s*starAngle]) cube([size, size, height], true);
   }
@@ -168,10 +180,3 @@ module 12ptStar(size, height) {
 module dislocateBox(w, h, d) {
   translate([0,0,-d/2]) cube([w,h,d]);
 }
-
-//-----------------------
-// Tests
-//module test2D_ellipse(){ellipse(10, 5);}
-module test_ellipsoid(){ellipsoid(10, 5);}
-
-//module test2D_egg_outline(){egg_outline();}
