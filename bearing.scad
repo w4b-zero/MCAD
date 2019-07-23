@@ -5,6 +5,11 @@
  * Dual licenced under Creative Commons Attribution-Share Alike 3.0 and LGPL2 or later
  */
 
+/*
+change list 13/6/2013
+ added ,604,606,607,628,629,6200,6201,6202,6203,6205,6206   bearing sizes 
+*/
+
 include <units.scad>
 include <materials.scad>
 
@@ -83,6 +88,13 @@ function bearingDimensions(model) =
   model == 697 ? [7*mm, 17*mm,  5*mm]:
   model == 698 ? [8*mm, 19*mm,  6*mm]:
   model == 699 ? [9*mm, 20*mm,  6*mm]:
+
+  model == 6200 ? [10*mm, 30*mm, 9*mm]:
+  model == 6201 ? [12*mm, 32*mm, 10*mm]:
+  model == 6202 ? [15*mm, 35*mm, 11*mm]:
+  model == 6203 ? [17*mm, 40*mm, 12*mm]:
+  model == 6205 ? [25*mm, 52*mm, 15*mm]:
+  model == 6206 ? [30*mm, 62*mm, 16*mm]:
 
   [8*mm, 22*mm, 7*mm]; // this is the default
 
