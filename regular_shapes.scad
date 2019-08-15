@@ -142,8 +142,8 @@ module tubify(radius,wall)
 {
   difference()
   {
-    child(0);
-    translate([0, 0, -0.1]) scale([(radius-wall)/radius, (radius-wall)/radius, 2]) child(0);
+    children(0);
+    translate([0, 0, -0.1]) scale([(radius-wall)/radius, (radius-wall)/radius, 2]) children(0);
   }
 }
 
