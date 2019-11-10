@@ -15,6 +15,8 @@
 mec_unit=10; //distance between holes
 mec_diam=4.5; //hole diameter
 mec_half_unit = mec_unit/2;
+mec_bend_stroke = 5;
+mec_bend_width = 0.5;
 
 function units(n) = n*mec_unit;
 
@@ -22,11 +24,38 @@ module mec_basicHole() {
   circle(d=mec_diam);
 }
 
+module mec_longHole(diam = mec_diam, length = mec_diam, angle = 0) {
+  rotate(angle) {  
+      translate([0, -length / 2]) 
+        circle(d = diam);
+      translate ([- diam / 2, -length / 2])
+        square([diam, length]);
+      translate([0,length / 2])  
+        circle(d = diam);
+  }
+}
+
+module bend_line(size) {
+  for (x = [0:size-1]) {
+    translate([0,units(x)])
+      mec_longHole(mec_bend_width, mec_bend_stroke);
+  }
+}
+
 module hole_grid(sizex, sizey) {
   for (x = [0:sizex-1]) {
     translate([0,units(x)])
       for (y=[0:sizey-1]) {
         translate([y*mec_unit+mec_half_unit,mec_half_unit]) mec_basicHole();
+      }
+  }
+}
+
+module long_hole_grid(sizex, sizey, angle) {
+  for (x = [0:sizex-1]) {
+    translate([0,units(x)])
+      for (y=[0:sizey-1]) {
+        translate([y*mec_unit+mec_half_unit,mec_half_unit]) mec_longHole(mec_diam, mec_diam / 2, 90);
       }
   }
 }
@@ -97,4 +126,13 @@ module wheel(size) {
   }
   else
       echo ("ERROR: Max wheel radius of 10 alowed.");
+}
+
+module angle(size) {
+  difference() {  
+    rounded_panel(size, 2);
+    translate([mec_unit, mec_half_unit]) 
+      bend_line(size);
+    long_hole_grid(size, 1);
+  }
 }
