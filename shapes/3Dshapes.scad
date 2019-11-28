@@ -191,9 +191,11 @@ module tube(h, r, wall, center = false) {
 }
 
 module tube2(height, ID, OD, center = false) {
-  difference() {
-    cylinder(h=height, r=OD/2, center=center);
-    cylinder(h=height, r=ID/2, center=center);
+  linear_extrude (height = height, center = center) {
+    difference() {
+      circle(r=OD/2);
+      circle(r=ID/2);
+    }
   }
 }
 
