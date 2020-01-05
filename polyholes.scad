@@ -2,10 +2,14 @@
 // This file is licensed under the terms of Creative Commons Attribution 3.0 Unported.
 
 // Using this holes should come out approximately right when printed
-module polyhole(h, d, center=false) {
-    n = max(round(2 * d),3);
+module polyhole(h, r=0, d=0, center=false) {
+    _r = (r == 0 ? d / 2 : r);
+    _d = (d == 0 ? r * 2 : d);
+
+    n = max(round(2 * _d),3);
+
     rotate([0,0,180])
-        cylinder(h = h, r = (d / 2) / cos (180 / n), $fn = n, center=center);
+        cylinder(h = h, r = (_d / 2) / cos (180 / n), $fn = n, center=center);
 }
 
 module test_polyhole(){
