@@ -2,7 +2,7 @@
 // This file is licensed under the terms of Creative Commons Attribution 3.0 Unported.
 
 // Using this holes should come out approximately right when printed
-module polyhole(h, r=0, d=0, center=false) {
+module polyhole(h, d=0, r=0, center=false) {
     _r = (r == 0 ? d / 2 : r);
     _d = (d == 0 ? r * 2 : d);
 
