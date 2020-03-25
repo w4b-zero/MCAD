@@ -30,7 +30,7 @@ module Cubic_and_Radial_Array_Test()
 //cubic array  of  5*5*5 objects spaced 10*10*10 center relative
  	Cubic_Array(10,10,10,5,5,5,center=true)
 		{
-		sphere(2.5,center=true,$fn=60);
+			sphere(2.5,$fn=60);
 			cylinder(h=10,r=.5,center=true);
 			rotate([90,0,0])
 			cylinder(h=10,r=.5,center=true);
@@ -91,43 +91,22 @@ module Cubic_and_Radial_Array_Test()
 
 
 // main lib modules
-module Cubic_Array(sx,sy,sz,nx,ny,nz,center)
-	{
+module Cubic_Array(sx,sy,sz,nx,ny,nz,center) {
 	if (center==true)
-		{
 		translate([-(((nx+1)*sx)/2),-(((ny+1)*sy)/2),-(((nz+1)*sz)/2)])
-			{
 			for(x=[1:nx])
-				{
 				for(y=[1:ny])
-					{
 					for(z=[1:nz])
-						{
 						translate([x*sx,y*sy,z*sz])
-						for (k = [0:$children-1]) child(k,center=true);;
-						}
-					}
-				}
-			}
-		}
+							children([0:$children-1],center=true);
 	else
-		{
 		translate([0,0,0])
-			{
 			for(x=[1:nx])
-				{
-				for(y=[1:ny])
-					{
+			    for(y=[1:ny])
 					for(z=[1:nz])
-						{
 						translate([x*sx,y*sy,z*sz])
-						for (k = [0:$children-1]) child(k);
-						}
-					}
-				}
-			}
-		}
-	}
+						    children([0:$children-1]);
+}
 
 //
 //Radial_Array(a,n,r){child object}
@@ -136,12 +115,9 @@ module Cubic_Array(sx,sy,sz,nx,ny,nz,center)
 // n= number of objects 
 // r= radius distance 
 //
-module Radial_Array(a,n,r)
-{
- for (k=[0:n-1])
- {
- rotate([0,0,-(a*k)])
- translate([0,r,0])
- for (k = [0:$children-1]) child(k);
- }
+module Radial_Array(a,n,r){
+	for (k=[0:n-1])
+		rotate([0,0,-(a*k)])
+			translate([0,r,0])
+				children([0:$children-1]);
 }
