@@ -119,5 +119,5 @@ module Radial_Array(a,n,r){
 	for (k=[0:n-1])
 		rotate([0,0,-(a*k)])
 			translate([0,r,0])
-				children([0:$children-1]);
+				children();
 }
