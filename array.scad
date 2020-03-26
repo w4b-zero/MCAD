@@ -92,20 +92,13 @@ module Cubic_and_Radial_Array_Test()
 
 // main lib modules
 module Cubic_Array(sx,sy,sz,nx,ny,nz,center) {
-	if (center==true)
-		translate([-(((nx+1)*sx)/2),-(((ny+1)*sy)/2),-(((nz+1)*sz)/2)])
+	offset = center ? [-(((nx+1)*sx)/2),-(((ny+1)*sy)/2),-(((nz+1)*sz)/2)] : [0,0,0];
+	translate(offset)
 			for(x=[1:nx])
-				for(y=[1:ny])
-					for(z=[1:nz])
-						translate([x*sx,y*sy,z*sz])
-							children([0:$children-1],center=true);
-	else
-		translate([0,0,0])
-			for(x=[1:nx])
-			    for(y=[1:ny])
-					for(z=[1:nz])
-						translate([x*sx,y*sy,z*sz])
-						    children();
+					for(y=[1:ny])
+							for(z=[1:nz])
+									translate([x*sx,y*sy,z*sz])
+											children([0:$children-1],center);
 }
 
 //
