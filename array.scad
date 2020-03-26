@@ -105,7 +105,7 @@ module Cubic_Array(sx,sy,sz,nx,ny,nz,center) {
 			    for(y=[1:ny])
 					for(z=[1:nz])
 						translate([x*sx,y*sy,z*sz])
-						    children([0:$children-1]);
+						    children();
 }
 
 //
