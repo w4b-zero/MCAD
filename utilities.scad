@@ -50,7 +50,7 @@ module fromTo(from=[0,0,0], to=[1*m,0,0], size=[1*cm, 1*cm], align=[CENTER, CENT
         rotate(angle)
           translate( [ -endCaps[0]*size[0] - endExtras[0], size[0]*(-0.5-align[0]), size[1]*(-0.5+align[1]) ] )
             rotate(rotation)
-              scale([length, size[0], size[1]]) child();
+              scale([length, size[0], size[1]]) children();
   }
 }
 

@@ -31,7 +31,7 @@
 module list(iHeight)
 {
 	for (i = [0 : $children-1]) 
-		translate([0,i*iHeight]) child(i);
+		translate([0,i*iHeight]) children(i);
 }
 module grid(iWidth,iHeight,inYDir = true,limit=3)
 {
@@ -39,6 +39,6 @@ module grid(iWidth,iHeight,inYDir = true,limit=3)
 	{
 		translate([(inYDir)? (iWidth)*(i%limit) : (iWidth)*floor(i/limit),
 					(inYDir)? (iHeight)*floor(i/limit) : (iHeight)*(i%limit)])
-					child(i);
+					children(i);
 	}
 }

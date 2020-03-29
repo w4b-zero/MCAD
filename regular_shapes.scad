@@ -50,43 +50,43 @@ module regular_polygon(sides, radius)
 
 module pentagon(radius)
 {
-  reg_polygon(5,radius);
+  regular_polygon(5,radius);
 }
 
 module hexagon(radius, diameter, across_flats)
 {
   r = across_flats ? across_flats/2/cos(30) : diameter ? diameter/2 : radius;
-  reg_polygon(6,r);
+  regular_polygon(6,r);
 }
 
 module heptagon(radius)
 {
-  reg_polygon(7,radius);
+  regular_polygon(7,radius);
 }
 
 module octagon(radius)
 {
-  reg_polygon(8,radius);
+  regular_polygon(8,radius);
 }
 
 module nonagon(radius)
 {
-  reg_polygon(9,radius);
+  regular_polygon(9,radius);
 }
 
 module decagon(radius)
 {
-  reg_polygon(10,radius);
+  regular_polygon(10,radius);
 }
 
 module hendecagon(radius)
 {
-  reg_polygon(11,radius);
+  regular_polygon(11,radius);
 }
 
 module dodecagon(radius)
 {
-  reg_polygon(12,radius);
+  regular_polygon(12,radius);
 }
 
 module ring(inside_diameter, thickness){

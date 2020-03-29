@@ -9,21 +9,22 @@ include <units.scad>
 
 use <utilities.scad>
 
-// TODO check that the axis parameter works as intended
-// Duplicate everything $no of times around an $axis, for $angle/360 rounds
-module spin(no, angle=360, axis=Z){
-    for (i = [1:no]){
-        rotate(normalized_axis(axis)*angle*no/i) union(){
-            for (i = [0 : $children-1]) child(i);
-        }
-    }
+// Copy everything $no of times around an $axis, spread over $angle
+// If $strict==true or $angle==360, then spacing will leave an empty at $angle,
+//  otherwise, $no will be distributed so first is at 0deg, last copy at $angle degrees
+// NOTE: $axis works (rotates around that axis), but pass parameter as lower case string
+//  eg: "x", "y", or "z". Alternatively, use units.scad vector definitions: X, Y, Z
+module spin(no, angle=360, axis=Z, strict=false){
+    divisor = (strict || angle==360) ? no : no-1;
+    for (i = [0:no-1])
+        rotate(normalized_axis(axis)*angle*i/divisor)
+            children();
 }
 
-//Doesn't work currently
-module duplicate(axis=Z) spin(no=2, axis=axis) child(0);
+// Make a copy of children by rotating around $axis by 180 degrees
+module duplicate(axis=Z) spin(no=2, axis=axis) children();
 
-module linear_multiply(no, separation, axis=Z){
-    for (i = [0:no-1]){
-        translate(i*separation*axis) child(0);
-    }
-}
+// Make $no copies along the $axis, separated by $separation
+module linear_multiply(no, separation, axis=Z)
+    for (i = [0:no-1])
+        translate(i*separation*normalized_axis(axis)) children();

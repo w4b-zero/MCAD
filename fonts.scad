@@ -24,12 +24,15 @@ module bold_2d(bold,width=0.2,resolution=8) {
   for(j=[0:$children-1]) {
     if(bold) {
       union() {
-            child(j);
-        for(i=[0:resolution-1]) assign(dx=width*cos(360*i/resolution),dy=width*sin(360*i/resolution))
-              translate([dx,dy]) child(j);
+            children(j);
+        for(i=[0:resolution-1]) {
+            dx=width*cos(360*i/resolution);
+            dy=width*sin(360*i/resolution);
+            translate([dx,dy]) children(j);
+        }
       }
     } else {
-      child(j);
+      children(j);
     }
   }
 }
@@ -47,7 +50,9 @@ module polytext(charstring,size,font,line=0,justify=1,align=-1
   char_shift_height=-char_height/2-align*char_height/2;
   char_thickness=font[0][2];
   char_index_map=search(charstring,font[2],1,1);
-  for(i=[0:len(char_index_map)-1]) assign( thisCharIndex=char_index_map[i], x_pos=i*size+line_shift_x*size/char_width) {
+  for(i=[0:len(char_index_map)-1]) {
+    thisCharIndex=char_index_map[i];
+    x_pos=i*size+line_shift_x*size/char_width;
     translate([x_pos,line*size+char_shift_height*size/char_height]) scale([size/char_width,size/char_height]) {
       if(char_thickness==0)
         bold_2d(bold,width=bold_width,resolution=bold_resolution)
@@ -578,8 +583,8 @@ module braille_ascii_spec800(inString,dot_backing=true,cell_backing=false,justif
   x_shift=thisFont[0][0];
   y_shift=thisFont[0][1];
   theseIndicies=search(inString,thisFont[2],1,1);
-  for( i=[0:len(theseIndicies)-1]) translate([i*x_shift-(1-justify)*x_shift*len(theseIndicies)/2,-y_shift*(align+1)/2]) 
-	assign(dotPattern=thisFont[2][theseIndicies[i]][6]) {
+  for( i=[0:len(theseIndicies)-1]) translate([i*x_shift-(1-justify)*x_shift*len(theseIndicies)/2,-y_shift*(align+1)/2]) {
+	dotPattern=thisFont[2][theseIndicies[i]][6];
     if(dot_backing) translate([cell_d2d_spacing/2-dot_spacing/2-dot_d/2,line_d2d_spacing/2-dot_spacing-dot_d/2,-dot_h]) 
 	cube(size=[dot_spacing+dot_d,2*dot_spacing+dot_d,dot_h],center=false);
     if(cell_backing) translate([0,0,-dot_h]) 
