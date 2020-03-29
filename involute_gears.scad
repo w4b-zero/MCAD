@@ -396,6 +396,46 @@ module gear (
 	}
 }
 
+module rack(
+		number_of_teeth=15,
+		circular_pitch=false, diametral_pitch=false,
+		pressure_angle=28,
+		clearance=0.2,
+		rim_thickness=8,
+		rim_width=5,
+		flat=false)
+{
+
+	if (circular_pitch==false && diametral_pitch==false)
+		echo("MCAD ERROR: gear module needs either a diametral_pitch or circular_pitch");
+
+	//Convert diametrial pitch to our native circular pitch
+	circular_pitch = (circular_pitch!=false?circular_pitch:180/diametral_pitch);
+	pitch = circular_pitch / 180 * PI;
+
+	addendum = circular_pitch / 180;
+	dedendum = addendum + clearance;
+	pitch_slope = tan(pressure_angle);
+
+	linear_extrude_flat_option(flat=flat, height=rim_thickness)
+		union()
+		{
+			translate([0,-dedendum-rim_width/2])
+				square([number_of_teeth*pitch, rim_width],center=true);
+
+			p1 = pitch / 4 + pitch_slope * dedendum;
+			p2 = pitch / 4 - pitch_slope * addendum;
+			for(i=[1:number_of_teeth])
+				translate([pitch*(i-number_of_teeth/2-0.5),0])
+					polygon(points=[
+							[-p1,-dedendum],
+							[p1,-dedendum],
+							[p2,addendum],
+							[-p2,addendum]
+					]);
+		}
+}
+
 module linear_extrude_flat_option(flat =false, height = 10, center = false, convexity = 2, twist = 0)
 {
 	if(flat==false)
@@ -554,6 +594,12 @@ module test_gears()
 				circular_pitch=500,
 				circles=5,
 				hub_diameter=2*8.88888889);
+
+			translate ([-37.5,0,0])
+			rotate ([0,0,-90])
+			rack (
+				circular_pitch=500
+			     );
 
 			translate ([0,0,10])
 			{
