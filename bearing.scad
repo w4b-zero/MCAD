@@ -95,6 +95,8 @@ function bearingDimensions(model) =
   model == 6203 ? [17*mm, 40*mm, 12*mm]:
   model == 6205 ? [25*mm, 52*mm, 15*mm]:
   model == 6206 ? [30*mm, 62*mm, 16*mm]:
+  
+  model == 6808 ? [40*mm, 52*mm, 7*mm]:
 
   [8*mm, 22*mm, 7*mm]; // this is the default
 
