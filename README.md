@@ -1,7 +1,7 @@
 OpenSCAD MCAD Library
 =====================
 
-This library contains components commonly used in designing and moching up
+This library contains components commonly used in designing and mocking up
 mechanical designs. It is currently unfinished and you can expect some API
 changes, however many things are already working.
 

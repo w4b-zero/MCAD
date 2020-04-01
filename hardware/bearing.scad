@@ -72,6 +72,15 @@ function bearingDimensions(model) =
   model == 698 ? [8*length_mm, 19*length_mm,  6*length_mm]:
   model == 699 ? [9*length_mm, 20*length_mm,  6*length_mm]:
 
+  model == 6200 ? [10*mm, 30*mm, 9*mm]:
+  model == 6201 ? [12*mm, 32*mm, 10*mm]:
+  model == 6202 ? [15*mm, 35*mm, 11*mm]:
+  model == 6203 ? [17*mm, 40*mm, 12*mm]:
+  model == 6205 ? [25*mm, 52*mm, 15*mm]:
+  model == 6206 ? [30*mm, 62*mm, 16*mm]:
+
+  model == 6808 ? [40*mm, 52*mm, 7*mm]:
+
 //
 //todo:-
 // add

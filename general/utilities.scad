@@ -101,7 +101,7 @@ module fromTo(from=[0,0,0], to=[1,0,0], size=[1, 1], align=[CENTER, CENTER], mat
         rotate(angle)
           translate( [ -endCaps[0]*size[0] - endExtras[0], size[0]*(-0.5-align[0]), size[1]*(-0.5+align[1]) ] )
             rotate(rotation)
-              scale([length, size[0], size[1]]) child();
+              scale([length, size[0], size[1]]) children();
   }
 }
 
@@ -112,10 +112,10 @@ module part(name) {
 
 module mirror_duplicate (plane = [0, 0, 1])
 union () {
-    child ();
+    children ();
 
     mirror (plane)
-    child ();
+    children ();
 }
 
 module linear_extrude_if (condition, height, center = undef, convexity = undef,

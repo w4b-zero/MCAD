@@ -287,20 +287,20 @@ module motor(model=Nema23, size=NemaMedium, dualAxis=false, pos=[0,0,0], orienta
 
           // Bolt holes
           color(stepperAluminum, $fs=holeRadius/8) {
-            translate([mid+holeDist,mid+holeDist]) cylinder(h=holeDepth+1*length_mm, r=holeRadius);
-            translate([mid-holeDist,mid+holeDist]) cylinder(h=holeDepth+1*length_mm, r=holeRadius);
-            translate([mid+holeDist,mid-holeDist]) cylinder(h=holeDepth+1*length_mm, r=holeRadius);
-            translate([mid-holeDist,mid-holeDist]) cylinder(h=holeDepth+1*length_mm, r=holeRadius);
+            translate([mid+holeDist,mid+holeDist]) cylinder(h=holeDepth+1*length_mm+extrSize, r=holeRadius);
+            translate([mid-holeDist,mid+holeDist]) cylinder(h=holeDepth+1*length_mm+extrSize, r=holeRadius);
+            translate([mid+holeDist,mid-holeDist]) cylinder(h=holeDepth+1*length_mm+extrSize, r=holeRadius);
+            translate([mid-holeDist,mid-holeDist]) cylinder(h=holeDepth+1*length_mm+extrSize, r=holeRadius);
 
           } 
 
           // Grinded flat
           color(stepperAluminum) {
             difference() {
-              translate([-1*length_mm, -1*length_mm, -1*length_mm]) 
+              translate([-1*length_mm, -1*length_mm, -1*length_mm])
                 cube(size=[side+2*length_mm, side+2*length_mm, extrSize + 1*length_mm]);
-              translate([side/2, side/2, -1.1*length_mm]) 
-                cylinder(h=4*length_mm, r=extrRad);
+              translate([side/2, side/2, -1*length_mm])
+                cylinder(h=extrSize + 1*length_mm, r=extrRad);
             }
           }
 

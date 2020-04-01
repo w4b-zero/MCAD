@@ -113,11 +113,7 @@ if (mode == "dxf") {
 }
 }
 
-module translateBeam(v) {
-	for (i = [0 : $children - 1]) {
-		translate(v * beam_width) child(i);
-	}
-}
+module translateBeam(v) translate(v * beam_width) children([0 : $children - 1]);
 
 module topShelf(width, depth, corners) {
 if (mode == "model") {

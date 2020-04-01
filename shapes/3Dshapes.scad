@@ -191,12 +191,7 @@ module tube(h, r, wall, center = false) {
 }
 
 module tube2(height, ID, OD, center = false) {
-  linear_extrude (height = height, center = center) {
-    difference() {
-      circle(r=OD/2);
-      circle(r=ID/2);
-    }
-  }
+  tube(h = height, r = OD / 2, wall = (OD - ID) / 2, center = center);
 }
 
 module oval_prism(height, rx, ry, center = false)
@@ -218,8 +213,8 @@ module tubify(radius,wall)
 {
   difference()
   {
-    child(0);
-    translate([0, 0, -0.1]) scale([(radius-wall)/radius, (radius-wall)/radius, 2]) child(0);
+    children(0);
+    translate([0, 0, -0.1]) scale([(radius-wall)/radius, (radius-wall)/radius, 2]) children(0);
   }
 }
 
@@ -302,9 +297,11 @@ module dodecagon_prism(height,radius)
 
 module rightTriangle(adjacent, opposite, height) {
   difference() {
-    translate([-adjacent/2,opposite/2,0]) cube([adjacent, opposite, height], true);
+    translate([-adjacent/2,opposite/2,0])
+      cube([adjacent, opposite, height], true);
     translate([-adjacent,0,0]) {
-      rotate([0,0,atan(opposite/adjacent)]) dislocateBox(adjacent*2, opposite, height+2);
+      rotate([0,0,atan(opposite/adjacent)])
+        dislocateBox(adjacent*2, opposite, height+2);
     }
   }
 }
@@ -343,7 +340,7 @@ module test_square_pyramid()
 
 module 12ptStar(size, height) {
   starNum = 3;
-  starAngle = 360/starNum;
+  starAngle = 90/starNum;
   for (s = [1:starNum]) {
     rotate([0, 0, s*starAngle]) cube([size, size, height], true);
   }
@@ -354,13 +351,6 @@ module 12ptStar(size, height) {
 module dislocateBox(w, h, d) {
   translate([0,0,-d/2]) cube([w,h,d]);
 }
-
-//-----------------------
-// Tests
-//module test2D_ellipse(){ellipse(10, 5);}
-module test_ellipsoid(){ellipsoid(10, 5);}
-
-//module test2D_egg_outline(){egg_outline();}
 
 // unregular_shapes.scad
 // Copyright 2011 Elmo Mäntynen

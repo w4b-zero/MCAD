@@ -20,7 +20,7 @@ inner_diameter: thickness of the shaft
 module helix(pitch, length, slices=500){
     rotations = length/pitch;
     linear_extrude(height=length, center=false, convexity=10, twist=360*rotations, slices=slices, $fn=100)
-        child(0);
+        children();
 }
 
 module auger(pitch, length, outside_radius, inner_radius, taper_ratio = 0.25) {
