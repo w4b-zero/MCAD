@@ -58,10 +58,13 @@ module box(width, height, depth) {
 
 // EXAMPLE USAGE:
 // mcad_rounded_box([20, 30, 40], 5, true);
+// mcad_rounded_box(20, 5, true);
 
 // size is a vector [w, h, d]
-module mcad_rounded_box (size, radius, sidesonly, center=false)
+module mcad_rounded_cube (size, radius, sidesonly, center=false)
 {
+    size = (is_list(size)) ? size : [size, size, size];
+
     module place_xy ()
     for (x = [size[0]/2 - radius, -size[0]/2 + radius])
     for (y = [size[1]/2 - radius, -size[1]/2 + radius])
@@ -84,8 +87,8 @@ module mcad_rounded_box (size, radius, sidesonly, center=false)
 
 module ccube (size, center = false)
 {
-    center = (len (center) == undef) ? [center, center, center] : center;
-    size = (len (size) == undef) ? [size, size, size] : size;
+    center = (is_list(center)) ? center : [center, center, center];
+    size = (is_list(size)) ? size : [size, size, size];
 
     function get_offset (i) = center[i] ? - size[i] / 2 : 0;
 
