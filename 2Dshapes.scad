@@ -9,15 +9,15 @@
  *  complexRoundSquare(size,rads1=[0,0], rads2=[0,0], rads3=[0,0], rads4=[0,0], center=true)
  *  roundedSquare(pos=[10,10],r=2)
  *  ellipsePart(width,height,numQuarters)
- *  donutSlice(innerSize,outerSize, start_angle, end_angle) 
+ *  donutSlice(innerSize,outerSize, start_angle, end_angle)
  *  pieSlice(size, start_angle, end_angle) //size in radius(es)
  *  ellipse(width, height) {
 */
 
-// Examples - (layouts.scad is required for exapmles)
+// Examples - (layouts.scad is required for examples)
 // example2DShapes(); use <layouts.scad>;
 
-module example2DShapes(){ 
+module example2DShapes() {
     grid(105,105,true,4)
     {
         // ellipse
@@ -83,7 +83,7 @@ module complexRoundSquare(
             translate([x1,y1])
             mirror([1,0])
             ellipsePart(rads1[0]*2,rads1[1]*2,1);
-        else 
+        else
             translate([x1,y1])
             square(size=[scs, scs]);
 
@@ -100,7 +100,7 @@ module complexRoundSquare(
             translate([x3,y3])
             mirror([0,1])
             ellipsePart(rads3[0]*2,rads3[1]*2,1);
-        else 
+        else
             translate([width/2-scs,height/2-scs])
             square(size=[scs, scs]);
 
@@ -109,7 +109,7 @@ module complexRoundSquare(
             translate([x4,y4])
             rotate([0,0,-180])
             ellipsePart(rads4[0]*2,rads4[1]*2,1);
-        else 
+        else
             #translate([x4,height/2-scs])
             square(size=[scs, scs]);
     }
@@ -120,10 +120,10 @@ module roundedSquare(pos=[10,10],r=2) {
     {
         square([pos[0]-r*2,pos[1]-r*2],center=true);
 
-        
+
         circle(r=r);
     }
-}   
+}
 
 // round shapes
 // The orientation might change with the implementation of circle...
@@ -150,14 +150,14 @@ module ellipsePart(width,height,numQuarters) {
     }
 }
 
-module donutSlice(innerSize,outerSize, start_angle, end_angle) { 
+module donutSlice(innerSize,outerSize, start_angle, end_angle) {
     difference()
     {
         pieSlice(outerSize, start_angle, end_angle);
-        
-        if(len(innerSize) > 1) 
+
+        if(len(innerSize) > 1)
              ellipse(innerSize[0]*2,innerSize[1]*2);
-        else 
+        else
             circle(innerSize);
     }
 }
@@ -172,7 +172,7 @@ module pieSlice(size, start_angle, end_angle) { //size in radius(es)
     a2 = (2 * start_angle + 2 * end_angle) / 4;
     a3 = (1 * start_angle + 3 * end_angle) / 4;
     a4 = (0 * start_angle + 4 * end_angle) / 4;
-    
+
     if(end_angle > start_angle)
         intersection() {
         if(len(size) > 1)
