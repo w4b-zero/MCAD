@@ -286,19 +286,20 @@ module pieSlice(size, start_angle, end_angle) //size in radius(es)
     a3 = (1 * start_angle + 3 * end_angle) / 4;
     a4 = (0 * start_angle + 4 * end_angle) / 4;
     if(end_angle > start_angle)
-        intersection() {
-		if (is_list(size))
-            ellipse(rx*2, ry*2);
-		else
-			circle(rx);
-        polygon([
-            [0, 0],
-            [trx * cos(a0), try * sin(a0)],
-            [trx * cos(a1), try * sin(a1)],
-            [trx * cos(a2), try * sin(a2)],
-            [trx * cos(a3), try * sin(a3)],
-            [trx * cos(a4), try * sin(a4)],
-            [0, 0]
-       ]);
-    }
+        intersection()
+        {
+            if (is_list(size))
+                ellipse(rx*2, ry*2);
+            else
+                circle(rx);
+            polygon([
+                [0, 0],
+                [trx * cos(a0), try * sin(a0)],
+                [trx * cos(a1), try * sin(a1)],
+                [trx * cos(a2), try * sin(a2)],
+                [trx * cos(a3), try * sin(a3)],
+                [trx * cos(a4), try * sin(a4)],
+                [0, 0]
+            ]);
+        }
 }
