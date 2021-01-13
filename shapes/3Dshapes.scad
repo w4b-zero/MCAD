@@ -54,15 +54,17 @@ module box(width, height, depth) {
 // Copyright: 2010
 // License: 2-clause BSD License (http://opensource.org/licenses/BSD-2-Clause)
 
-// mcad_rounded_box([width, height, depth], float radius, bool sidesonly);
+// mcad_rounded_box([width, height, depth], float radius, bool/vector sidesonly);
 
 // EXAMPLE USAGE:
 // mcad_rounded_box([20, 30, 40], 5, true);
 // mcad_rounded_box(20, 5, true);
+// mcad_rounded_box([20, 30, 40], 5, [0, 1, 0]); // centers on Y axis only
 
 // size is a vector [w, h, d]
 module mcad_rounded_cube (size, radius, sidesonly, center=false)
 {
+    center = (is_list(center)) ? center : [center, center, center];
     size = (is_list(size)) ? size : [size, size, size];
 
     module place_xy ()
@@ -71,7 +73,11 @@ module mcad_rounded_cube (size, radius, sidesonly, center=false)
     translate ([x, y, 0])
     children ();
 
-    translate (center ? [0, 0, 0] : size / 2)
+    center_offset = [
+        for (i = [0:2])
+            center[i] ? 0 : size[i] / 2
+    ];
+    translate (center_offset)
     hull ()
     if (sidesonly) {
         place_xy ()
