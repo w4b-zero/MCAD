@@ -34,6 +34,21 @@ module test_threads ($fa=5, $fs=0.1)
     // Rohloff hub thread:
     translate ([65, 0, 0])
     metric_thread(34, 1, 10, internal=true, n_starts=6);
+
+    // Cylinder with internal M8 thread and chamfers
+    translate ([95, 0, 0]) {
+        let(OD = 12, T = 8, P = 1.25, L = 10) {
+            difference() {
+                cylinder(d=OD, h=L);
+                chamfered_thread(L, internal = true) {
+                    metric_thread(T, P, L);
+                    chamfer_cylinder(T-2*P, T+0.5, internal = true);
+                    chamfer_cylinder(T-2*P, T+0.5, internal = true);
+                }
+            }
+        }
+    }
+
 }
 
 // ----------------------------------------------------------------------------
@@ -44,27 +59,60 @@ use <scad-utils/transformations.scad>
 
 
 // ----------------------------------------------------------------------------
-// internal - true = clearances for internal thread (e.g., a nut).
-//            false = clearances for external thread (e.g., a bolt).
-//            (Internal threads should be "cut out" from a solid using
-//            difference()).
-// n_starts - Number of thread starts (e.g., DNA, a "double helix," has
-//            n_starts=2).  See wikipedia Screw_thread.
+// Metric Threads in accordance with ISO 68-1
+// ----------------------------------------------------------------------------
+// diameter  - nominal diameter of thread in mm. (e.g. 10 for an M10 thread)
+// pitch     - distance in mm from the crest of one thread to the next.
+// length    - overall axial length of thread in mm.
+// internal  - true = clearances for internal thread (e.g., a nut).
+//             false = clearances for external thread (e.g., a bolt).
+//             (Internal threads should be "cut out" from a solid using
+//             difference()).
+// clearance - additional clearance to add in mm. Teeth are effectively
+//             shifted inwards (outwards) for external (internal) threads by
+//             this amount.
+// n_starts  - Number of thread starts (e.g., DNA, a "double helix," has
+//             n_starts=2).  See Wikipedia Screw_thread.
 module metric_thread (
-    diameter = 8,
-    pitch = 1,
-    length = 1,
+    diameter,
+    pitch,
+    length,
     internal = false,
-    n_starts = 1
+    n_starts = 1,
+    clearance
 )
 {
+    // Tolerancing as per ISO 286
+    // See https://en.wikipedia.org/wiki/IT_Grade
+    function IT_grade (diameter, ITG) =
+        assert(ITG>=1, "ITG has to be between 1 and 16")
+        assert(ITG<=16, "ITG has to be between 1 and 16")
+        let (i = 0.45 * pow(diameter, 1/3) + 0.001 * diameter)
+            pow(10, 0.2*(ITG-1)) * i / 1000;
+
+    // Fundamental deviations as per ISO 286. Formulas obtained from:
+    // https://www.cobanengineering.com/Tolerances/ToleranceBand.asp
+    function EI_es_g (diameter) = 2.5 * pow(diameter, 0.34) / 1000;
+
+    theta = 60;                // V-shape angle, 60º for metric threads
+    H = pitch/2/tan(theta/2);  // height of the V-shape
+    clearance = (clearance != undef)
+        ? clearance
+        : internal
+            ? IT_grade(diameter, 6)/2 + 0                  // H6
+            : IT_grade(diameter, 6)/2 + EI_es_g(diameter); // g6
+    D_maj = internal
+        ? diameter + clearance
+        : diameter - clearance;
+    D_min = D_maj - 2*5/8*H;
+
     trapezoidal_thread (
         pitch = pitch,
         length = length,
         upper_angle = 30, lower_angle = 30,
         outer_flat_length = pitch / 8,
-        major_radius = diameter / 2,
-        minor_radius = diameter / 2 - 5/8 * cos(30) * pitch,
+        major_radius = D_maj / 2,
+        minor_radius = D_min / 2,
         internal = internal,
         n_starts = n_starts
     );
@@ -134,7 +182,7 @@ module buttress_thread (
 }
 
 /**
- * trapezoid_thread():
+ * trapezoidal_thread():
  * generates a screw with a trapezoidal thread profile
  *
  * pitch = distance between the same part of adjacent teeth
