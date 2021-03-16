@@ -190,8 +190,8 @@ module roundedSquare(pos=[10, 10], r=2) {
 
 module csquare (size, center = false)
 {
-    center = (len (center) == undef) ? [center, center] : center;
-    size = (len (size) == undef) ? [size, size] : size;
+    center = (!is_list(center)) ? [center, center] : center;
+    size = (!is_list(size)) ? [size, size] : size;
 
     function get_offset (i) = center[i] ? - size[i] / 2 : 0;
 
