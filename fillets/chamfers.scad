@@ -40,7 +40,7 @@ module test_chamfers ($fn=32)
  *   3. (optional) Chamfer object at far end (z = length).
  *
  * @param length Axial length of the cylindrical object.
- * @param internal (optional) True when the cylinder is internal.
+ * @param internal (optional) True when cylinder is internal (countersunk hole)
  */
 module mcad_chamfered_cylinder (length, internal = false)
 {
@@ -70,9 +70,9 @@ module mcad_chamfered_cylinder (length, internal = false)
  * internal cylinders, this object can be subtracted along with the
  * cylinder from the original solid.
  *
- * Chamfer definition is allowed by specifying either just the
- * 'length', or any combination of two out of the three parameters
- * 'length', 'angle' and 'depth'.
+ * A chamfer may be defined by either just `diameter` and `length`, or
+ * `diameter` and any two of the following parameters: `length`, `angle`, and
+ * `depth`.
  *
  * @param diameter Diameter of the cylinder to generate a chamfer for.
  * @param length Chamfer length measured on the cylinder's end face.
@@ -81,7 +81,7 @@ module mcad_chamfered_cylinder (length, internal = false)
  *     is 45º)
  * @param depth (optional) Depth/height of the chamfer measured along
  *     the z axis from the cylinder's end face.
- * @param internal (optional) True when the cylinder is internal.
+ * @param internal (optional) True when the cylinder is internal
  */
 module mcad_chamfer_cylinder (
      diameter,
