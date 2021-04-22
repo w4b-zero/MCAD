@@ -25,8 +25,8 @@ module test_bearing(){
 
 module test_bearing_hole(){
     difference(){
-      translate([0, 0, 3.5]) cube(size=[30, 30, 7-10*epsilon], center=true);
-      bearing(outline=true);
+      cube(size=[30, 30, 7-10*epsilon], center=true);
+      bearing(outline=true, center=true);
     }
 }
 
@@ -106,7 +106,7 @@ function bearingInnerDiameter(model) = bearingDimensions(model)[BEARING_INNER_DI
 function bearingOuterDiameter(model) = bearingDimensions(model)[BEARING_OUTER_DIAMETER];
 
 module bearing(pos=[0,0,0], angle=[0,0,0], model=SkateBearing, outline=false,
-                material=Steel, sideMaterial=Brass) {
+                material=Steel, sideMaterial=Brass, center=false) {
   // Common bearing names
   model =
     model == "Skate" ? 608 :
@@ -119,8 +119,9 @@ module bearing(pos=[0,0,0], angle=[0,0,0], model=SkateBearing, outline=false,
   innerRim = innerD + (outerD - innerD) * 0.2;
   outerRim = outerD - (outerD - innerD) * 0.2;
   midSink = w * 0.1;
+  newpos = [pos[0], pos[1], center ? pos[2]-(w/2) : pos[2]];
 
-  translate(pos) rotate(angle) union() {
+  translate(newpos) rotate(angle) union() {
     color(material)
       difference() {
         // Basic ring
