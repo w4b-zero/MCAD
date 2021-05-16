@@ -266,13 +266,13 @@ module involute_bevel_gear_tooth (
 	{
 		for (i=[1:res])
 		{
-			assign (
+			let (
 				point1=
 					involute (base_radius*2,start_angle+(stop_angle - start_angle)*(i-1)/res),
 				point2=
 					involute (base_radius*2,start_angle+(stop_angle - start_angle)*(i)/res))
 			{
-				assign (
+				let (
 					side1_point1 = rotate_point (centre_angle, point1),
 					side1_point2 = rotate_point (centre_angle, point2),
 					side2_point1 = mirror_point (rotate_point (centre_angle, point1)),

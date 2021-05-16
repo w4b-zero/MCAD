@@ -48,7 +48,7 @@ module ball_groove2(pitch, length, diameter, ball_radius, slices=200){
     offset = length/slices;
     union(){
         for (i = [0:slices]) {
-            assign (z = i*offset){
+            let (z = i*offset){
                 translate(helix_curve(pitch, radius, z)) sphere(ball_radius, $fa=5, $fs=1);
             }
         }
