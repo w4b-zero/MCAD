@@ -145,7 +145,7 @@ METRIC_BOLT_CAP_DIAMETERS =
 [
 	-1, //0 index is not used but reduces computation
 	-1,
-	-1,
+	3.8,
 	5.50,//m3
 	7.00,//m4
 	8.50,//m5
