@@ -81,6 +81,7 @@ function bearingDimensions(model) =
   model == 688 ? [8*mm, 16*mm,  5*mm]:
   model == 689 ? [9*mm, 17*mm,  5*mm]:
 
+  model == 692 ? [2*mm, 6*mm, 3*mm]:
   model == 693 ? [3*mm,  8*mm,  4*mm]:
   model == 694 ? [4*mm, 11*mm,  4*mm]:
   model == 695 ? [5*mm, 13*mm,  4*mm]:
@@ -89,15 +90,85 @@ function bearingDimensions(model) =
   model == 698 ? [8*mm, 19*mm,  6*mm]:
   model == 699 ? [9*mm, 20*mm,  6*mm]:
 
+  model == 6000 ? [10*mm, 26*mm, 8*mm]:
+  model == 6001 ? [12*mm, 28*mm, 8*mm]:
+  model == 6002 ? [15*mm, 32*mm, 9*mm]:
+  model == 6003 ? [17*mm, 35*mm, 10*mm]:
+  model == 6004 ? [20*mm, 42*mm, 12*mm]:
+  model == 6005 ? [25*mm, 47*mm, 12*mm]:
+  model == 6006 ? [30*mm, 55*mm, 13*mm]:
+  model == 6007 ? [35*mm, 62*mm, 14*mm]:
+  model == 6008 ? [40*mm, 68*mm, 15*mm]:
+  model == 6009 ? [45*mm, 75*mm, 16*mm]:
+  model == 6010 ? [50*mm, 80*mm, 16*mm]:
+  model == 6011 ? [55*mm, 90*mm, 18*mm]:
+  model == 6012 ? [60*mm, 95*mm, 18*mm]:
+  model == 6013 ? [65*mm, 100*mm, 18*mm]:
+  model == 6014 ? [70*mm, 110*mm, 20*mm]:
+  model == 6015 ? [75*mm, 115*mm, 20*mm]:
+
   model == 6200 ? [10*mm, 30*mm, 9*mm]:
   model == 6201 ? [12*mm, 32*mm, 10*mm]:
   model == 6202 ? [15*mm, 35*mm, 11*mm]:
   model == 6203 ? [17*mm, 40*mm, 12*mm]:
+  model == 6204 ? [20*mm, 47*mm, 14*mm]:
   model == 6205 ? [25*mm, 52*mm, 15*mm]:
   model == 6206 ? [30*mm, 62*mm, 16*mm]:
+  model == 6207 ? [35*mm, 72*mm, 17*mm]:
+  model == 6208 ? [40*mm, 80*mm, 18*mm]:
+  model == 6209 ? [45*mm, 85*mm, 19*mm]:
+
+  model == 6300 ? [10*mm, 35*mm, 11*mm]:
+  model == 6301 ? [12*mm, 37*mm, 12*mm]:
+  model == 6302 ? [15*mm, 42*mm, 13*mm]:
+  model == 6303 ? [17*mm, 47*mm, 14*mm]:
+  model == 6304 ? [20*mm, 52*mm, 15*mm]:
+  model == 6305 ? [25*mm, 62*mm, 17*mm]:
+  model == 6306 ? [30*mm, 72*mm, 19*mm]:
+  model == 6307 ? [35*mm, 80*mm, 21*mm]:
+  model == 6308 ? [40*mm, 90*mm, 23*mm]:
+  model == 6309 ? [45*mm, 100*mm, 25*mm]:
+  model == 6310 ? [50*mm, 110*mm, 27*mm]:
+  model == 6311 ? [55*mm, 120*mm, 29*mm]:
+  model == 6312 ? [60*mm, 130*mm, 31*mm]:
+  model == 6313 ? [65*mm, 140*mm, 33*mm]:
+  model == 6314 ? [70*mm, 150*mm, 35*mm]:
+  model == 6315 ? [75*mm, 160*mm, 37*mm]:
+
+  model == 6700 ? [10*mm, 15*mm, 4*mm]:
+  model == 6701 ? [12*mm, 18*mm, 4*mm]:
   
   model == 6808 ? [40*mm, 52*mm, 7*mm]:
 
+  model == 6900 ? [10*mm, 22*mm, 6*mm]:
+  model == 6901 ? [12*mm, 24*mm, 6*mm]:
+  model == 6902 ? [15*mm, 28*mm, 7*mm]:
+  model == 6903 ? [17*mm, 30*mm, 7*mm]:
+  model == 6904 ? [20*mm, 37*mm, 9*mm]:
+  model == 6905 ? [25*mm, 42*mm, 9*mm]:
+
+  model == "LM12" ? [12*mm, 21*mm, 30*mm]:
+
+  model == "MR52" ? [2*mm, 5*mm, 2.5*mm]:
+  model == "MR62" ? [2*mm, 6*mm, 2.5*mm]:
+  model == "MR63" ? [3*mm, 6*mm, 2.5*mm]:
+  model == "MR72" ? [2*mm, 7*mm, 3*mm]:
+  model == "MR74" ? [4*mm, 7*mm, 2.5*mm]:
+  model == "MR83" ? [3*mm, 8*mm, 3*mm]:
+  model == "MR84" ? [4*mm, 8*mm, 3*mm]:
+  model == "MR85" ? [5*mm, 8*mm, 2.5*mm]:
+  model == "MR93" ? [3*mm, 9*mm, 4*mm]:
+  model == "MR95" ? [5*mm, 9*mm, 3*mm]:
+  model == "MR104" ? [4*mm, 10*mm, 4*mm]:
+  model == "MR105" ? [5*mm, 10*mm, 4*mm]:
+  model == "MR106" ? [6*mm, 10*mm, 3*mm]:
+  model == "MR115" ? [5*mm, 11*mm, 4*mm]:
+  model == "MR117" ? [7*mm, 11*mm, 3*mm]:
+  model == "MR126" ? [6*mm, 12*mm, 4*mm]:
+  model == "MR128" ? [8*mm, 12*mm, 3.5*mm]:
+  model == "MR137" ? [7*mm, 13*mm, 4*mm]:
+  model == "MR148" ? [8*mm, 14*mm, 4*mm]:
+  model == "MR149" ? [9*mm, 14*mm, 4.5*mm]:
   [8*mm, 22*mm, 7*mm]; // this is the default
 
 
