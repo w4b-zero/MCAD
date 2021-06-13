@@ -155,7 +155,7 @@ module donutSlice(innerSize,outerSize, start_angle, end_angle) {
     {
         pieSlice(outerSize, start_angle, end_angle);
 
-        if(len(innerSize) > 1)
+        if(is_list(innerSize) && len(innerSize) > 1)
              ellipse(innerSize[0]*2,innerSize[1]*2);
         else
             circle(innerSize);
@@ -163,8 +163,8 @@ module donutSlice(innerSize,outerSize, start_angle, end_angle) {
 }
 
 module pieSlice(size, start_angle, end_angle) { //size in radius(es)
-    rx = len(size) > 1? size[0] : size;
-    ry = len(size) > 1? size[1] : size;
+    rx = (is_list(size) && len(size) > 1)? size[0] : size;
+    ry = (is_list(size) && len(size) > 1)? size[1] : size;
     trx = rx* sqrt(2) + 1;
     try = ry* sqrt(2) + 1;
     a0 = (4 * start_angle + 0 * end_angle) / 4;
@@ -175,7 +175,7 @@ module pieSlice(size, start_angle, end_angle) { //size in radius(es)
 
     if(end_angle > start_angle)
         intersection() {
-        if(len(size) > 1)
+        if(is_list(size) && len(size) > 1)
             ellipse(rx*2,ry*2);
         else
             circle(rx);
