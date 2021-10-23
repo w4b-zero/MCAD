@@ -58,7 +58,7 @@ module profile_channel(base, side, wall) {
 	}
 }
 
-module profile_tslot_generic (pitch, slot, lip, web, hole) {
+module profile_tslot_generic (pitch, slot, lip, web, core, hole) {
 	// pitch = side width, slot = slot width, lip = thickness of the lip, web = thickness of the web, core = side of the center square, hole = center hole diameter
 	difference () {
 		union() {
@@ -72,7 +72,7 @@ module profile_tslot_generic (pitch, slot, lip, web, hole) {
 			rotate ([0, 0, -45]) square ([pitch*1.15, web], center=true);
 			square (core, center=true);
 		}
-		circle (hole/2, center = true);
+		circle (hole/2);
 	}
 }
 
