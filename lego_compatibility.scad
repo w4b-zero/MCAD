@@ -126,14 +126,25 @@ module block(width=2,length=4,height=1,axle_hole=false,reinforcement=false, holl
                     cube([wall_thickness,overall_width+wall_thickness,wall_thickness]);
             }
             if (axle_hole==true)
-                if (width>1 && length>1) for (ycount=[1:width-1])
-                    for (xcount=[1:length-1])
-                        translate([xcount*knob_spacing,ycount*knob_spacing,-roof_thickness])  axle(height+roof_thickness/2);
+                if (width>1 && length>1)
+                  for (ycount=[0:width-2])
+                    for (xcount=[0:length-2])
+                        translate([
+                          knob_diameter/2+wall_thickness+knob_spacing/2+xcount*knob_spacing,
+                          knob_diameter/2+wall_thickness+knob_spacing/2+ycount*knob_spacing,
+                          -roof_thickness
+                        ])
+                        axle(height+roof_thickness/2);
             if (circular_hole==true)
-                if (width>1 && length>1) for (ycount=[1:width-1])
-                    for (xcount=[1:length-1])
-                        translate([xcount*knob_spacing,ycount*knob_spacing,-roof_thickness/8])
-                            cylinder(r=knob_diameter/2, h=height*block_height+roof_thickness/4,$fs=cylinder_precision);
+                if (width>1 && length>1)
+                  for (ycount=[0:width-2])
+                    for (xcount=[0:length-2])
+                        translate([
+                          knob_diameter/2+wall_thickness+knob_spacing/2+xcount*knob_spacing,
+                          knob_diameter/2+wall_thickness+knob_spacing/2+ycount*knob_spacing,
+                          -roof_thickness/8
+                        ])
+                        cylinder(r=knob_diameter/2, h=height*block_height+roof_thickness/4,$fs=cylinder_precision);
 
 // cut knobs if round
         if(round==true&&width==length)translate([overall_length/2,overall_width/2])rotate_extrude($fs=cylinder_precision,$fa=5)translate([overall_length/2,-1])square([20,height*block_height+10],false);
@@ -168,11 +179,19 @@ module block(width=2,length=4,height=1,axle_hole=false,reinforcement=false, holl
         }
         if (reinforcement == true && width==1 && length!=1)
             for (xcount=[0:length -2])
-                translate([knob_diameter/2+wall_thickness+knob_spacing/2+xcount*knob_spacing,overall_width/2,0]) cylinder(r=pin_diameter/2,h=block_height*height,$fs=cylinder_precision);
+                translate([
+                  knob_diameter/2+wall_thickness+knob_spacing/2+xcount*knob_spacing,
+                  overall_width/2,
+                  0])
+                cylinder(r=pin_diameter/2,h=block_height*height,$fs=cylinder_precision);
 
         if (reinforcement == true && length==1 && width!=1)
             for (ycount=[0:width -2])
-                translate([overall_length/2,knob_diameter/2+wall_thickness+knob_spacing/2+ycount*knob_spacing,0]) cylinder(r=pin_diameter/2,h=block_height*height,$fs=cylinder_precision);
+                translate([
+                  overall_length/2,
+                  knob_diameter/2+wall_thickness+knob_spacing/2+ycount*knob_spacing,
+                  0])
+                cylinder(r=pin_diameter/2,h=block_height*height,$fs=cylinder_precision);
     }
 }
 
