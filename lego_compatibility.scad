@@ -39,12 +39,18 @@ cylinder_precision=0.5;
 
 /* EXAMPLES:
 
+// 1×1 
+translate([0,-40,0])block(1,1,1,round=true,flat_top=false,hollow_knob=true,solid_bottom=false,center=false);
+translate([10,-40,0])block(1,1,1/3,round=true,flat_top=true,hollow_knob=true,solid_bottom=false,center=false);
+translate([20,-40,0])block(1,1,1,round=true,flat_top=true,hollow_knob=true,solid_bottom=false,center=false);
+translate([30,-40,0])block(1,1,1/3,round=true,flat_top=false,hollow_knob=false,solid_bottom=false,center=false);
+translate([40,-40,0])block(1,1,1/3,round=true,flat_top=false,hollow_knob=true,solid_bottom=false,center=false);
+
 block(2,1,1/3,axle_hole=false,circular_hole=true,reinforcement=true,hollow_knob=true,flat_top=true, solid_bottom=true);
 
 translate([50,-10,0])
     block(1,2,1/3,axle_hole=false,circular_hole=true,reinforcement=false,hollow_knob=true,flat_top=true, solid_bottom=true);
-translate([74,-10,0])
-    block(1,1,1,axle_hole=false,circular_hole=true,reinforcement=false,hollow_knob=true,flat_top=false, solid_bottom=false,round=true);
+
 
 translate([10,0,0])
     block(2,2,1/3,axle_hole=false,circular_hole=true,reinforcement=true,hollow_knob=true,flat_top=true, solid_bottom=true);
@@ -53,9 +59,11 @@ translate([30,0,0])
 translate([50,0,0])
     block(2,2,1/3,axle_hole=false,circular_hole=true,reinforcement=true,hollow_knob=true,flat_top=false, solid_bottom=true);
 translate([70,0,0])
-    block(2,2,1/3,axle_hole=false,circular_hole=true,reinforcement=true,hollow_knob=true,flat_top=false, solid_bottom=true,round=true);
+    block(2,2,1/3,axle_hole=false,circular_hole=false,reinforcement=true,hollow_knob=false,flat_top=true, solid_bottom=true,round=true);
 translate([90,0,0])
-    block(2,2,1/3,axle_hole=false,circular_hole=true,reinforcement=true,hollow_knob=true,flat_top=false, solid_bottom=false,round=true);
+    block(2,2,1/3,axle_hole=false,circular_hole=true,reinforcement=true,hollow_knob=false,flat_top=false, solid_bottom=true,round=true);
+translate([110,0,0])
+    block(2,2,1/3,axle_hole=true,circular_hole=false,reinforcement=true,hollow_knob=true,flat_top=false, solid_bottom=false,round=true);
 
 translate([0,20,0])
     block(3,2,2/3,axle_hole=false,circular_hole=true,reinforcement=true,hollow_knob=true,flat_top=false, solid_bottom=true);
@@ -71,7 +79,7 @@ translate([0,-20,0])
 translate([0,-30,0])
     block(1,5,1/3,axle_hole=true,circular_hole=false,reinforcement=true,hollow_knob=true,flat_top=true,solid_bottom=true);
 //*/
-
+echo("lego_compatibility.scad useable module: \nblock(width=2,length=4,height=1,\n     axle_hole=false,\n     reinforcement=false,\n     hollow_knob=false,\n     flat_top=false,\n     circular_hole=false,\n     solid_bottom=true,\n     center=false,\n     round=false\n);\n");
 module block(width=2,length=4,height=1,axle_hole=false,reinforcement=false, hollow_knob=false, flat_top=false, circular_hole=false, solid_bottom=true, center=false,round=false) {
     overall_length=(length-1)*knob_spacing+knob_diameter+wall_thickness*2;
     overall_width=(width-1)*knob_spacing+knob_diameter+wall_thickness*2;
@@ -102,16 +110,18 @@ module block(width=2,length=4,height=1,axle_hole=false,reinforcement=false, holl
             // hollow bottom:
             if (solid_bottom == false)
                 if(width == length && round == true ){
-                        translate([overall_width/2,overall_length/2,-roof_thickness])  cylinder(block_height*height,d=overall_length-wall_thickness*2,$fs=cylinder_precision,$fa=5);
+                        translate([overall_width/2,overall_length/2,-roof_thickness]) cylinder(block_height*height,d=overall_length-wall_thickness*2,$fs=cylinder_precision,$fa=5);
+                  if(width == 1) translate([overall_width/2,overall_length/2,-roof_thickness]) cylinder(block_height/3,d=(overall_length-wall_thickness*2)/cos(180/8),$fn=8);
                         // place for knobs if >1
                         if(width > 1 || length >1) translate([wall_thickness,wall_thickness,-roof_thickness]) cube([overall_length-wall_thickness*2,overall_width-wall_thickness*2,block_height/3]);
-                }
+                }// end round
                 else translate([wall_thickness,wall_thickness,-roof_thickness]) cube([overall_length-wall_thickness*2,overall_width-wall_thickness*2,block_height*height]);
 
 
             // round 1x1 -> groove around bottom
-            if(round == true && width == 1 && length ==1)translate([overall_length/2,overall_width/2])
-                rotate_extrude($fs=cylinder_precision,$fa=5)translate([overall_length/2,0])square([wall_thickness*2/3,wall_thickness],true);
+            if(round == true && width == 1 && length ==1 && !(height==1/3&&flat_top))translate([overall_length/2,overall_width/2])
+                rotate_extrude($fs=cylinder_precision,$fa=5)translate([overall_length/2,0])
+                square([overall_length-(sqrt(2)*knob_spacing-knob_diameter),block_height/2-wall_thickness/2],true);
 
             // flat_top -> groove around bottom
             if (flat_top == true) {
@@ -124,6 +134,8 @@ module block(width=2,length=4,height=1,axle_hole=false,reinforcement=false, holl
                     cube([wall_thickness,overall_width+wall_thickness,wall_thickness]);
                 translate([overall_length-wall_thickness/3,0,-wall_thickness/2])
                     cube([wall_thickness,overall_width+wall_thickness,wall_thickness]);
+                if(round)translate([overall_length/2,overall_width/2])
+                rotate_extrude($fs=cylinder_precision,$fa=5)translate([overall_length/2,0])square([wall_thickness*2/3,wall_thickness],true);
             }
             if (axle_hole==true)
                 if (width>1 && length>1)
