@@ -132,9 +132,10 @@ module block(width=2,length=4,height=1,axle_hole=false,reinforcement=false, holl
                         translate([
                           knob_diameter/2+wall_thickness+knob_spacing/2+xcount*knob_spacing,
                           knob_diameter/2+wall_thickness+knob_spacing/2+ycount*knob_spacing,
-                          -roof_thickness
+                          solid_bottom?-.1:+block_height/3-roof_thickness
                         ])
-                        axle(height+roof_thickness/2);
+                        axle(height*block_height+roof_thickness/2);
+// circular hole
             if (circular_hole==true)
                 if (width>1 && length>1)
                   for (ycount=[0:width-2])
@@ -144,11 +145,11 @@ module block(width=2,length=4,height=1,axle_hole=false,reinforcement=false, holl
                           knob_diameter/2+wall_thickness+knob_spacing/2+ycount*knob_spacing,
                           -roof_thickness/8
                         ])
-                        cylinder(r=knob_diameter/2, h=height*block_height+roof_thickness/4,$fs=cylinder_precision);
+                        cylinder(r=axle_diameter/2, h=height*block_height+roof_thickness/4,$fs=cylinder_precision);
 
 // cut knobs if round
         if(round==true&&width==length)translate([overall_length/2,overall_width/2])rotate_extrude($fs=cylinder_precision,$fa=5)translate([overall_length/2,-1])square([20,height*block_height+10],false);
-        }
+        } // end difference line 81
 
         if (reinforcement==true && width>1 && length>1)
             difference() {
@@ -165,7 +166,7 @@ module block(width=2,length=4,height=1,axle_hole=false,reinforcement=false, holl
                             knob_diameter/2+wall_thickness+knob_spacing/2+xcount*knob_spacing,
                             knob_diameter/2+wall_thickness+knob_spacing/2+ycount*knob_spacing,
                             -roof_thickness/2])
-                                cylinder(r=knob_diameter/2, h=height*block_height+roof_thickness, $fs=cylinder_precision);
+                                cylinder(r=axle_diameter/2, h=height*block_height+roof_thickness, $fs=cylinder_precision,$fa=5);
             }
         // posts:
         if (solid_bottom == false){
@@ -175,7 +176,7 @@ module block(width=2,length=4,height=1,axle_hole=false,reinforcement=false, holl
                         knob_diameter/2+wall_thickness+knob_spacing/2+xcount*knob_spacing,
                         knob_diameter/2+wall_thickness+knob_spacing/2+ycount*knob_spacing,
                         0])
-                    post(height);
+                    post(height,axle_hole,circular_hole);
         }
         if (reinforcement == true && width==1 && length!=1)
             for (xcount=[0:length -2])
@@ -195,11 +196,17 @@ module block(width=2,length=4,height=1,axle_hole=false,reinforcement=false, holl
     }
 }
 
-module post(height) {
+module post(height,axle_hole,circular_hole) {
     difference() {
         cylinder(r=post_diameter/2, h=height*block_height-roof_thickness/2,$fs=cylinder_precision);
         translate([0,0,-roof_thickness/2])
-            cylinder(r=knob_diameter/2, h=height*block_height+roof_thickness/4,$fs=cylinder_precision);
+      if(!axle_hole)cylinder(r=knob_diameter/2, h=height*block_height+roof_thickness/4,$fs=cylinder_precision);
+      
+      if(axle_hole){
+        translate([0,0,-roof_thickness/4])axle(height*block_height+roof_thickness/2);
+        cylinder(r=axle_diameter/2, h=(block_height/3-roof_thickness)*2,center=true,$fs=cylinder_precision,$fa=5);
+      }
+      if(circular_hole)translate([0,0,-roof_thickness/4])cylinder(r=axle_diameter/2, h=height*block_height+roof_thickness/2,$fs=cylinder_precision,$fa=5);
     }
 }
 
@@ -213,9 +220,15 @@ module reinforcement(height) {
 }
 
 module axle(height) {
-    translate([0,0,height*block_height/2]) union() {
-        cube([axle_diameter,axle_spline_width,height*block_height],center=true);
-        cube([axle_spline_width,axle_diameter,height*block_height],center=true);
+  assert(height);
+  translate([0,0,height/2-.01])
+    intersection(){
+      union(){
+        cube([axle_diameter,axle_spline_width,height],center=true);
+        cube([axle_spline_width,axle_diameter,height],center=true);
+      }
+    cylinder(r=axle_diameter/2, h=height,center=true,$fa=5,$fs=cylinder_precision);
     }
 }
 
+//EOF
