@@ -1,29 +1,14 @@
-// Copyright 2011 Nophead (of RepRap fame)
-// This file is licensed under the terms of Creative Commons Attribution 3.0 Unported.
+use <MCAD/shapes/polyhole.scad>
 
-// Using this holes should come out approximately right when printed
-module polyhole(h, d=0, r=0, center=false) {
-    _r = (r == 0 ? d / 2 : r);
-    _d = (d == 0 ? r * 2 : d);
+// @deprecated
+module polyhole (h, d = undef, r = undef, center = false)
+{
+    _h = (h < 0) ? undef : h;
 
-    n = max(round(2 * _d),3);
-
-    rotate([0,0,180])
-        cylinder(h = h, r = (_d / 2) / cos (180 / n), $fn = n, center=center);
-}
-
-module test_polyhole(){
-difference() {
-    cube(size = [100,27,3]);
-    union() {
-        for(i = [1:10]) {
-            translate([(i * i + i)/2 + 3 * i , 8,-1])
-                polyhole(h = 5, d = i);
-
-            assign(d = i + 0.5)
-                translate([(d * d + d)/2 + 3 * d, 19,-1])
-                    polyhole(h = 5, d = d);
-        }
-    }
-}
+    mcad_polyhole (
+        d = d,
+        r = r,
+        h = h,
+        center = center
+    );
 }
